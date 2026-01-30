@@ -266,10 +266,10 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_8c2rb")
+"texture": SubResource("AtlasTexture_cgnfb")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_fi1t5")
+"texture": SubResource("AtlasTexture_24b45")
 }],
 "loop": true,
 "name": &"walk_up",
@@ -284,4 +284,6 @@ script = ExtResource("1_s28po")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1800875661]
 sprite_frames = SubResource("SpriteFrames_rapj0")
-animation = &"walk_right"
+animation = &"walk_up"
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=955898391]
