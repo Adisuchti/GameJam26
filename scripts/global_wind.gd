@@ -20,7 +20,7 @@ func _ready() -> void:
 	_schedule_next_event()
 
 func _process(delta: float) -> void:
-	print(wind_strength)
+	#print(wind_strength)
 	timer += delta
 
 	# Wait for next wind event

@@ -3,46 +3,95 @@
 [ext_resource type="Texture2D" uid="uid://oct07keab2xc" path="res://sprites/ui/iron2.png" id="1_skb31"]
 [ext_resource type="PackedScene" uid="uid://dqqvxej24p1i3" path="res://scenes/gameloop/ingameUI/facecam.tscn" id="3_evgre"]
 [ext_resource type="Texture2D" uid="uid://dfe5g6jrf8wcd" path="res://sprites/ui/vignette.png" id="4_s1pl0"]
+[ext_resource type="Texture2D" uid="uid://baboh31jxadun" path="res://sprites/ui/cam/frame.png" id="5_pyww5"]
 [ext_resource type="Texture2D" uid="uid://dg5d4p6hktcts" path="res://sprites/ui/vignette2.png" id="5_skb31"]
-[ext_resource type="PackedScene" uid="uid://bpu25jp3c2u1j" path="res://scenes/gameloop/ingameUI/minimap.tscn" id="6_rlcvn"]
+[ext_resource type="PackedScene" uid="uid://bmoo5ympo8g7m" path="res://scenes/gameloop/ingameUI/newspaper.tscn" id="5_taqhf"]
+[ext_resource type="Shader" uid="uid://70g58ghv8q1h" path="res://scenes/gameloop/ingameUI/ingame_iu.gdshader" id="6_skb31"]
+[ext_resource type="Texture2D" uid="uid://b45k21xicfo28" path="res://sprites/ui/cam/frame_only_wood.png" id="6_tth5c"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ap58y"]
+shader = ExtResource("6_skb31")
+shader_parameter/alpha_percent = 0.1990000094525
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_rlcvn"]
+shader = ExtResource("6_skb31")
+shader_parameter/alpha_percent = 0.1510000071725
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_skb31"]
+shader = ExtResource("6_skb31")
+shader_parameter/alpha_percent = 0.3450000163875
 
 [node name="ingameIU" type="Node2D" unique_id=1906887442]
 
 [node name="TextureRect" type="TextureRect" parent="." unique_id=977715543]
-offset_left = 637.0
-offset_top = 2.0
-offset_right = 1661.0
-offset_bottom = 1285.0189
-scale = Vector2(0.505, 0.505)
+offset_left = 892.0
+offset_right = 1916.0
+offset_bottom = 1280.0789
+scale = Vector2(0.507, 0.507)
 texture = ExtResource("1_skb31")
 stretch_mode = 1
 flip_h = true
 
-[node name="Minimap" parent="." unique_id=113448912 instance=ExtResource("6_rlcvn")]
-position = Vector2(766, 131)
-scale = Vector2(1.145, 1.145)
-
-[node name="facecam_mothernode" type="Node" parent="." unique_id=1581497675]
+[node name="facecam_mothernode" type="Node2D" parent="." unique_id=1074899503]
 
 [node name="Facecam" parent="facecam_mothernode" unique_id=73801167 instance=ExtResource("3_evgre")]
-position = Vector2(765, 520)
+position = Vector2(1023, 519)
 
 [node name="Vignette" type="Sprite2D" parent="facecam_mothernode" unique_id=943685005]
-position = Vector2(764.5, 520)
-scale = Vector2(0.17480469, 0.32962963)
+position = Vector2(1022.5, 519)
+scale = Vector2(0.17871094, 0.3407407)
 texture = ExtResource("4_s1pl0")
 
 [node name="Vignette2" type="Sprite2D" parent="facecam_mothernode" unique_id=493473060]
-position = Vector2(766.125, 520.37506)
-scale = Vector2(0.09388021, 0.12690976)
+position = Vector2(1022.50006, 518.99994)
+scale = Vector2(0.09531254, 0.12777776)
 texture = ExtResource("5_skb31")
 
-[node name="Vignette2" type="Sprite2D" parent="." unique_id=1235291274]
-position = Vector2(766.375, 130.87498)
-scale = Vector2(0.09414063, 0.12621526)
-texture = ExtResource("5_skb31")
+[node name="newsletter_mothernode" type="Node2D" parent="." unique_id=450321339]
+position = Vector2(1022.00006, 128.99997)
+scale = Vector2(0.214, 0.214)
 
-[node name="Vignette" type="Sprite2D" parent="." unique_id=1687577563]
-position = Vector2(768.875, 131.375)
-scale = Vector2(0.17797849, 0.33842593)
+[node name="Frame" type="Sprite2D" parent="newsletter_mothernode" unique_id=60928682]
+texture = ExtResource("5_pyww5")
+
+[node name="Frame2" type="Sprite2D" parent="newsletter_mothernode" unique_id=1432116762]
+position = Vector2(-0.00048828125, 609.62646)
+texture = ExtResource("5_pyww5")
+
+[node name="FrameOnlyWood" type="Sprite2D" parent="newsletter_mothernode" unique_id=625306985]
+position = Vector2(467.28906, 280.37408)
+rotation = -3.1415925
+texture = ExtResource("6_tth5c")
+
+[node name="FrameOnlyWood2" type="Sprite2D" parent="newsletter_mothernode" unique_id=814397846]
+position = Vector2(-467.28906, 196.26172)
+texture = ExtResource("6_tth5c")
+
+[node name="ColorRect" type="ColorRect" parent="newsletter_mothernode" unique_id=441062511]
+offset_left = -425.2339
+offset_top = -425.2335
+offset_right = 425.2334
+offset_bottom = 1037.3834
+color = Color(0, 0, 0, 1)
+
+[node name="Newspaper" parent="newsletter_mothernode" unique_id=1958823397 instance=ExtResource("5_taqhf")]
+position = Vector2(-0.00024414063, 303.73865)
+scale = Vector2(2.751, 2.751)
+
+[node name="Vignette" type="Sprite2D" parent="newsletter_mothernode" unique_id=352179983]
+material = SubResource("ShaderMaterial_ap58y")
+position = Vector2(-0.00014755203, 303.73843)
+scale = Vector2(0.82140774, 2.6998959)
 texture = ExtResource("4_s1pl0")
+
+[node name="Vignette2" type="Sprite2D" parent="newsletter_mothernode" unique_id=973166673]
+material = SubResource("ShaderMaterial_rlcvn")
+position = Vector2(0.9786582, 306.80386)
+scale = Vector2(0.4419319, 1.0146937)
+texture = ExtResource("5_skb31")
+
+[node name="UIVignette" type="Sprite2D" parent="." unique_id=1235291274]
+material = SubResource("ShaderMaterial_skb31")
+position = Vector2(1023.00006, 324.00003)
+scale = Vector2(0.13541663, 0.45069444)
+texture = ExtResource("5_skb31")

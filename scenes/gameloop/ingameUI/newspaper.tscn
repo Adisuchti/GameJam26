@@ -1,12 +1,13 @@
 [gd_scene format=3 uid="uid://bmoo5ympo8g7m"]
 
 [ext_resource type="Texture2D" uid="uid://3qywm10fxw37" path="res://sprites/newspaper.png" id="1_qtysi"]
+[ext_resource type="Script" uid="uid://cm7byfsx1ag2e" path="res://scripts/ui/newspaper.gd" id="1_y7042"]
 [ext_resource type="FontFile" uid="uid://bkec2pue1apws" path="res://sprites/ui/pixelated-elegance-font/PixelatedEleganceRegular-ovyAA.ttf" id="2_y7042"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_cefmg"]
 line_spacing = 0.16
 font = ExtResource("2_y7042")
-font_size = 10
+font_size = 22
 font_color = Color(0, 0, 0, 1)
 
 [sub_resource type="LabelSettings" id="LabelSettings_egmcf"]
@@ -15,6 +16,7 @@ font_size = 41
 font_color = Color(0, 0, 0, 1)
 
 [node name="Newspaper" type="Node2D" unique_id=1958823397]
+script = ExtResource("1_y7042")
 
 [node name="Newspaper" type="Sprite2D" parent="." unique_id=726717171]
 texture = ExtResource("1_qtysi")
@@ -79,7 +81,7 @@ offset_left = -123.0
 offset_top = -111.0
 offset_right = 121.0
 offset_bottom = 169.0
-text = "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean "
+text = "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. "
 label_settings = SubResource("LabelSettings_cefmg")
 autowrap_mode = 2
 clip_text = true

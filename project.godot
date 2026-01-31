@@ -23,7 +23,9 @@ globalwind="*uid://dfgowvqh03ry5"
 
 [display]
 
-window/size/resizable=false
+window/size/mode=2
+window/stretch/mode="viewport"
+window/stretch/scale_mode="integer"
 
 [editor]
 

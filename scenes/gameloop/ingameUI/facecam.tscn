@@ -8,6 +8,8 @@
 [ext_resource type="Texture2D" uid="uid://bst3837d8mxdr" path="res://sprites/ui/cam/clean_mask.png" id="5_p52yh"]
 [ext_resource type="Texture2D" uid="uid://30jrhgeg31eu" path="res://sprites/ui/cam/clean_sheet_protag.png" id="6_q6kkj"]
 [ext_resource type="Texture2D" uid="uid://dhbrq4iypx36h" path="res://sprites/ui/cam/clean_cap.png" id="8_q6kkj"]
+[ext_resource type="VideoStream" uid="uid://c5v6lguhjeub7" path="res://sprites/ui/cam/wind.ogv" id="9_owmow"]
+[ext_resource type="Shader" uid="uid://bslj24yq1avlf" path="res://scenes/gameloop/ingameUI/facecam.gdshader" id="9_v6xy4"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_q6kkj"]
 animations = [{
@@ -90,6 +92,12 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_6irry"]
+shader = ExtResource("9_v6xy4")
+shader_parameter/chroma_key_color = Color(1, 1, 1, 1)
+shader_parameter/pickup_range = 0.1
+shader_parameter/fade_amount = 0.1
+
 [node name="Facecam" type="Node2D" unique_id=73801167]
 script = ExtResource("1_lv2ya")
 
@@ -115,3 +123,38 @@ texture = ExtResource("5_p52yh")
 position = Vector2(-5, -30.999996)
 scale = Vector2(0.345, 0.345)
 texture = ExtResource("8_q6kkj")
+
+[node name="Control" type="Control" parent="." unique_id=1874811492]
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VideoStreamPlayer" type="VideoStreamPlayer" parent="Control" unique_id=1700148397]
+material = SubResource("ShaderMaterial_6irry")
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -91.0
+offset_top = -91.99999
+offset_right = 559.0
+offset_bottom = 565.1428
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.28, 0.28)
+size_flags_horizontal = 4
+size_flags_vertical = 4
+stream = ExtResource("9_owmow")
+expand = true
+loop = true
