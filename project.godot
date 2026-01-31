@@ -14,15 +14,19 @@ config/name="GameJam"
 config/version="0.1"
 run/main_scene="uid://c4roo1maew2b4"
 config/features=PackedStringArray("4.6", "Forward Plus")
-config/icon="res://icon.svg"
+config/icon="res://assets/icon.svg"
 
 [autoload]
 
 Global="*uid://d24xi2n0ju3g"
+global="*uid://d24xi2n0ju3g"
+globalwind="*uid://dfgowvqh03ry5"
 
 [display]
 
-window/size/resizable=false
+window/size/mode=2
+window/stretch/mode="viewport"
+window/stretch/scale_mode="integer"
 
 [editor]
 
