@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://bmoo5ympo8g7m" path="res://scenes/gameloop/ingameUI/newspaper.tscn" id="5_taqhf"]
 [ext_resource type="Shader" uid="uid://70g58ghv8q1h" path="res://scenes/gameloop/ingameUI/ingame_iu.gdshader" id="6_skb31"]
 [ext_resource type="Texture2D" uid="uid://b45k21xicfo28" path="res://sprites/ui/cam/frame_only_wood.png" id="6_tth5c"]
+[ext_resource type="Script" uid="uid://fmagvujm5kvl" path="res://scenes/gameloop/ingameUI/progress_bar.gd" id="9_tth5c"]
 
 [sub_resource type="Shader" id="Shader_pyww5"]
 resource_local_to_scene = true
@@ -218,6 +219,20 @@ shader_parameter/alpha_percent = 0.1510000071725
 shader = ExtResource("6_skb31")
 shader_parameter/alpha_percent = 0.3450000163875
 
+[sub_resource type="GDScript" id="GDScript_tth5c"]
+script/source = "extends Label
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	pass # Replace with function body.
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta: float) -> void:
+	pass
+"
+
 [node name="ingameIU" type="Node2D" unique_id=1906887442]
 material = SubResource("ShaderMaterial_tth5c")
 
@@ -299,3 +314,22 @@ material = SubResource("ShaderMaterial_ap58y")
 position = Vector2(446, 324.50003)
 scale = Vector2(0.87109375, 1.2018518)
 texture = ExtResource("4_s1pl0")
+
+[node name="wanted_level" type="Node2D" parent="." unique_id=1263139313]
+
+[node name="ProgressBar" type="ProgressBar" parent="wanted_level" unique_id=820908015]
+offset_left = 911.0
+offset_top = 365.0
+offset_right = 1131.0
+offset_bottom = 392.0
+script = ExtResource("9_tth5c")
+
+[node name="alert_label" type="Label" parent="wanted_level" unique_id=227953564]
+offset_left = 911.0
+offset_top = 391.0
+offset_right = 1132.0
+offset_bottom = 414.0
+text = "WANTED"
+horizontal_alignment = 1
+vertical_alignment = 1
+script = SubResource("GDScript_tth5c")
