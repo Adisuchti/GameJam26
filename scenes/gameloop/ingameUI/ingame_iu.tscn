@@ -318,6 +318,7 @@ texture = ExtResource("4_s1pl0")
 [node name="wanted_level" type="Node2D" parent="." unique_id=1263139313]
 
 [node name="ProgressBar" type="ProgressBar" parent="wanted_level" unique_id=820908015]
+modulate = Color(1, 0, 0, 1)
 offset_left = 911.0
 offset_top = 365.0
 offset_right = 1131.0
@@ -329,6 +330,8 @@ offset_left = 911.0
 offset_top = 391.0
 offset_right = 1132.0
 offset_bottom = 414.0
+theme_override_colors/font_color = Color(1, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 text = "WANTED"
 horizontal_alignment = 1
 vertical_alignment = 1
