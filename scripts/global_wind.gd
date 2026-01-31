@@ -22,7 +22,6 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	#print(wind_strength)
 	timer += delta
-
 	# Wait for next wind event
 	if timer >= next_event_time and target == 0.0 and wind_strength == 0.0:
 		target = WIND_MAX
@@ -52,4 +51,5 @@ func _process(delta: float) -> void:
 
 func _schedule_next_event() -> void:
 	timer = 0.0
-	next_event_time = randf_range(MIN_INTERVAL, MAX_INTERVAL)
+	#next_event_time = randf_range(MIN_INTERVAL, MAX_INTERVAL)
+	next_event_time = 1

@@ -1,0 +1,159 @@
+[gd_scene format=3 uid="uid://bgiy35f1shwms"]
+
+[ext_resource type="Script" uid="uid://cqrcqyk2168ac" path="res://Missions/Targets/spray.gd" id="1_l2flg"]
+[ext_resource type="Texture2D" uid="uid://fi5kl26hdof3" path="res://addons/plenticons/icons/64x-hidpi/2d/hexagon-yellow.png" id="2_c437p"]
+[ext_resource type="Texture2D" uid="uid://dsrombvqerkm8" path="res://addons/plenticons/icons/64x-hidpi/symbols/exclamation-mark-red.png" id="3_c437p"]
+[ext_resource type="Texture2D" uid="uid://b6f8l8770bpli" path="res://addons/plenticons/icons/64x-hidpi/2d/double-chevron-right-red.png" id="4_c437p"]
+[ext_resource type="Texture2D" uid="uid://bst3837d8mxdr" path="res://sprites/ui/cam/clean_mask.png" id="5_c437p"]
+
+[sub_resource type="Animation" id="Animation_l2flg"]
+resource_name = "Despawn"
+length = 20.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("InteractionMarker:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("MarkerObject:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Spray:self_modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 15, 19.02),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+tracks/3/type = "method"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath(".")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(19.466667),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"queue_free"
+}]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Spray:visible")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 0.01, 19.265001),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [false, true, true]
+}
+
+[sub_resource type="Animation" id="Animation_c437p"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("InteractionMarker:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("MarkerObject:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Spray:self_modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Spray:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_wkv66"]
+_data = {
+&"Despawn": SubResource("Animation_l2flg"),
+&"RESET": SubResource("Animation_c437p")
+}
+
+[node name="Spray" type="Node2D" unique_id=425051470]
+script = ExtResource("1_l2flg")
+
+[node name="InteractionMarker" type="Sprite2D" parent="." unique_id=454355621]
+self_modulate = Color(1, 1, 1, 0)
+z_index = 99
+texture = ExtResource("2_c437p")
+
+[node name="Sprite2D" type="Sprite2D" parent="InteractionMarker" unique_id=1445192093]
+z_index = 99
+scale = Vector2(0.515, 0.5)
+texture = ExtResource("3_c437p")
+
+[node name="MarkerObject" type="Node2D" parent="." unique_id=363391027]
+z_index = 99
+
+[node name="MissionMarker" type="Sprite2D" parent="MarkerObject" unique_id=768169]
+z_index = 99
+rotation = 1.5707964
+scale = Vector2(0.8, 0.8)
+texture = ExtResource("4_c437p")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1498540040]
+libraries/ = SubResource("AnimationLibrary_wkv66")
+
+[node name="Spray" type="Sprite2D" parent="." unique_id=1451521719]
+visible = false
+texture = ExtResource("5_c437p")

@@ -1,9 +1,18 @@
 [gd_scene format=3 uid="uid://bnf3rnjlkmnii"]
 
 [ext_resource type="Script" uid="uid://c87xndjahdkjm" path="res://scripts/mainpage.gd" id="1_m1fh4"]
+[ext_resource type="Texture2D" uid="uid://cqery80ibqnwk" path="res://sprites/startscreen.jpg" id="2_h13qq"]
 
 [node name="mainpage" type="Node2D" unique_id=1073345706]
 script = ExtResource("1_m1fh4")
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=1868430630]
+z_index = -10
+offset_left = 3.0
+offset_top = -281.0
+offset_right = 1155.0
+offset_bottom = 743.0
+texture = ExtResource("2_h13qq")
 
 [node name="Play" type="Button" parent="." unique_id=543999438]
 offset_left = 381.0
