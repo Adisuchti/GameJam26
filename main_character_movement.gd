@@ -3,6 +3,9 @@ extends CharacterBody2D
 @onready var anim_sprite: AnimatedSprite2D = $AnimatedSprite2D
 @export var speed = 400
 
+@export var max_health = 100
+var current_health = 100
+
 # Equipment toggles
 @export var has_mask: bool = false
 @export var has_hat: bool = false
@@ -13,6 +16,9 @@ var use_alt_frame = false
 
 # Initializing with Vector2.DOWN (0, 1) so the character faces the screen by default
 var last_direction = Vector2.DOWN
+
+func _ready():
+	current_health = max_health # Initialize health
 
 func _physics_process(delta):
 	# 1. Handle Movement
@@ -58,6 +64,17 @@ func _input(event):
 			has_hat = !has_hat
 			print("Hat toggled: ", has_hat)
 	update_animation(last_direction)
+	
+func take_damage(amount):
+	current_health -= amount
+	print("Ouch! Took ", amount, " damage. Health remaining: ", current_health)
+	
+	if current_health <= 0:
+		die()
+
+func die():
+	print("Player has died!")
+	# TODO game over screen or something
 
 func update_animation(direction: Vector2):
 	var angle = direction.angle()

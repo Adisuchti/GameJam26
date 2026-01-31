@@ -1,11 +1,11 @@
 [gd_scene format=3 uid="uid://dcmy5lgb2xxx2"]
 
 [ext_resource type="Texture2D" uid="uid://c0u4hf04n126d" path="res://sprites/character/police/policeMan.png" id="1_2jqxw"]
-[ext_resource type="Script" uid="uid://dphrjnw1nrstn" path="res://scenes/gameloop/NPC_movement.gd" id="1_4dp8m"]
+[ext_resource type="Script" uid="uid://br1445m5mkkl7" path="res://scenes/gameloop/police_man.gd" id="1_4dp8m"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_4dp8m"]
-radius = 46.0
-height = 136.0
+radius = 19.0
+height = 72.0
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_4dp8m"]
 atlas = ExtResource("1_2jqxw")
@@ -271,6 +271,9 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_4dp8m"]
+radius = 510.06274
+
 [node name="PoliceMan" type="CharacterBody2D" unique_id=1605622894]
 script = ExtResource("1_4dp8m")
 
@@ -282,3 +285,8 @@ sprite_frames = SubResource("SpriteFrames_1mt6n")
 animation = &"walk_up"
 
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="." unique_id=1043280389]
+
+[node name="DetectionArea" type="Area2D" parent="." unique_id=2143094280]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionArea" unique_id=510077565]
+shape = SubResource("CircleShape2D_4dp8m")
