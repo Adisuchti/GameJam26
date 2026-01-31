@@ -1,4 +1,4 @@
-[gd_resource type="Resource" format=3 uid="uid://tugqw6641j4w"]
+[gd_resource type="Resource" script_class="mission_list" format=3 uid="uid://tugqw6641j4w"]
 
 [ext_resource type="PackedScene" uid="uid://ci1ixalr7tgcq" path="res://Missions/available_missions/spray_mission.tscn" id="1_p7ic8"]
 
