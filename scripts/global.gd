@@ -1,5 +1,7 @@
 extends Node
 
+# You MUST declare the variable here for other scripts to see it
+var lastCameraSpotted: int = 0
 # DEFINE SIGNALS HERE
 #signal respawn_marble(instance_id)
 #signal released_value(team_id, value)

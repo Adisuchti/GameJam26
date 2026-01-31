@@ -1,0 +1,82 @@
+[gd_scene format=3 uid="uid://cg2mat3hlxosh"]
+
+[ext_resource type="Script" uid="uid://bwbutc6memleh" path="res://scenes/gameloop/camera.gd" id="1_bgk8j"]
+[ext_resource type="Texture2D" uid="uid://6tiq5s7v7kp1" path="res://sprites/character/police/cameras.png" id="1_ktc8d"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_bgk8j"]
+radius = 19.0
+height = 72.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bgk8j"]
+atlas = ExtResource("1_ktc8d")
+region = Rect2(0, 0, 217, 382)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kds1y"]
+atlas = ExtResource("1_ktc8d")
+region = Rect2(217, 0, 217, 382)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fb3hp"]
+atlas = ExtResource("1_ktc8d")
+region = Rect2(434, 0, 217, 382)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_kds1y"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bgk8j")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kds1y")
+}],
+"loop": true,
+"name": &"blinking",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fb3hp")
+}],
+"loop": true,
+"name": &"broken",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bgk8j")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kds1y")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fb3hp")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kds1y")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_fb3hp"]
+radius = 510.06274
+
+[node name="Node2D" type="CharacterBody2D" unique_id=1674744262]
+script = ExtResource("1_bgk8j")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=913964075]
+shape = SubResource("CapsuleShape2D_bgk8j")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=706493306]
+sprite_frames = SubResource("SpriteFrames_kds1y")
+animation = &"idle"
+
+[node name="DetectionArea" type="Area2D" parent="." unique_id=996959598]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionArea" unique_id=106917535]
+shape = SubResource("CircleShape2D_fb3hp")

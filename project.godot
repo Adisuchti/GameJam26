@@ -18,6 +18,7 @@ config/icon="res://assets/icon.svg"
 
 [autoload]
 
+Global="*uid://d24xi2n0ju3g"
 global="*uid://d24xi2n0ju3g"
 globalwind="*uid://dfgowvqh03ry5"
 
