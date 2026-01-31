@@ -7,10 +7,12 @@ extends "res://scenes/gameloop/NPC_movement.gd"
 
 const COOLDOWN_MS = 30000.0
 
-var target_player = null 
+var bubble_scene = load("res://scenes/speech_bubble.tscn")
+
+var target_player = null
 var attack_timer = 0.0
 # New variable to track persistent anger
-var is_aggroed = false 
+var is_aggroed = false
 
 func _ready():
 	super._ready()
@@ -31,6 +33,9 @@ func _physics_process(delta):
 		if (target_player.get("has_mask") == true) or (elapsed < COOLDOWN_MS):
 			is_aggroed = true
 			print("Police spotted mask! AGGRO STARTED.")
+			var bubble = bubble_scene.instantiate()
+			add_child(bubble)
+			bubble.display_text("STOP!")
 
 	# 2. ACT: Chase if aggroed, otherwise Patrol
 	if is_aggroed and target_player != null:
@@ -40,7 +45,7 @@ func _physics_process(delta):
 
 func perform_chase_and_attack_logic(delta):
 	var distance_to_player = global_position.distance_to(target_player.global_position)
-
+	
 	# --- ATTACK ---
 	if distance_to_player <= attack_range:
 		velocity = Vector2.ZERO
@@ -55,6 +60,10 @@ func perform_chase_and_attack_logic(delta):
 		if not nav_agent.is_navigation_finished():
 			var next_pos = nav_agent.get_next_path_position()
 			var direction = global_position.direction_to(next_pos)
+			velocity = direction * chase_speed
+			update_animation(direction)
+			
+			$DetectionArea.rotation = direction.angle() - 90
 			velocity = direction * chase_speed
 			update_animation(direction)
 	

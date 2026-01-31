@@ -1,0 +1,19 @@
+[gd_scene format=3 uid="uid://dehronembxvb3"]
+
+[ext_resource type="Script" uid="uid://bggeb6m8oswdl" path="res://scenes/SpeechBubble.gd" id="1_a8ruc"]
+
+[node name="SpeechBubble" type="Node2D" unique_id=962259099]
+script = ExtResource("1_a8ruc")
+
+[node name="PanelContainer" type="PanelContainer" parent="." unique_id=1912989709]
+offset_left = -41.0
+offset_top = -35.0
+offset_right = 42.0
+offset_bottom = -4.0
+
+[node name="label" type="Label" parent="PanelContainer" unique_id=1351218864]
+layout_mode = 2
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Marker2D" type="Marker2D" parent="." unique_id=195170252]

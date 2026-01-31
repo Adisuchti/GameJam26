@@ -66,6 +66,28 @@ animations = [{
 [sub_resource type="CircleShape2D" id="CircleShape2D_fb3hp"]
 radius = 510.06274
 
+[sub_resource type="GDScript" id="GDScript_bgk8j"]
+script/source = "@tool # This makes it update inside the editor
+extends Polygon2D
+
+@export var radius: float = 5000.0
+@export var vertices: int = 32 # Higher number = smoother circle
+
+func _ready():
+	draw_circle_polygon()
+
+func draw_circle_polygon():
+	var points = PackedVector2Array()
+	for i in range(vertices):
+		# Calculate the angle for each point in radians
+		var angle = i * TAU / vertices
+		var x = cos(angle) * radius
+		var y = sin(angle) * radius
+		points.append(Vector2(x, y))
+	
+	self.polygon = points
+"
+
 [node name="Node2D" type="CharacterBody2D" unique_id=1674744262]
 script = ExtResource("1_bgk8j")
 
@@ -80,3 +102,10 @@ animation = &"idle"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionArea" unique_id=106917535]
 shape = SubResource("CircleShape2D_fb3hp")
+
+[node name="Polygon2D" type="Polygon2D" parent="." unique_id=109491282]
+position = Vector2(-2.3841858e-07, -2.3841858e-07)
+scale = Vector2(0.10283673, 0.10283673)
+color = Color(18.892157, 0, 0, 0.21568628)
+polygon = PackedVector2Array(5000, 0, 4903.9263, 975.4516, 4619.3975, 1913.4171, 4157.348, 2777.851, 3535.534, 3535.534, 2777.851, 4157.348, 1913.4171, 4619.3975, 975.4516, 4903.9263, 3.061516e-13, 5000, -975.4516, 4903.9263, -1913.4171, 4619.3975, -2777.851, 4157.348, -3535.534, 3535.534, -4157.348, 2777.851, -4619.3975, 1913.4171, -4903.9263, 975.4516, -5000, 6.123032e-13, -4903.9263, -975.4516, -4619.3975, -1913.4171, -4157.348, -2777.851, -3535.534, -3535.534, -2777.851, -4157.348, -1913.4171, -4619.3975, -975.4516, -4903.9263, -9.184548e-13, -5000, 975.4516, -4903.9263, 1913.4171, -4619.3975, 2777.851, -4157.348, 3535.534, -3535.534, 4157.348, -2777.851, 4619.3975, -1913.4171, 4903.9263, -975.4516)
+script = SubResource("GDScript_bgk8j")
