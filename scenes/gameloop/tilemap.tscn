@@ -306,6 +306,7 @@ active = true
 
 [node name="iceMan" parent="Ice" unique_id=1965744311 instance=ExtResource("4_oi645")]
 position = Vector2(3908, 1053)
+active = true
 
 [node name="Marker2D" type="Marker2D" parent="Ice" unique_id=24865077]
 position = Vector2(3641, 951)
