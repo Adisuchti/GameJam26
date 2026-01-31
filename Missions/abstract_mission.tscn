@@ -1,0 +1,24 @@
+[gd_scene format=3 uid="uid://c1gmbi20sna26"]
+
+[ext_resource type="Script" uid="uid://41p8bjed1hgx" path="res://Missions/abstract_mission.gd" id="1_5vvoh"]
+[ext_resource type="Texture2D" uid="uid://fi5kl26hdof3" path="res://addons/plenticons/icons/64x-hidpi/2d/hexagon-yellow.png" id="2_navow"]
+[ext_resource type="Texture2D" uid="uid://cpf3i2li7cnro" path="res://addons/plenticons/icons/64x-hidpi/symbols/exclamation-mark-yellow.png" id="3_05rtn"]
+[ext_resource type="Texture2D" uid="uid://bv7864irq7hmr" path="res://addons/plenticons/icons/64x-hidpi/2d/double-chevron-right-yellow.png" id="3_emnyh"]
+
+[node name="AbstractMission" type="Node2D" unique_id=788571627]
+z_index = 2
+script = ExtResource("1_5vvoh")
+
+[node name="InteractMarker" type="Sprite2D" parent="." unique_id=1978868090]
+texture = ExtResource("2_navow")
+
+[node name="Sprite2D" type="Sprite2D" parent="InteractMarker" unique_id=846952740]
+scale = Vector2(0.515, 0.5)
+texture = ExtResource("3_05rtn")
+
+[node name="MarkerObject" type="Node2D" parent="." unique_id=60491378]
+
+[node name="MissionMarker" type="Sprite2D" parent="MarkerObject" unique_id=1276076596]
+rotation = 1.5707964
+scale = Vector2(0.8, 0.8)
+texture = ExtResource("3_emnyh")
