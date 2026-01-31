@@ -3,6 +3,10 @@
 [ext_resource type="Texture2D" uid="uid://c0u4hf04n126d" path="res://sprites/character/police/policeMan.png" id="1_2jqxw"]
 [ext_resource type="Script" uid="uid://dphrjnw1nrstn" path="res://scenes/gameloop/NPC_movement.gd" id="1_4dp8m"]
 
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_4dp8m"]
+radius = 46.0
+height = 136.0
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_4dp8m"]
 atlas = ExtResource("1_2jqxw")
 region = Rect2(0, 0, 128, 139)
@@ -271,6 +275,7 @@ animations = [{
 script = ExtResource("1_4dp8m")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=886751667]
+shape = SubResource("CapsuleShape2D_4dp8m")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1282932955]
 sprite_frames = SubResource("SpriteFrames_1mt6n")
