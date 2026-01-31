@@ -1,0 +1,22 @@
+[gd_scene format=3 uid="uid://coedkdyf8sqbd"]
+
+[ext_resource type="PackedScene" uid="uid://b5i6f2ebusnkj" path="res://scenes/gameloop/ingameUI/ingame_iu.tscn" id="1_mgpub"]
+[ext_resource type="PackedScene" uid="uid://c5aggcikkjnf4" path="res://scenes/gameloop/tilemap.tscn" id="2_h3l1r"]
+[ext_resource type="Shader" uid="uid://70g58ghv8q1h" path="res://scenes/gameloop/ingameUI/ingame_iu.gdshader" id="3_7fyfm"]
+[ext_resource type="Texture2D" uid="uid://dfe5g6jrf8wcd" path="res://sprites/ui/vignette.png" id="4_4a24n"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_5u7iv"]
+shader = ExtResource("3_7fyfm")
+shader_parameter/alpha_percent = 0.32400001539
+
+[node name="Game" type="Node2D" unique_id=1828080213]
+
+[node name="ingameIU" parent="." unique_id=1906887442 instance=ExtResource("1_mgpub")]
+
+[node name="Tilemap" parent="." unique_id=1369200881 instance=ExtResource("2_h3l1r")]
+
+[node name="Vignette" type="Sprite2D" parent="." unique_id=1394481620]
+material = SubResource("ShaderMaterial_5u7iv")
+position = Vector2(446.00003, 323.50006)
+scale = Vector2(0.8730468, 1.2018518)
+texture = ExtResource("4_4a24n")

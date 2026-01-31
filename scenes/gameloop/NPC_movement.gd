@@ -4,7 +4,7 @@ extends CharacterBody2D
 # 1. Add a NavigationAgent2D node to your NPC scene and link it here
 @onready var nav_agent: NavigationAgent2D = $NavigationAgent2D
 
-@export var speed = 200
+@export var speed = 100
 @export var waypoints: Array[Marker2D] = [] 
 @export var active: bool = false 
 

@@ -1,3 +1,24 @@
 [gd_scene format=3 uid="uid://bnf3rnjlkmnii"]
 
+[ext_resource type="Script" uid="uid://c87xndjahdkjm" path="res://scripts/mainpage.gd" id="1_m1fh4"]
+
 [node name="mainpage" type="Node2D" unique_id=1073345706]
+script = ExtResource("1_m1fh4")
+
+[node name="Play" type="Button" parent="." unique_id=543999438]
+offset_left = 381.0
+offset_top = 226.0
+offset_right = 815.0
+offset_bottom = 389.0
+text = "Play
+(or regret it)"
+
+[node name="Quit" type="Button" parent="." unique_id=1901476647]
+offset_left = 45.0
+offset_top = 560.0
+offset_right = 175.0
+offset_bottom = 616.0
+text = "Quit"
+
+[connection signal="pressed" from="Play" to="." method="_on_play_pressed"]
+[connection signal="pressed" from="Quit" to="." method="_on_quit_pressed"]
