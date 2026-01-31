@@ -1,0 +1,9 @@
+[gd_scene format=3 uid="uid://bxqs7ogaji7kw"]
+
+[ext_resource type="Texture2D" uid="uid://cvt7f6pl3swt1" path="res://addons/plenticons/icons/64x-hidpi/symbols/crosshair-red.png" id="1_p32fg"]
+
+[node name="TargetSpawner" type="Node2D" unique_id=1334500602 groups=["TargetSpawner"]]
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=608159104]
+z_index = 99
+texture = ExtResource("1_p32fg")

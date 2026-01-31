@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://c4fpwwruf0xsr"]
 
-[ext_resource type="Texture2D" uid="uid://dbjas35ffenfn" path="res://addons/plenticons/icons/64x-hidpi/2d/circle-green.png" id="1_m20cv"]
+[ext_resource type="Texture2D" uid="uid://bw188jsma2osy" path="res://addons/plenticons/icons/64x-hidpi/symbols/crosshair-green.png" id="1_m20cv"]
 
 [node name="MissionSpawner" type="Node2D" unique_id=1334500602 groups=["MissionSpawner"]]
 
