@@ -1,0 +1,29 @@
+[gd_scene format=3 uid="uid://ci1ixalr7tgcq"]
+
+[ext_resource type="Texture2D" uid="uid://fi5kl26hdof3" path="res://addons/plenticons/icons/64x-hidpi/2d/hexagon-yellow.png" id="1_81m5i"]
+[ext_resource type="Script" uid="uid://bh86w32mj8dvy" path="res://Missions/available_missions/spray_mission.gd" id="1_e6446"]
+[ext_resource type="Texture2D" uid="uid://cpf3i2li7cnro" path="res://addons/plenticons/icons/64x-hidpi/symbols/exclamation-mark-yellow.png" id="2_e6446"]
+[ext_resource type="PackedScene" uid="uid://bgiy35f1shwms" path="res://Missions/Targets/Spray.tscn" id="2_uu2kl"]
+[ext_resource type="Texture2D" uid="uid://bv7864irq7hmr" path="res://addons/plenticons/icons/64x-hidpi/2d/double-chevron-right-yellow.png" id="3_uu2kl"]
+
+[node name="SprayMission" type="Node2D" unique_id=1331378699]
+script = ExtResource("1_e6446")
+mission = ExtResource("2_uu2kl")
+
+[node name="InteractionMarker" type="Sprite2D" parent="." unique_id=1615920659]
+z_index = 99
+texture = ExtResource("1_81m5i")
+
+[node name="Sprite2D" type="Sprite2D" parent="InteractionMarker" unique_id=773929420]
+z_index = 99
+scale = Vector2(0.515, 0.5)
+texture = ExtResource("2_e6446")
+
+[node name="MarkerObject" type="Node2D" parent="." unique_id=414174709]
+z_index = 99
+
+[node name="MissionMarker" type="Sprite2D" parent="MarkerObject" unique_id=1009764946]
+z_index = 99
+rotation = 1.5707964
+scale = Vector2(0.8, 0.8)
+texture = ExtResource("3_uu2kl")
