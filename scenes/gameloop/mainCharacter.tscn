@@ -1,7 +1,14 @@
 [gd_scene format=3 uid="uid://11os60r36ysk"]
 
 [ext_resource type="Script" uid="uid://b04yqha13xys4" path="res://main_character_movement.gd" id="1_s28po"]
+[ext_resource type="Shader" uid="uid://bslj24yq1avlf" path="res://scenes/gameloop/ingameUI/facecam.gdshader" id="1_wgyqw"]
 [ext_resource type="Texture2D" uid="uid://ultljvsx6lhf" path="res://sprites/character/protag/protag.png" id="2_h0ik5"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_vhs7y"]
+shader = ExtResource("1_wgyqw")
+shader_parameter/chroma_key_color = Color(0.03529412, 0.20392157, 0.03529412, 1)
+shader_parameter/pickup_range = 1.0
+shader_parameter/fade_amount = 0.810000038475
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_h0ik5"]
 radius = 24.0
@@ -395,14 +402,17 @@ animations = [{
 }]
 
 [node name="Character" type="CharacterBody2D" unique_id=930760806]
+material = SubResource("ShaderMaterial_vhs7y")
 position = Vector2(553, 279)
 script = ExtResource("1_s28po")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=479010126]
+position = Vector2(-121, 0)
 shape = SubResource("CapsuleShape2D_h0ik5")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1800875661]
+position = Vector2(-121, 0)
 sprite_frames = SubResource("SpriteFrames_rapj0")
-animation = &"both_walk_left"
+animation = &"both_walk_right"
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=955898391]

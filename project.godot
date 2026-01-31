@@ -18,8 +18,8 @@ config/icon="res://assets/icon.svg"
 
 [autoload]
 
-global="*uid://d24xi2n0ju3g"
 Global="*uid://d24xi2n0ju3g"
+global="*uid://d24xi2n0ju3g"
 globalwind="*uid://dfgowvqh03ry5"
 MissionControl="*uid://c7xd5jm4r4efu"
 

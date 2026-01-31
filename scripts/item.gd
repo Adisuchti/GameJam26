@@ -8,12 +8,12 @@ extends Node2D
 @export var item_sprite: Sprite2D  # assign any Sprite2D in the Inspector
 
 # Hover parameters
-@export var hover_amplitude: float = 35.0   # pixels up/down
+@export var hover_amplitude: float = 16.0   # pixels up/down
 @export var hover_speed: float = 2.0        # how fast it hovers
 
 # Throw physics
-@export var gravity: float = 500.0          # pixels/sec^2
-@export var land_offset_x: float = 600.0    # horizontal distance to land
+@export var gravity: float = 50.0          # pixels/sec^2
+@export var land_offset_x: float = 60.0    # horizontal distance to land
 
 var original_pos: Vector2
 var hover_timer: float = 0.0
@@ -29,6 +29,7 @@ func _ready() -> void:
 		return
 	original_pos = item_sprite.position
 	item_sprite.visible = false  # start hidden
+	throw_item()
 
 func _process(delta: float) -> void:
 	if item_sprite == null:
@@ -75,7 +76,7 @@ func hide_item() -> void:
 # THROW FUNCTION
 # ========================
 
-func throw_item(force: Vector2 = Vector2(500, -300)) -> void:
+func throw_item(force: Vector2 = Vector2(50, -30)) -> void:
 	if item_sprite == null:
 		return
 	item_sprite.visible = true
