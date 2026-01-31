@@ -4,8 +4,8 @@
 [ext_resource type="Texture2D" uid="uid://ultljvsx6lhf" path="res://sprites/character/protag/protag.png" id="2_h0ik5"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_h0ik5"]
-radius = 17.0
-height = 42.0
+radius = 24.0
+height = 74.0
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_gtpqm"]
 atlas = ExtResource("2_h0ik5")
@@ -394,9 +394,6 @@ animations = [{
 "speed": 5.0
 }]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_h0ik5"]
-radius = 34.0
-
 [node name="Character" type="CharacterBody2D" unique_id=930760806]
 position = Vector2(553, 279)
 script = ExtResource("1_s28po")
@@ -407,9 +404,5 @@ shape = SubResource("CapsuleShape2D_h0ik5")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1800875661]
 sprite_frames = SubResource("SpriteFrames_rapj0")
 animation = &"both_walk_left"
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=479010126]
-position = Vector2(0, 32)
-shape = SubResource("CircleShape2D_h0ik5")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=955898391]

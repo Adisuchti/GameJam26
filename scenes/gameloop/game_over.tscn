@@ -1,0 +1,12 @@
+[gd_scene format=3 uid="uid://bfwvie2im4fi3"]
+
+[ext_resource type="Texture2D" uid="uid://dlpw1v5d3uyc5" path="res://sprites/salvadone.png" id="1_ruct0"]
+
+[node name="gameOver" type="Node2D" unique_id=324113374]
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=362551985]
+offset_right = 1152.0
+offset_bottom = 648.0
+texture = ExtResource("1_ruct0")
+expand_mode = 3
+stretch_mode = 3
