@@ -5,35 +5,16 @@ extends Node
 # ========================
 
 @export var player: Node2D
-@export var player_cap: Node2D          # hat on player's head
 @export var dropped_cap_scene: PackedScene
 @export var newspaper_nodes: Array[Node2D] = []
 
-@export var pickup_distance := 20.0     # how close player must be
+@export var pickup_distance := 50.0     # how close player must be
 
 # ========================
 # INTERNAL STATE
 # ========================
 
-var dropped_cap: Node2D = null
-var cap_lost := false
-
-
-# ========================
-# PUBLIC API
-# ========================
-
-func cap_fell_off() -> void:
-	"""
-	Call this when the hat flies off the player
-	"""
-	if cap_lost:
-		return
-
-	cap_lost = true
-	player_cap.visible = false
-
-	_spawn_dropped_cap()
+var cap: Node2D = null
 
 
 # ========================
@@ -41,8 +22,16 @@ func cap_fell_off() -> void:
 # ========================
 
 func _process(_delta: float) -> void:
-	if cap_lost and dropped_cap:
+	if cap:
 		_check_pickup()
+
+func _ready():
+	global.cap_fell_off.connect(_on_cap_fell_off)
+	#await get_tree().process_frame
+	#_spawn_dropped_cap()
+	
+func _on_cap_fell_off():
+	_spawn_dropped_cap()
 
 
 # ========================
@@ -50,22 +39,24 @@ func _process(_delta: float) -> void:
 # ========================
 
 func _spawn_dropped_cap() -> void:
+	if cap:
+		return
 	if dropped_cap_scene == null:
 		push_error("Dropped cap scene not assigned!")
 		return
 
-	dropped_cap = dropped_cap_scene.instantiate()
-	add_child(dropped_cap)
+	#Instantiate
+	cap = dropped_cap_scene.instantiate()
 
-	# Pick random newspaper (or fallback to player)
-	var spawn_pos: Vector2
-	if newspaper_nodes.size() > 0:
-		var paper = newspaper_nodes.pick_random()
-		spawn_pos = paper.global_position
+	# Add to scene
+	get_tree().current_scene.add_child(cap)
+	cap.z_index = 1000
+	
+	# Set position
+	if player:
+		cap.global_position = player.global_position + Vector2(0, -32)
 	else:
-		spawn_pos = player.global_position
-
-	dropped_cap.global_position = spawn_pos
+		cap.global_position = Vector2(1991.0, 739.0)
 
 
 # ========================
@@ -73,7 +64,8 @@ func _spawn_dropped_cap() -> void:
 # ========================
 
 func _check_pickup() -> void:
-	var dist := player.global_position.distance_to(dropped_cap.global_position)
+	var dist = player.global_position.distance_to(cap.global_position + Vector2(150.0, 0))
+	#print(dist)
 
 	if dist <= pickup_distance:
 		_pickup_cap()
@@ -84,10 +76,7 @@ func _check_pickup() -> void:
 # ========================
 
 func _pickup_cap() -> void:
-	cap_lost = false
-
-	if dropped_cap:
-		dropped_cap.queue_free()
-		dropped_cap = null
-
-	player_cap.visible = true
+	if cap:
+		cap.queue_free()
+		cap = null
+		global.cap_picked_up.emit()
