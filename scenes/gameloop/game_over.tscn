@@ -1,8 +1,10 @@
 [gd_scene format=3 uid="uid://bfwvie2im4fi3"]
 
+[ext_resource type="Script" uid="uid://lvdfkh757x6l" path="res://scenes/gameloop/game_over.gd" id="1_0c6he"]
 [ext_resource type="Texture2D" uid="uid://dlpw1v5d3uyc5" path="res://sprites/salvadone.png" id="1_ruct0"]
 
 [node name="gameOver" type="Node2D" unique_id=324113374]
+script = ExtResource("1_0c6he")
 
 [node name="TextureRect" type="TextureRect" parent="." unique_id=362551985]
 offset_right = 1152.0
@@ -10,3 +12,21 @@ offset_bottom = 648.0
 texture = ExtResource("1_ruct0")
 expand_mode = 3
 stretch_mode = 3
+
+[node name="Play" type="Button" parent="." unique_id=1685987291]
+offset_left = 381.0
+offset_top = 427.0
+offset_right = 815.0
+offset_bottom = 590.0
+text = "Play again
+(or regret it)"
+
+[node name="Quit" type="Button" parent="." unique_id=1463617198]
+offset_left = 45.0
+offset_top = 560.0
+offset_right = 175.0
+offset_bottom = 616.0
+text = "Quit"
+
+[connection signal="pressed" from="Play" to="." method="_on_play_pressed"]
+[connection signal="pressed" from="Quit" to="." method="_on_quit_pressed"]

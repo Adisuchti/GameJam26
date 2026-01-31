@@ -5,6 +5,8 @@ extends "res://scenes/gameloop/NPC_movement.gd"
 @export var attack_damage = 10
 @export var attack_cooldown = 0.5
 
+const COOLDOWN_MS = 30000.0
+
 var target_player = null 
 var attack_timer = 0.0
 # New variable to track persistent anger
@@ -19,11 +21,14 @@ func _ready():
 
 func _physics_process(delta):
 	attack_timer += delta
-
+	
+	var current_time = Time.get_ticks_msec()
+	var elapsed = current_time - Global.lastCameraSpotted
+	
 	# 1. DECIDE: Check for Mask Trigger
 	# If we have a target and they put on a mask, we get angry permanently
 	if target_player != null and not is_aggroed:
-		if target_player.get("has_mask") == true:
+		if (target_player.get("has_mask") == true) or (elapsed < COOLDOWN_MS):
 			is_aggroed = true
 			print("Police spotted mask! AGGRO STARTED.")
 

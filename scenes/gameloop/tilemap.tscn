@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://11os60r36ysk" path="res://scenes/gameloop/mainCharacter.tscn" id="2_63d22"]
 [ext_resource type="TileSet" uid="uid://cd18jn0w7ohjm" path="res://sprites/map/City.tres" id="2_gxxa4"]
-[ext_resource type="PackedScene" uid="uid://dcmy5lgb2xxx2" path="res://scenes/gameloop/policeMan.tscn" id="3_63d22"]
+[ext_resource type="PackedScene" uid="uid://dcmy5lgb2xxx2" path="res://scenes/gameloop/policeMan.tscn" id="3_13dkx"]
 [ext_resource type="PackedScene" uid="uid://b5i6f2ebusnkj" path="res://scenes/gameloop/ingameUI/ingame_iu.tscn" id="3_63d22"]
 [ext_resource type="PackedScene" uid="uid://56e6u2f1pafl" path="res://scenes/gameloop/ice_man.tscn" id="4_oi645"]
 [ext_resource type="PackedScene" uid="uid://cg2mat3hlxosh" path="res://scenes/gameloop/camera.tscn" id="5_37rvb"]
@@ -194,7 +194,7 @@ shader_parameter/distort_intensity = 0.0
 shader_parameter/noise_opacity = 0.0
 shader_parameter/noise_speed = 0.0
 shader_parameter/static_noise_intensity = 0.0
-shader_parameter/aberration = 0.010000047974999982
+shader_parameter/aberration = 0.01000004797499998
 shader_parameter/brightness = 1.4
 shader_parameter/discolor = true
 shader_parameter/warp_amount = 0.030000001425
@@ -269,34 +269,10 @@ z_index = 1
 position = Vector2(1991, 771)
 scale = Vector2(0.75, 0.75)
 
-[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=550270837]
-
-[node name="ingameIU" parent="CanvasLayer" unique_id=1906887442 instance=ExtResource("3_63d22")]
-z_index = 4096
-
-[node name="PostProcess" type="CanvasLayer" parent="." unique_id=1049298825]
-
-[node name="ColorRect" type="ColorRect" parent="PostProcess" unique_id=1627708519]
-material = SubResource("ShaderMaterial_oi645")
-offset_right = 1152.0
-offset_bottom = 648.0
-
 [node name="Police" type="Node" parent="." unique_id=1551040706]
 process_mode = 3
 physics_interpolation_mode = 1
 auto_translate_mode = 1
-
-[node name="PoliceMan" parent="Police" unique_id=1605622894 node_paths=PackedStringArray("waypoints") instance=ExtResource("3_63d22")]
-z_index = 1
-position = Vector2(3886, 3482)
-waypoints = [NodePath("../Marker2D"), NodePath("../Marker2D2"), NodePath("../Marker2D3"), NodePath("../Marker2D4")]
-active = true
-
-[node name="PoliceMan2" parent="Police" unique_id=1737102801 node_paths=PackedStringArray("waypoints") instance=ExtResource("3_63d22")]
-z_index = 1
-position = Vector2(1987, 2067)
-waypoints = [NodePath("../Marker2D5"), NodePath("../Marker2D6")]
-active = true
 
 [node name="Marker2D" type="Marker2D" parent="Police" unique_id=1285327064]
 position = Vector2(3875, 3484)
@@ -316,10 +292,23 @@ position = Vector2(2506, 626)
 [node name="Marker2D6" type="Marker2D" parent="Police" unique_id=1392358107]
 position = Vector2(2483, 3440)
 
+[node name="PoliceMan" parent="Police" unique_id=1605622894 node_paths=PackedStringArray("waypoints") instance=ExtResource("3_13dkx")]
+position = Vector2(2450, 542)
+waypoints = [NodePath("../Marker2D5"), NodePath("../Marker2D6")]
+active = true
+
+[node name="PoliceMan2" parent="Police" unique_id=949773939 node_paths=PackedStringArray("waypoints") instance=ExtResource("3_13dkx")]
+position = Vector2(4028, 3469)
+waypoints = [NodePath("../Marker2D2"), NodePath("../Marker2D3"), NodePath("../Marker2D4"), NodePath("../Marker2D")]
+active = true
+
 [node name="Ice" type="Node" parent="." unique_id=390293031]
 
 [node name="iceMan" parent="Ice" unique_id=1965744311 instance=ExtResource("4_oi645")]
 position = Vector2(3908, 1053)
+
+[node name="Marker2D" type="Marker2D" parent="Ice" unique_id=24865077]
+position = Vector2(3641, 951)
 
 [node name="Node" type="Node" parent="." unique_id=1125253834]
 
@@ -328,3 +317,15 @@ position = Vector2(5797, 3003)
 
 [node name="camera2" parent="Node" unique_id=2113523910 instance=ExtResource("5_37rvb")]
 position = Vector2(1770, 1547)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=550270837]
+
+[node name="ingameIU" parent="CanvasLayer" unique_id=1906887442 instance=ExtResource("3_63d22")]
+z_index = 4096
+
+[node name="PostProcess" type="CanvasLayer" parent="." unique_id=1049298825]
+
+[node name="ColorRect" type="ColorRect" parent="PostProcess" unique_id=1627708519]
+material = SubResource("ShaderMaterial_oi645")
+offset_right = 1152.0
+offset_bottom = 648.0
