@@ -48,15 +48,12 @@ func _physics_process(delta):
 		
 	move_and_slide()
 
-	# --- INSERT THIS BLOCK ---
-	# 1. Get the navigation map ID for the current world
 	var map = get_world_2d().get_navigation_map()
-	
-	# 2. Ask the server for the closest "legal" point on the navigation mesh
 	var valid_pos = NavigationServer2D.map_get_closest_point(map, global_position)
 	
-	# 3. Snap the player to that valid point (preventing them from walking off)
-	global_position = valid_pos
+	# Only snap if valid_pos isn't exactly zero (unless your road is actually at 0,0)
+	if valid_pos != Vector2.ZERO:
+		global_position = valid_pos
 	
 # New helper function for your test toggles
 func _input(event):
