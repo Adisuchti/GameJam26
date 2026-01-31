@@ -3,8 +3,9 @@ extends CharacterBody2D
 @onready var anim_sprite: AnimatedSprite2D = $AnimatedSprite2D
 @export var speed = 400
 
-@export var max_health = 100
-var current_health = 100
+@export var max_health = 1
+var current_health = 1
+var is_dead = false
 
 # Equipment toggles
 @export var has_mask: bool = false
@@ -21,6 +22,9 @@ func _ready():
 	current_health = max_health # Initialize health
 
 func _physics_process(delta):
+	if is_dead:
+		return
+	
 	# 1. Handle Movement
 	var input_direction = Input.get_vector("MoveLeft", "MoveRight", "MoveUp", "MoveDown")
 	velocity = input_direction * speed
@@ -73,8 +77,24 @@ func take_damage(amount):
 		die()
 
 func die():
+	if is_dead: return # Prevent die() from running multiple times
+	is_dead = true
+	
 	print("Player has died!")
-	# TODO game over screen or something
+	
+	# 1. Turn the sprite 90 degrees (falling over)
+	anim_sprite.rotation_degrees = 90 
+	
+	# 2. Apply a red tint (Minecraft style)
+	# modulate affects the color of the sprite; (1, 0, 0) is pure red
+	anim_sprite.modulate = Color(1, 0.4, 0.4) 
+	
+	# 3. Wait a moment before switching scenes (optional but feels better)
+	await get_tree().create_timer(1.0).timeout
+	
+	# 4. Switch to the Game Over scene
+	# Replace "res://GameOver.tscn" with the actual path to your scene
+	get_tree().change_scene_to_file("res://scenes/gameloop/game_over.tscn")
 
 func update_animation(direction: Vector2):
 	var angle = direction.angle()

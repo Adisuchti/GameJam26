@@ -408,7 +408,7 @@ shape = SubResource("CapsuleShape2D_h0ik5")
 sprite_frames = SubResource("SpriteFrames_rapj0")
 animation = &"both_walk_left"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=479010126]
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="." unique_id=222554863]
 position = Vector2(0, 32)
 shape = SubResource("CircleShape2D_h0ik5")
 
