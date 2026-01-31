@@ -2,12 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cm56mtk8c4qj3"
-valid=false
+uid="uid://1a054kf20mjc"
+path="res://.godot/imported/newspaper.png-aab25bbc04578f17f233817a975bc5c8.ctex"
+metadata={
+"vram_texture": false
+}
 
 [deps]
 
-source_file="res://sprites/newspaper.jpg"
+source_file="res://sprites/items/newspaper.png"
+dest_files=["res://.godot/imported/newspaper.png-aab25bbc04578f17f233817a975bc5c8.ctex"]
 
 [params]
 

@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://c7g8c3ctwpjg"]
+
+[ext_resource type="Texture2D" uid="uid://1a054kf20mjc" path="res://sprites/items/newspaper.png" id="1_fhc2x"]
+
+[node name="Newsletter" type="Node2D" unique_id=2059132962]
+
+[node name="Newspaper" type="Sprite2D" parent="." unique_id=582663021]
+texture = ExtResource("1_fhc2x")

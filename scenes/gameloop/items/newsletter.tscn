@@ -1,0 +1,12 @@
+[gd_scene format=3 uid="uid://25r54ucq3b18"]
+
+[ext_resource type="Script" uid="uid://cjosnrjpdm11w" path="res://scripts/item.gd" id="1_tiyhg"]
+[ext_resource type="Texture2D" uid="uid://1a054kf20mjc" path="res://sprites/items/newspaper.png" id="2_ga80g"]
+
+[node name="Newsletter" type="Node2D" unique_id=2142553142 node_paths=PackedStringArray("item_sprite")]
+script = ExtResource("1_tiyhg")
+item_sprite = NodePath("Newspaper")
+
+[node name="Newspaper" type="Sprite2D" parent="." unique_id=995656146]
+scale = Vector2(0.1, 0.1)
+texture = ExtResource("2_ga80g")

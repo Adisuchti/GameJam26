@@ -1,0 +1,12 @@
+[gd_scene format=3 uid="uid://cyyi6wgw6woo4"]
+
+[ext_resource type="Script" uid="uid://cjosnrjpdm11w" path="res://scripts/item.gd" id="1_wihxt"]
+[ext_resource type="Texture2D" uid="uid://c87p5fdctheac" path="res://sprites/items/cap.png" id="2_6mdlr"]
+
+[node name="Cap" type="Node2D" unique_id=1944586297 node_paths=PackedStringArray("item_sprite")]
+script = ExtResource("1_wihxt")
+item_sprite = NodePath("Cap")
+
+[node name="Cap" type="Sprite2D" parent="." unique_id=655991447]
+scale = Vector2(0.1, 0.1)
+texture = ExtResource("2_6mdlr")
