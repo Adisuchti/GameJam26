@@ -1,0 +1,9 @@
+[gd_scene format=3 uid="uid://bpu25jp3c2u1j"]
+
+[ext_resource type="Texture2D" uid="uid://dhbyrfxj8h108" path="res://sprites/ui/temp_ui_map.png" id="1_30p1v"]
+
+[node name="Minimap" type="Node2D" unique_id=113448912]
+
+[node name="TempUiMap" type="Sprite2D" parent="." unique_id=1736812210]
+scale = Vector2(0.185, 0.185)
+texture = ExtResource("1_30p1v")

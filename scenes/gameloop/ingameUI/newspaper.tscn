@@ -1,0 +1,95 @@
+[gd_scene format=3 uid="uid://bmoo5ympo8g7m"]
+
+[ext_resource type="Texture2D" uid="uid://3qywm10fxw37" path="res://sprites/newspaper.png" id="1_qtysi"]
+[ext_resource type="FontFile" uid="uid://bkec2pue1apws" path="res://sprites/ui/pixelated-elegance-font/PixelatedEleganceRegular-ovyAA.ttf" id="2_y7042"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_cefmg"]
+line_spacing = 0.16
+font = ExtResource("2_y7042")
+font_size = 10
+font_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_egmcf"]
+font = ExtResource("2_y7042")
+font_size = 41
+font_color = Color(0, 0, 0, 1)
+
+[node name="Newspaper" type="Node2D" unique_id=1958823397]
+
+[node name="Newspaper" type="Sprite2D" parent="." unique_id=726717171]
+texture = ExtResource("1_qtysi")
+
+[node name="ColorRect" type="ColorRect" parent="Newspaper" unique_id=878068891]
+offset_left = 22.0
+offset_top = -182.0
+offset_right = 123.0
+offset_bottom = -134.0
+color = Color(0.90588236, 0.85490197, 0.7372549, 1)
+
+[node name="ColorRect2" type="ColorRect" parent="Newspaper" unique_id=1733728521]
+offset_left = -63.0
+offset_top = -112.0
+offset_right = 20.0
+offset_bottom = -70.0
+color = Color(0.90588236, 0.85490197, 0.7372549, 1)
+
+[node name="ColorRect3" type="ColorRect" parent="Newspaper" unique_id=635390929]
+offset_left = -124.0
+offset_top = -70.0
+offset_right = 19.0
+offset_bottom = 169.0
+color = Color(0.90588236, 0.85490197, 0.7372549, 1)
+
+[node name="ColorRect4" type="ColorRect" parent="Newspaper" unique_id=1641155692]
+offset_left = 22.0
+offset_top = -112.0
+offset_right = 124.0
+offset_bottom = -84.0
+color = Color(0.90588236, 0.85490197, 0.7372549, 1)
+
+[node name="ColorRect5" type="ColorRect" parent="Newspaper" unique_id=1086651963]
+offset_top = -28.0
+offset_right = 123.0
+offset_bottom = 52.0
+color = Color(0.90588236, 0.85490197, 0.7372549, 1)
+
+[node name="ColorRect6" type="ColorRect" parent="Newspaper" unique_id=760388290]
+offset_left = 1.0
+offset_top = 108.0
+offset_right = 123.0
+offset_bottom = 169.0
+color = Color(0.90588236, 0.85490197, 0.7372549, 1)
+
+[node name="ColorRect7" type="ColorRect" parent="Newspaper" unique_id=25418106]
+offset_left = -123.0
+offset_top = -113.0
+offset_right = 123.0
+offset_bottom = 164.0
+color = Color(0.90588236, 0.85490197, 0.7372549, 1)
+
+[node name="ColorRect8" type="ColorRect" parent="Newspaper" unique_id=523676014]
+offset_left = -124.0
+offset_top = -188.0
+offset_right = 112.0
+offset_bottom = -135.0
+color = Color(0.90588236, 0.85490197, 0.7372549, 1)
+
+[node name="Text" type="Label" parent="Newspaper" unique_id=1537673489]
+offset_left = -123.0
+offset_top = -111.0
+offset_right = 121.0
+offset_bottom = 169.0
+text = "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean "
+label_settings = SubResource("LabelSettings_cefmg")
+autowrap_mode = 2
+clip_text = true
+
+[node name="Title" type="Label" parent="Newspaper" unique_id=1398018669]
+offset_left = -118.0
+offset_top = -175.0
+offset_right = 97.0
+offset_bottom = -135.0
+text = "News"
+label_settings = SubResource("LabelSettings_egmcf")
+autowrap_mode = 2
+clip_text = true

@@ -1,0 +1,48 @@
+[gd_scene format=3 uid="uid://b5i6f2ebusnkj"]
+
+[ext_resource type="Texture2D" uid="uid://oct07keab2xc" path="res://sprites/ui/iron2.png" id="1_skb31"]
+[ext_resource type="PackedScene" uid="uid://dqqvxej24p1i3" path="res://scenes/gameloop/ingameUI/facecam.tscn" id="3_evgre"]
+[ext_resource type="Texture2D" uid="uid://dfe5g6jrf8wcd" path="res://sprites/ui/vignette.png" id="4_s1pl0"]
+[ext_resource type="Texture2D" uid="uid://dg5d4p6hktcts" path="res://sprites/ui/vignette2.png" id="5_skb31"]
+[ext_resource type="PackedScene" uid="uid://bpu25jp3c2u1j" path="res://scenes/gameloop/ingameUI/minimap.tscn" id="6_rlcvn"]
+
+[node name="ingameIU" type="Node2D" unique_id=1906887442]
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=977715543]
+offset_left = 637.0
+offset_top = 2.0
+offset_right = 1661.0
+offset_bottom = 1285.0189
+scale = Vector2(0.505, 0.505)
+texture = ExtResource("1_skb31")
+stretch_mode = 1
+flip_h = true
+
+[node name="Minimap" parent="." unique_id=113448912 instance=ExtResource("6_rlcvn")]
+position = Vector2(766, 131)
+scale = Vector2(1.145, 1.145)
+
+[node name="facecam_mothernode" type="Node" parent="." unique_id=1581497675]
+
+[node name="Facecam" parent="facecam_mothernode" unique_id=73801167 instance=ExtResource("3_evgre")]
+position = Vector2(765, 520)
+
+[node name="Vignette" type="Sprite2D" parent="facecam_mothernode" unique_id=943685005]
+position = Vector2(764.5, 520)
+scale = Vector2(0.17480469, 0.32962963)
+texture = ExtResource("4_s1pl0")
+
+[node name="Vignette2" type="Sprite2D" parent="facecam_mothernode" unique_id=493473060]
+position = Vector2(766.125, 520.37506)
+scale = Vector2(0.09388021, 0.12690976)
+texture = ExtResource("5_skb31")
+
+[node name="Vignette2" type="Sprite2D" parent="." unique_id=1235291274]
+position = Vector2(766.375, 130.87498)
+scale = Vector2(0.09414063, 0.12621526)
+texture = ExtResource("5_skb31")
+
+[node name="Vignette" type="Sprite2D" parent="." unique_id=1687577563]
+position = Vector2(768.875, 131.375)
+scale = Vector2(0.17797849, 0.33842593)
+texture = ExtResource("4_s1pl0")
