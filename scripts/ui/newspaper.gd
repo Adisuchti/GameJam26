@@ -6,9 +6,13 @@
 # newspaper.hide_newspaper()
 
 extends Node2D
+class_name newspaper
 
 @onready var text: Label = $Newspaper/Text
 @onready var title: Label = $Newspaper/Title
+
+func _ready() -> void:
+	MissionControl.set_paper(self)
 
 # ========================
 # NEWSPAPER API
