@@ -1,8 +1,6 @@
 [gd_scene format=3 uid="uid://c4roo1maew2b4"]
 
 [ext_resource type="Script" uid="uid://b6rcu1osnoom0" path="res://scripts/startupscene.gd" id="1_60wh5"]
-[ext_resource type="VideoStream" uid="uid://rg428jw2b8tr" path="res://assets/intro.ogv" id="2_qvier"]
-[ext_resource type="VideoStream" uid="uid://bddokvjnpqm2m" path="res://assets/loadingloop.ogv" id="3_7donk"]
 
 [node name="Startup Scene" type="Node2D" unique_id=1316823878]
 script = ExtResource("1_60wh5")
@@ -16,21 +14,16 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
-stream = ExtResource("2_qvier")
-autoplay = true
-
-[node name="LoadIcon" type="VideoStreamPlayer" parent="." unique_id=1894533988]
-offset_left = 1022.0
-offset_top = 526.0
-offset_right = 1350.0
-offset_bottom = 864.0
-scale = Vector2(0.205, 0.205)
-stream = ExtResource("3_7donk")
-autoplay = true
 
 [node name="Timer" type="Timer" parent="." unique_id=425665835]
-wait_time = 3.0
+wait_time = 10.0
 one_shot = true
 autostart = true
 
+[node name="Button" type="Button" parent="Timer" unique_id=1415844044]
+offset_right = 1176.0
+offset_bottom = 679.0
+flat = true
+
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+[connection signal="pressed" from="Timer/Button" to="." method="_on_button_pressed"]

@@ -156,4 +156,7 @@ libraries/ = SubResource("AnimationLibrary_wkv66")
 
 [node name="Spray" type="Sprite2D" parent="." unique_id=1451521719]
 visible = false
+z_index = 99
+y_sort_enabled = true
+scale = Vector2(0.23979592, 0.23979592)
 texture = ExtResource("5_c437p")

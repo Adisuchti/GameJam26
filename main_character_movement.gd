@@ -20,6 +20,23 @@ var last_direction = Vector2.DOWN
 
 func _ready():
 	current_health = max_health # Initialize health
+	
+func _process(delta: float) -> void:
+	#global.mask_lost_forever.connect(_on_mask_lost_forever)
+	#global.mask_restored.connect(_on_mask_restored)
+	if global.cap_lost:
+		has_hat = false
+	if global.mask_down:
+		has_mask = false
+	update_animation(last_direction)
+
+#func _on_mask_restored() -> void:
+	#mask_gone = true
+	#update_animation(last_direction)
+	#
+#func _on_mask_lost_forever() -> void:
+	#mask_gone = false
+	#update_animation(last_direction)
 
 func _physics_process(delta):
 	if is_dead:
@@ -59,11 +76,25 @@ func _physics_process(delta):
 func _input(event):
 	if event is InputEventKey and event.pressed:
 		if event.keycode == KEY_1:
-			has_mask = !has_mask
-			print("Mask toggled: ", has_mask)
+			if !global.mask_down:
+				has_mask = !has_mask
+				if has_mask:
+					global.mask_show.emit()
+				else:
+					global.mask_hide.emit()
+				print("Mask toggled: ", has_mask)
+			else:
+				print("Mask not on hand anymore")
 		if event.keycode == KEY_2:
-			has_hat = !has_hat
-			print("Hat toggled: ", has_hat)
+			if !global.cap_lost:
+				has_hat = !has_hat
+				if has_hat:
+					global.cap_show.emit()
+				else:
+					global.cap_hide.emit()
+				print("Hat toggled: ", has_hat)
+			else:
+				print("Hat not on hand anymore")
 	update_animation(last_direction)
 	
 func take_damage(amount):

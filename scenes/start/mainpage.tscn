@@ -1,24 +1,33 @@
 [gd_scene format=3 uid="uid://bnf3rnjlkmnii"]
 
 [ext_resource type="Script" uid="uid://c87xndjahdkjm" path="res://scripts/mainpage.gd" id="1_m1fh4"]
+[ext_resource type="Texture2D" uid="uid://bd7n0f67wguw4" path="res://assets/Pandemonium.png" id="2_h13qq"]
 
 [node name="mainpage" type="Node2D" unique_id=1073345706]
 script = ExtResource("1_m1fh4")
 
+[node name="TextureRect" type="TextureRect" parent="." unique_id=1868430630]
+z_index = -10
+offset_left = -1.9999998
+offset_top = -10.0
+offset_right = 2718.0
+offset_bottom = 1558.0
+scale = Vector2(0.425, 0.425)
+texture = ExtResource("2_h13qq")
+
 [node name="Play" type="Button" parent="." unique_id=543999438]
-offset_left = 381.0
-offset_top = 226.0
-offset_right = 815.0
-offset_bottom = 389.0
-text = "Play
-(or regret it)"
+offset_left = 405.0
+offset_top = 435.0
+offset_right = 745.0
+offset_bottom = 510.0
+flat = true
 
 [node name="Quit" type="Button" parent="." unique_id=1901476647]
-offset_left = 45.0
-offset_top = 560.0
-offset_right = 175.0
-offset_bottom = 616.0
-text = "Quit"
+offset_left = 485.0
+offset_top = 550.0
+offset_right = 665.0
+offset_bottom = 597.0
+flat = true
 
 [connection signal="pressed" from="Play" to="." method="_on_play_pressed"]
 [connection signal="pressed" from="Quit" to="." method="_on_quit_pressed"]

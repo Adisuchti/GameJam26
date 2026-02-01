@@ -51,9 +51,20 @@ func _physics_process(delta):
 
 func update_animation(direction: Vector2):
 	var angle = direction.angle()
-	# Convert angle to 0-7 index for 8 directions [cite: 1]
 	var direction_index = int(round((angle + PI) / (PI / 4))) % 8
 	
+	# --- NEW: Rotate DetectionArea Logic ---
+	# This ensures it updates during Patrol AND Chase
+	if has_node("DetectionArea"):
+		# direction.angle() assumes 0 is Right.
+		# If your semicircle sprite faces UP in the editor, use "+ PI / 2" (which is +90 degrees).
+		# If it faces RIGHT in the editor, just use "direction.angle()".
+		# If it faces DOWN, use "- PI / 2".
+		
+		# Based on your previous code trying to offset by 90:
+		$DetectionArea.rotation = direction.angle() + deg_to_rad(-90) 
+	# ---------------------------------------
+
 	var anim_name = "front"
 	var should_flip = false
 

@@ -5,6 +5,8 @@ extends "res://scenes/gameloop/NPC_movement.gd"
 @export var attack_damage = 10
 @export var attack_cooldown = 0.5
 
+var bubble_scene = load("res://scenes/speech_bubble.tscn")
+
 var target_player = null 
 var attack_timer = 0.0
 # New variable to track persistent anger
@@ -26,6 +28,9 @@ func _physics_process(delta):
 		if target_player.get("has_hat") != true:
 			is_aggroed = true
 			print("Fire spotted hatless! AGGRO STARTED.")
+			var bubble = bubble_scene.instantiate()
+			add_child(bubble)
+			bubble.display_text("I'LL GET YOU!")
 
 	# 2. ACT: Chase if aggroed, otherwise Patrol
 	if is_aggroed and target_player != null:

@@ -5,5 +5,6 @@
 [node name="TargetSpawner" type="Node2D" unique_id=1334500602 groups=["TargetSpawner"]]
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=608159104]
+visible = false
 z_index = 99
 texture = ExtResource("1_p32fg")
