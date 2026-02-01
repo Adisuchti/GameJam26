@@ -3,7 +3,8 @@ extends abstract_interact
 #the correct frames for newspaper stands are 793 (blue) and 795 (black)
 @onready
 var newspaperstand = $NewspaperStand
-
+@export
+var paper: PackedScene
 
 func _ready() -> void:
 	is_active = true
@@ -11,9 +12,7 @@ func _ready() -> void:
 
 func on_interaction():
 	if is_active:
-		MissionControl.spawn_mission()
-		var news = global.get_random_headline()
-		global.changeNewspaper.emit(news)
+		spawn_paper()
 	else:
 		print("no new missions")
 
@@ -24,3 +23,9 @@ func toggle_active(val: bool):
 	else:
 		newspaperstand.frame = 795
 		is_active = false
+
+func spawn_paper():
+	var m = paper.instantiate()
+	self.add_child(m)
+	m.global_position = self.global_position
+	MissionControl.item_manager.newspaper_nodes.append(m)

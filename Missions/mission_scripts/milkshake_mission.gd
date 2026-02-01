@@ -12,6 +12,7 @@ func on_interaction():
 		hide_markers()
 		spawn_goal()
 
+
 func spawn_goal():
 	var player : Node = get_tree().get_first_node_in_group("Player")
 	if player: print("FOUND PLAYER")
