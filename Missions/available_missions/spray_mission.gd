@@ -12,7 +12,7 @@ func on_interaction():
 		spawn_goal()
 
 func spawn_goal():
-	var spawn_locations : Array[Node] = get_tree().get_nodes_in_group("MissionSpawner")
+	var spawn_locations : Array[Node] = get_tree().get_nodes_in_group("TargetSpawner")
 	if spawn_locations.size() < 1: 
 		print("TARGET ERROR: No available target spawn locations!")
 		return
