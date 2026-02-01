@@ -25,6 +25,7 @@ func toggle_active(val: bool):
 		is_active = false
 
 func spawn_paper():
+	toggle_active(false)
 	var m = paper.instantiate()
 	self.add_child(m)
 	m.global_position = self.global_position
