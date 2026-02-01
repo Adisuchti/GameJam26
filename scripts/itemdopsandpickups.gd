@@ -26,7 +26,7 @@ func _process(_delta: float) -> void:
 	_check_pickup()
 
 func _ready():
-	MissionControl.item_manager = self
+	MissionControl.item_man = self
 	global.cap_fell_off.connect(_on_cap_fell_off)
 	#await get_tree().process_frame
 	#_spawn_dropped_cap()
