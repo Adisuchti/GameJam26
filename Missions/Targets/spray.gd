@@ -12,9 +12,9 @@ func on_interaction():
 		return
 	else:
 		is_active = true
-		goal_achieved.emit()
-		on_completed()
+		goal_achieved.emit(true)
+		on_completed(true)
 
 
-func on_completed():
+func on_completed(val: bool):
 	anim_player.play("Despawn")

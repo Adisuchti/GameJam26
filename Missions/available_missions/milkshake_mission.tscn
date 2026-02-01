@@ -1,0 +1,24 @@
+[gd_scene format=3 uid="uid://cta5k15x0nnph"]
+
+[ext_resource type="Script" uid="uid://bsixev4fvdnfn" path="res://Missions/mission_scripts/milkshake_mission.gd" id="1_842x8"]
+[ext_resource type="Texture2D" uid="uid://cku3r6p2mi4ye" path="res://sprites/items/pixel-art-milkshake.png" id="2_lxtrr"]
+[ext_resource type="PackedScene" uid="uid://cj10ulwdomxgh" path="res://Missions/Targets/Shake.tscn" id="2_veu0g"]
+[ext_resource type="Texture2D" uid="uid://bv7864irq7hmr" path="res://addons/plenticons/icons/64x-hidpi/2d/double-chevron-right-yellow.png" id="3_unrw3"]
+
+[node name="MilkshakeMission" type="Node2D" unique_id=35558315]
+script = ExtResource("1_842x8")
+target = ExtResource("2_veu0g")
+
+[node name="InteractionMarker" type="Sprite2D" parent="." unique_id=1661484637]
+z_index = 99
+scale = Vector2(0.04, 0.04)
+texture = ExtResource("2_lxtrr")
+
+[node name="MarkerObject" type="Node2D" parent="." unique_id=1616510098]
+z_index = 99
+
+[node name="MissionMarker" type="Sprite2D" parent="MarkerObject" unique_id=1551328129]
+z_index = 99
+rotation = 1.5707964
+scale = Vector2(0.8, 0.8)
+texture = ExtResource("3_unrw3")
