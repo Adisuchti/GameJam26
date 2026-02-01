@@ -8,7 +8,7 @@ extends Node
 @export var dropped_cap_scene: PackedScene
 @export var newspaper_nodes: Array[Node2D] = []
 
-@export var pickup_distance := 10.0     # how close player must be
+@export var pickup_distance := 25.0     # how close player must be
 
 # ========================
 # INTERNAL STATE
