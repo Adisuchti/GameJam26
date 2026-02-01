@@ -8,7 +8,7 @@ extends Node
 @export var dropped_cap_scene: PackedScene
 @export var newspaper_nodes: Array[Node2D] = []
 
-@export var pickup_distance := 50.0     # how close player must be
+@export var pickup_distance := 10.0     # how close player must be
 
 # ========================
 # INTERNAL STATE
@@ -22,8 +22,7 @@ var cap: Node2D = null
 # ========================
 
 func _process(_delta: float) -> void:
-	if cap:
-		_check_pickup()
+	_check_pickup()
 
 func _ready():
 	global.cap_fell_off.connect(_on_cap_fell_off)
@@ -64,11 +63,25 @@ func _spawn_dropped_cap() -> void:
 # ========================
 
 func _check_pickup() -> void:
-	var dist = player.global_position.distance_to(cap.global_position + Vector2(150.0, 0))
-	#print(dist)
-
-	if dist <= pickup_distance:
-		_pickup_cap()
+	if cap:
+		var dist = player.global_position.distance_to(cap.global_position + Vector2(52, 0))
+		if dist <= pickup_distance:
+			_pickup_cap()
+# Use a back-to-front loop when removing items from an array while iterating
+	for i in range(newspaper_nodes.size() - 1, -1, -1):
+		var newspaper_node = newspaper_nodes[i]
+		
+		# 1. Check if the node is still valid (not freed)
+		if is_instance_valid(newspaper_node):
+			var newspaper_dist = player.global_position.distance_to(newspaper_node.global_position + Vector2(52, 0))
+			#print(newspaper_dist-pickup_distance)
+			# 2. Only pick up if within distance (you were missing the distance check!)
+			if newspaper_dist <= pickup_distance:
+				_pickup_newsletter(newspaper_node)
+				newspaper_nodes.remove_at(i) # Remove from array so we stop checking it
+		else:
+			# Clean up the array if the node was deleted elsewhere
+			newspaper_nodes.remove_at(i)
 
 
 # ========================
@@ -80,3 +93,8 @@ func _pickup_cap() -> void:
 		cap.queue_free()
 		cap = null
 		global.cap_picked_up.emit()
+		
+
+func _pickup_newsletter(newspaper_node: Node2D) -> void:
+	if is_instance_valid(newspaper_node):
+		newspaper_node.queue_free()

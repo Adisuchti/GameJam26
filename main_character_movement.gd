@@ -1,7 +1,8 @@
 extends CharacterBody2D
 
 @onready var anim_sprite: AnimatedSprite2D = $AnimatedSprite2D
-@export var speed = 400
+@export var speed = 150
+@export var jitter_strength = 4.0    # Max pixels to "twitch" per frame
 
 @export var max_health = 1
 var current_health = 1
@@ -14,6 +15,7 @@ var is_dead = false
 # Variables to track animation timing
 var animation_timer = 0.0
 var use_alt_frame = false
+var frame_counter = 0
 
 # Initializing with Vector2.DOWN (0, 1) so the character faces the screen by default
 var last_direction = Vector2.DOWN
@@ -42,15 +44,24 @@ func _physics_process(delta):
 	if is_dead:
 		return
 	
-	# 1. Handle Movement
 	var input_direction = Input.get_vector("MoveLeft", "MoveRight", "MoveUp", "MoveDown")
 	velocity = input_direction * speed
 	
-	# 2. Handle Animation Logic
 	if input_direction != Vector2.ZERO:
-		animation_timer += delta
+		# --- RHYTHMIC JITTER LOGIC ---
+		frame_counter += 1
 		
-		# Per your request: Change frame every 2 seconds
+		# Only change the offset every 10 frames
+		if frame_counter >= 10:
+			var displacement = Vector2(
+				randf_range(-jitter_strength, jitter_strength),
+				randf_range(-jitter_strength, jitter_strength)
+			)
+			anim_sprite.position = displacement
+			frame_counter = 0 # Reset counter
+		
+		# Animation Timing
+		animation_timer += delta
 		if animation_timer >= 0.2: 
 			animation_timer = 0.0
 			use_alt_frame = not use_alt_frame
@@ -58,17 +69,18 @@ func _physics_process(delta):
 		update_animation(input_direction)
 		last_direction = input_direction
 	else:
-		# Reset to frame 0 (idle) when stopped
+		# Reset when standing still
+		anim_sprite.position = Vector2.ZERO 
+		frame_counter = 0
 		animation_timer = 0.0
 		use_alt_frame = false
-		anim_sprite.frame = 0 # Ensure it stays on the base frame when still
+		anim_sprite.frame = 0 
 		
 	move_and_slide()
 
+	# Navigation Snapping
 	var map = get_world_2d().get_navigation_map()
 	var valid_pos = NavigationServer2D.map_get_closest_point(map, global_position)
-	
-	# Only snap if valid_pos isn't exactly zero (unless your road is actually at 0,0)
 	if valid_pos != Vector2.ZERO:
 		global_position = valid_pos
 	
