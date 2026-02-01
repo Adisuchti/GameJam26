@@ -1,6 +1,7 @@
 [gd_resource type="Resource" script_class="mission_list" format=3 uid="uid://tugqw6641j4w"]
 
-[ext_resource type="PackedScene" uid="uid://ci1ixalr7tgcq" path="res://Missions/available_missions/spray_mission.tscn" id="1_p7ic8"]
+[ext_resource type="PackedScene" uid="uid://cta5k15x0nnph" path="res://Missions/available_missions/milkshake_mission.tscn" id="1_p7ic8"]
+[ext_resource type="PackedScene" uid="uid://ci1ixalr7tgcq" path="res://Missions/available_missions/spray_mission.tscn" id="2_cn374"]
 
 [sub_resource type="GDScript" id="GDScript_pyjiq"]
 script/source = "class_name mission_list
@@ -15,4 +16,4 @@ func get_random_mission() -> PackedScene:
 
 [resource]
 script = SubResource("GDScript_pyjiq")
-list = Array[PackedScene]([ExtResource("1_p7ic8")])
+list = Array[PackedScene]([ExtResource("1_p7ic8"), ExtResource("2_cn374")])

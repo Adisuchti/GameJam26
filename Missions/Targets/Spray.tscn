@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://fi5kl26hdof3" path="res://addons/plenticons/icons/64x-hidpi/2d/hexagon-yellow.png" id="2_c437p"]
 [ext_resource type="Texture2D" uid="uid://dsrombvqerkm8" path="res://addons/plenticons/icons/64x-hidpi/symbols/exclamation-mark-red.png" id="3_c437p"]
 [ext_resource type="Texture2D" uid="uid://b6f8l8770bpli" path="res://addons/plenticons/icons/64x-hidpi/2d/double-chevron-right-red.png" id="4_c437p"]
-[ext_resource type="Texture2D" uid="uid://bst3837d8mxdr" path="res://sprites/ui/cam/clean_mask.png" id="5_c437p"]
+[ext_resource type="Texture2D" uid="uid://1terayjin78w" path="res://sprites/items/Grafitti.png" id="5_c437p"]
 
 [sub_resource type="Animation" id="Animation_l2flg"]
 resource_name = "Despawn"
