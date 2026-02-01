@@ -5,6 +5,7 @@ var lastCameraSpotted: int = -100000000;
 var cap_lost = false
 var mask_down = false
 var mask_hidden = true
+signal wanted_level(boolean: bool)
 # DEFINE SIGNALS HERE
 
 # ========================
@@ -36,6 +37,9 @@ signal mask_show
 # ========================
 # Generic item pickup event
 signal item_picked_up(node: Node)
+
+
+signal enemy_detected_player(boolean: bool)
 
 
 # RUNS EVERY FRAME

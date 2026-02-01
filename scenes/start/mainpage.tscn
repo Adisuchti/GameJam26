@@ -2,6 +2,20 @@
 
 [ext_resource type="Script" uid="uid://c87xndjahdkjm" path="res://scripts/mainpage.gd" id="1_m1fh4"]
 [ext_resource type="Texture2D" uid="uid://bd7n0f67wguw4" path="res://assets/Pandemonium.png" id="2_h13qq"]
+[ext_resource type="Shader" uid="uid://505ltlw2vmjk" path="res://shaders/button_shine.gdshader" id="3_rhrqi"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_q8x1i"]
+shader = ExtResource("3_rhrqi")
+shader_parameter/Line_Smoothness = 0.045
+shader_parameter/Line_Width = 0.09
+shader_parameter/Brightness = 3.0
+shader_parameter/Rotation_deg = 30.0
+shader_parameter/Distortion = 1.8
+shader_parameter/Speed = 0.3
+shader_parameter/Position = 0.0
+shader_parameter/Position_Min = 0.25
+shader_parameter/Position_Max = 0.5
+shader_parameter/Alpha = 0.10000000475
 
 [node name="mainpage" type="Node2D" unique_id=1073345706]
 script = ExtResource("1_m1fh4")
@@ -15,19 +29,39 @@ offset_bottom = 1558.0
 scale = Vector2(0.425, 0.425)
 texture = ExtResource("2_h13qq")
 
-[node name="Play" type="Button" parent="." unique_id=543999438]
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=2080113885]
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer" unique_id=916092455]
+material = SubResource("ShaderMaterial_q8x1i")
+offset_left = 403.0
+offset_top = 433.0
+offset_right = 748.0
+offset_bottom = 513.0
+
+[node name="ColorRect2" type="ColorRect" parent="CanvasLayer" unique_id=1379993764]
+material = SubResource("ShaderMaterial_q8x1i")
+offset_left = 484.0
+offset_top = 547.0
+offset_right = 668.0
+offset_bottom = 602.0
+
+[node name="CanvasLayer2" type="CanvasLayer" parent="." unique_id=415799478]
+
+[node name="Play" type="Button" parent="CanvasLayer2" unique_id=543999438]
+visible = false
 offset_left = 405.0
 offset_top = 435.0
 offset_right = 745.0
 offset_bottom = 510.0
 flat = true
 
-[node name="Quit" type="Button" parent="." unique_id=1901476647]
+[node name="Quit" type="Button" parent="CanvasLayer2" unique_id=1901476647]
+visible = false
 offset_left = 485.0
 offset_top = 550.0
 offset_right = 665.0
 offset_bottom = 597.0
 flat = true
 
-[connection signal="pressed" from="Play" to="." method="_on_play_pressed"]
-[connection signal="pressed" from="Quit" to="." method="_on_quit_pressed"]
+[connection signal="pressed" from="CanvasLayer2/Play" to="." method="_on_play_pressed"]
+[connection signal="pressed" from="CanvasLayer2/Quit" to="." method="_on_quit_pressed"]

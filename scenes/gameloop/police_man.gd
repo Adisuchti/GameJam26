@@ -33,6 +33,7 @@ func _physics_process(delta):
 	if target_player != null and not is_aggroed:
 		if (target_player.get("has_mask") == true) or (elapsed < COOLDOWN_MS):
 			is_aggroed = true
+			Global.lastCameraSpotted = Time.get_ticks_msec()
 			print("Police spotted mask! AGGRO STARTED.")
 			var bubble = bubble_scene.instantiate()
 			add_child(bubble)
