@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://xtyvx5m4ggkq"
-path="res://.godot/imported/CP_V1.0.4.png-1683003cb9ef4b21c96b13666f6d6e65.ctex"
+uid="uid://cighs0rslh3oj"
+path="res://.godot/imported/circle-white.png-9344cf07866a2c8e201d38be7dc1119f.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://sprites/map/CP_V1.0.4.png"
-dest_files=["res://.godot/imported/CP_V1.0.4.png-1683003cb9ef4b21c96b13666f6d6e65.ctex"]
+source_file="res://addons/plenticons/icons/16x/2d/circle-white.png"
+dest_files=["res://.godot/imported/circle-white.png-9344cf07866a2c8e201d38be7dc1119f.ctex"]
 
 [params]
 

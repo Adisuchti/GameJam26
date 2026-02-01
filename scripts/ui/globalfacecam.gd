@@ -264,8 +264,14 @@ func _process_mask_fall(delta: float) -> void:
 			_schedule_mask_fall()
 			global.mask_restored.emit()
 	#print(clean_mask.position.y)
-		
-		
+	
+	# Calculate how far the mask has fallen relative to the "Lost" threshold (45.0)
+	var current_fall_distance = clean_mask.position.y - mask_original_pos.y
+	var max_fall_distance = 45.0 
+	# Calculate fraction: 0.0 (Top) to 1.0 (Bottom)
+	var fall_fraction = current_fall_distance / max_fall_distance
+	# Invert and scale to 100 (Top) -> 0 (Bottom)
+	global.maskState = clamp((1.0 - fall_fraction) * 100.0, 0.0, 100.0)
 
 func _schedule_mask_fall() -> void:
 	mask_timer = 0.0

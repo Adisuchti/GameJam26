@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://xtyvx5m4ggkq"
-path="res://.godot/imported/CP_V1.0.4.png-1683003cb9ef4b21c96b13666f6d6e65.ctex"
+uid="uid://ceco73wdjvdsg"
+path="res://.godot/imported/police.png-892fcade6672982a18973f02b07a0977.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://sprites/map/CP_V1.0.4.png"
-dest_files=["res://.godot/imported/CP_V1.0.4.png-1683003cb9ef4b21c96b13666f6d6e65.ctex"]
+source_file="res://sprites/tutorial/police.png"
+dest_files=["res://.godot/imported/police.png-892fcade6672982a18973f02b07a0977.ctex"]
 
 [params]
 

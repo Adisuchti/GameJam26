@@ -16,8 +16,9 @@ shader_parameter/Position = 0.0
 shader_parameter/Position_Min = 0.25
 shader_parameter/Position_Max = 0.5
 shader_parameter/Alpha = 0.10000000475
+[ext_resource type="Texture2D" uid="uid://dfe5g6jrf8wcd" path="res://sprites/ui/vignette.png" id="3_rhrqi"]
 
-[node name="mainpage" type="Node2D" unique_id=1073345706]
+[node name="mainpage" type="Node2D" unique_id=850755395]
 script = ExtResource("1_m1fh4")
 
 [node name="TextureRect" type="TextureRect" parent="." unique_id=1868430630]
@@ -50,9 +51,9 @@ offset_bottom = 602.0
 [node name="Play" type="Button" parent="CanvasLayer2" unique_id=543999438]
 visible = false
 offset_left = 405.0
-offset_top = 435.0
+offset_top = 446.0
 offset_right = 745.0
-offset_bottom = 510.0
+offset_bottom = 521.0
 flat = true
 
 [node name="Quit" type="Button" parent="CanvasLayer2" unique_id=1901476647]
@@ -63,5 +64,22 @@ offset_right = 665.0
 offset_bottom = 597.0
 flat = true
 
-[connection signal="pressed" from="CanvasLayer2/Play" to="." method="_on_play_pressed"]
-[connection signal="pressed" from="CanvasLayer2/Quit" to="." method="_on_quit_pressed"]
+[node name="TextureRect2" type="TextureRect" parent="." unique_id=638930589]
+offset_left = 986.0
+offset_top = 599.0
+offset_right = 1147.0
+offset_bottom = 641.0
+texture = ExtResource("3_rhrqi")
+expand_mode = 2
+
+[node name="tutorial" type="Button" parent="." unique_id=1799290165]
+offset_left = 947.0
+offset_top = 594.0
+offset_right = 1182.7334
+offset_bottom = 646.0
+text = "Tutorial"
+flat = true
+
+[connection signal="pressed" from="Play" to="." method="_on_play_pressed"]
+[connection signal="pressed" from="Quit" to="." method="_on_quit_pressed"]
+[connection signal="pressed" from="tutorial" to="." method="_on_tutorial_pressed"]
