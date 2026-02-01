@@ -10,9 +10,15 @@ extends Node2D
 @onready var text: Label = $Newspaper/Text
 @onready var title: Label = $Newspaper/Title
 
+func _ready() -> void:
+	global.changeNewspaper.connect(_on_changeNewspaper)
+
 # ========================
 # NEWSPAPER API
 # ========================
+
+func _on_changeNewspaper(new_text: String):
+	set_text(new_text)
 
 func set_title(new_title: String) -> void:
 	"""Sets the newspaper title"""

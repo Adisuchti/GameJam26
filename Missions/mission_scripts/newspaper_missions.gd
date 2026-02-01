@@ -4,6 +4,7 @@ extends abstract_interact
 @onready
 var newspaperstand = $NewspaperStand
 
+
 func _ready() -> void:
 	is_active = true
 	MissionControl.missions_available.connect(toggle_active)
@@ -11,6 +12,8 @@ func _ready() -> void:
 func on_interaction():
 	if is_active:
 		MissionControl.spawn_mission()
+		var news = global.get_random_headline()
+		global.changeNewspaper.emit(news)
 	else:
 		print("no new missions")
 

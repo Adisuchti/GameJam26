@@ -12,7 +12,7 @@ func _process(delta: float) -> void:
 
 
 func _on_play_pressed() -> void:
-	global.lastCameraSpotted = -100000000;
+	global.lastCameraSpotted = -1000000;
 	get_tree().change_scene_to_file("res://scenes/gameloop/game.tscn")
 
 
