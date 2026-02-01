@@ -52,6 +52,6 @@ func on_interaction():
 	print("interaction started")
 
 
-func on_completed():
-	MissionControl.mission_finished()
+func on_completed(val: bool):
+	MissionControl.mission_finished(val)
 	self.queue_free()

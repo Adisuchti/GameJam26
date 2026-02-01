@@ -9,7 +9,7 @@ func _ready() -> void:
 func mission_activated():
 	missions_available.emit(false)
 
-func mission_finished():
+func mission_finished(success: bool):
 	missions_available.emit(true)
 
 func get_random_mission() -> PackedScene:

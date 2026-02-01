@@ -1,6 +1,6 @@
 extends abstract_mission
 @export
-var mission: PackedScene
+var target: PackedScene
 
 func on_interaction():
 	if is_active or global_position.distance_to(camera.global_position) > interaction_distance:
@@ -17,8 +17,7 @@ func spawn_goal():
 		print("TARGET ERROR: No available target spawn locations!")
 		return
 	var loc = spawn_locations[randi_range(0, spawn_locations.size() - 1)]
-	#TODO: reroll if the target is also the mission area
-	var m = mission.instantiate()
+	var m = target.instantiate()
 	get_parent().add_child(m)
 	m.global_position = loc.global_position
 	m.goal_achieved.connect(on_completed)

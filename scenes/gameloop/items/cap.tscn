@@ -4,6 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://c87p5fdctheac" path="res://sprites/items/cap.png" id="2_6mdlr"]
 
 [node name="Cap" type="Node2D" unique_id=1944586297 node_paths=PackedStringArray("item_sprite")]
+z_index = 8
 script = ExtResource("1_wihxt")
 item_sprite = NodePath("Cap")
 
