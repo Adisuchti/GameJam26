@@ -5,9 +5,12 @@
 [ext_resource type="Texture2D" uid="uid://n3b5tkdvnp1o" path="res://assets/icon.svg" id="3_ftmru"]
 
 [node name="Newspaper" type="Node2D" unique_id=1529074359]
+z_index = 1
+y_sort_enabled = true
 script = ExtResource("1_ilfgb")
 
 [node name="NewspaperStand" type="Sprite2D" parent="." unique_id=368596203]
+y_sort_enabled = true
 scale = Vector2(4, 4)
 texture = ExtResource("2_wenke")
 hframes = 64
