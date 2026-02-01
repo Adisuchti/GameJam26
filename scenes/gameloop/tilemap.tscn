@@ -89,19 +89,19 @@ position = Vector2(6281, 2285)
 position = Vector2(6269, 897)
 
 [node name="Newspaper15" parent="Newspapers" unique_id=1355139886 instance=ExtResource("2_63d22")]
-position = Vector2(5330, 342)
+position = Vector2(5275, 362)
 
 [node name="Newspaper16" parent="Newspapers" unique_id=1077242098 instance=ExtResource("2_63d22")]
 position = Vector2(1667, 1751)
 
 [node name="Newspaper17" parent="Newspapers" unique_id=586202984 instance=ExtResource("2_63d22")]
-position = Vector2(520, 336)
+position = Vector2(488, 351)
 
 [node name="Newspaper2" parent="Newspapers" unique_id=1055642001 instance=ExtResource("2_63d22")]
-position = Vector2(4169, 2343)
+position = Vector2(4148, 2327)
 
 [node name="Newspaper3" parent="Newspapers" unique_id=1868939942 instance=ExtResource("2_63d22")]
-position = Vector2(5717, 1770)
+position = Vector2(5702, 1776)
 
 [node name="Newspaper4" parent="Newspapers" unique_id=611434774 instance=ExtResource("2_63d22")]
 position = Vector2(4174, 893)
@@ -110,7 +110,7 @@ position = Vector2(4174, 893)
 position = Vector2(3602, 3215)
 
 [node name="Newspaper6" parent="Newspapers" unique_id=43824070 instance=ExtResource("2_63d22")]
-position = Vector2(1202, 3223)
+position = Vector2(1148, 3223)
 
 [node name="Newspaper7" parent="Newspapers" unique_id=1368879204 instance=ExtResource("2_63d22")]
 position = Vector2(2355, 3303)
@@ -122,7 +122,7 @@ position = Vector2(2642, 2260)
 position = Vector2(3686, 1859)
 
 [node name="Newspaper10" parent="Newspapers" unique_id=1641356788 instance=ExtResource("2_63d22")]
-position = Vector2(909, 2449)
+position = Vector2(578, 2414)
 
 [node name="Newspaper11" parent="Newspapers" unique_id=1813725701 instance=ExtResource("2_63d22")]
 position = Vector2(332, 1087)

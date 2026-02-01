@@ -28,4 +28,5 @@ func spawn_paper():
 	var m = paper.instantiate()
 	self.add_child(m)
 	m.global_position = self.global_position
+	m.throw_item()
 	MissionControl.item_manager.newspaper_nodes.append(m)
