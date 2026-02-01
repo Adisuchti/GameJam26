@@ -20,6 +20,7 @@ func _input(event: InputEvent) -> void:
 		throw(get_global_mouse_position() - global_position)
 
 func throw(_direction: Vector2):
+	reparent(MissionControl.item_man)
 	moving = true
 	direction = _direction
 	anim_player.play("spin")
