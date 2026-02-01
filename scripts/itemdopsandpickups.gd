@@ -1,4 +1,5 @@
 extends Node
+class_name item_manager
 
 # ========================
 # ASSIGN IN INSPECTOR
@@ -25,6 +26,7 @@ func _process(_delta: float) -> void:
 	_check_pickup()
 
 func _ready():
+	MissionControl.item_manager = self
 	global.cap_fell_off.connect(_on_cap_fell_off)
 	#await get_tree().process_frame
 	#_spawn_dropped_cap()
@@ -97,4 +99,7 @@ func _pickup_cap() -> void:
 
 func _pickup_newsletter(newspaper_node: Node2D) -> void:
 	if is_instance_valid(newspaper_node):
+		MissionControl.spawn_mission()
 		newspaper_node.queue_free()
+		var news = global.get_random_headline()
+		global.changeNewspaper.emit(news)

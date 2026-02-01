@@ -4,6 +4,7 @@ signal missions_available
 signal victory
 
 var paper : newspaper
+var item_manager : item_manager
 var possible_missions
 var score = 0
 var target_score = 20
@@ -12,7 +13,6 @@ func _ready() -> void:
 	possible_missions = ResourceLoader.load("res://Missions/available_missions/mission_list.tres")
 
 func mission_activated():
-	print("mission_activated")
 	missions_available.emit(false)
 
 func mission_finished(success: bool):
@@ -40,7 +40,7 @@ func spawn_mission() -> void:
 
 func update_paper():
 	if paper == null: return
-	paper.set_title("Score: " + str(score))
+	paper.set_title(str(score) + "/" + str(target_score))
 
 func set_paper(val: newspaper):
 	paper = val
