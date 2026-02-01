@@ -19,11 +19,17 @@ var is_aggroed = false
 var chase_frame_counter = 0
 
 func _ready():
+	global.reset_wanted.connect(_on_reset_wanted)
 	super._ready()
 	if has_node("DetectionArea"):
 		var area = $DetectionArea
 		area.body_entered.connect(_on_body_entered)
 		area.body_exited.connect(_on_body_exited)
+func _on_reset_wanted():
+	var target_player = null 
+	var attack_timer = 0.0
+	var is_aggroed = false 
+	global.lastCameraSpotted = -1000000;
 
 func _physics_process(delta):
 	attack_timer += delta

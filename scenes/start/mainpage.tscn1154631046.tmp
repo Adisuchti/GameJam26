@@ -31,7 +31,6 @@ shader = ExtResource("6_cyhow")
 shader_parameter/timer = 0.0
 shader_parameter/y_offsets = PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
 shader_parameter/melting = false
-shader_parameter/melt_color = Color(0, 0, 0, 1)
 
 [sub_resource type="LabelSettings" id="LabelSettings_qv3vk"]
 font = ExtResource("6_rq6k1")
@@ -88,7 +87,6 @@ expand_mode = 2
 [node name="CanvasLayer3" type="CanvasLayer" parent="." unique_id=63414640]
 
 [node name="doom_effect" type="ColorRect" parent="CanvasLayer3" unique_id=1106175895]
-visible = false
 material = SubResource("ShaderMaterial_qv3vk")
 offset_right = 1152.0
 offset_bottom = 648.0

@@ -3,6 +3,12 @@ extends ProgressBar
 @onready var alert_label: Label = $"../alert_label" # Adjust path to your Label node
 const COOLDOWN_MS: float = 30000.0
 
+func _ready() -> void:
+	self.hide()
+	alert_label.hide()
+	self.value = 0
+	global.wanted_level.emit(false)
+	
 func _process(_delta: float) -> void:
 	var current_time = Time.get_ticks_msec()
 	var elapsed = current_time - Global.lastCameraSpotted

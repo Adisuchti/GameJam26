@@ -72,6 +72,8 @@ signal item_picked_up(node: Node)
 
 
 signal enemy_detected_player(boolean: bool)
+signal reset_wanted()
+signal reset_everything()
 
 
 func _ready() -> void:
@@ -81,6 +83,24 @@ func _ready() -> void:
 	global.mask_restored.connect(_on_mask_restored)
 	global.mask_hide.connect(_on_mask_hide)
 	global.mask_show.connect(_on_mask_show)
+	global.reset_everything.connect(_on_reset_everything)
+
+func _on_reset_everything() -> void:
+	# 1. Reset Camera Logic
+	lastCameraSpotted = -100000000
+	
+	# 2. Reset Player State
+	cap_lost = false
+	mask_down = false
+	mask_hidden = true # You defined this as true by default in your variables
+	maskState = 100
+	
+	# 3. Reset Signals / UI if needed
+	# If you have a variable for wanted level (not just a signal), reset it here:
+	# wanted_level_bool = false 
+	
+	print("GLOBAL STATE RESET COMPLETE")
+	
 
 # RUNS EVERY FRAME
 @warning_ignore("unused_parameter")
