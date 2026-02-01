@@ -16,13 +16,20 @@ var is_aggroed = false
 var chase_frame_counter = 0 # Track frames for jitter
 
 func _ready():
+	global.reset_wanted.connect(_on_reset_wanted)
 	super._ready()
 	if has_node("DetectionArea"):
 		var area = $DetectionArea
 		# Connecting signals to the functions defined at the bottom
 		area.body_entered.connect(_on_body_entered)
 		area.body_exited.connect(_on_body_exited)
-
+		
+func _on_reset_wanted():
+	is_aggroed = false
+	target_player = null
+	var attack_timer = 0.0
+	global.lastCameraSpotted = -1000000;
+	
 func _physics_process(delta):
 	attack_timer += delta
 	

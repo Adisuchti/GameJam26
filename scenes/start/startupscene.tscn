@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://c4roo1maew2b4"]
 
 [ext_resource type="Script" uid="uid://b6rcu1osnoom0" path="res://scripts/startupscene.gd" id="1_60wh5"]
+[ext_resource type="Texture2D" uid="uid://bppiah4gkessl" path="res://assets/icon.png" id="2_qvier"]
 
 [node name="Startup Scene" type="Node2D" unique_id=1316823878]
 script = ExtResource("1_60wh5")
@@ -24,6 +25,11 @@ autostart = true
 offset_right = 1176.0
 offset_bottom = 679.0
 flat = true
+
+[node name="Icon" type="Sprite2D" parent="." unique_id=2098653393]
+position = Vector2(1008, 503)
+scale = Vector2(0.645, 0.645)
+texture = ExtResource("2_qvier")
 
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
 [connection signal="pressed" from="Timer/Button" to="." method="_on_button_pressed"]
