@@ -11,6 +11,7 @@
 [ext_resource type="Script" uid="uid://b57v4w4n4sdqe" path="res://scenes/gameloop/rain.gd" id="10_ddjna"]
 [ext_resource type="Shader" uid="uid://dw0eh8k0ecv0v" path="res://scenes/gameloop/game.gdshader" id="10_u5a54"]
 [ext_resource type="Script" uid="uid://bvkb2g77bo4r2" path="res://scenes/gameloop/damage.gd" id="11_cyuyt"]
+[ext_resource type="Script" uid="uid://dcb3dcux0ieqa" path="res://scenes/gameloop/open_your_eyes.gd" id="12_cyuyt"]
 
 [sub_resource type="Shader" id="Shader_ddjna"]
 code = "shader_type canvas_item;
@@ -347,6 +348,34 @@ shader_parameter/clip_warp = false
 shader_parameter/vignette_intensity = 0.09
 shader_parameter/vignette_opacity = 1.0
 
+[sub_resource type="Shader" id="Shader_u5a54"]
+code = "shader_type canvas_item;
+
+uniform float open_amount : hint_range(0.0, 1.0, 0.01);
+uniform float edge_blur_amount : hint_range(0.0, 1.0, 0.01);
+uniform vec3 color : source_color;
+
+void fragment() {
+	float blur = edge_blur_amount * 0.5;
+	float v = open_amount + edge_blur_amount * open_amount;
+	float d1 = (2.0 * v * pow(UV.x - 0.5, 2.0) - v/2.0 + 0.5) - (UV.y+v/(2.0));
+	float d2 = -(-2.0 * v * pow(UV.x - 0.5, 2.0) + v/2.0 + 0.5) + (UV.y-v/(2.0));
+	float d = max(d1, d2);
+
+	if (d > -blur){
+		COLOR = vec4(color, (-d-blur)/-blur);
+	} else {
+		COLOR = vec4(0.0);
+	}
+}
+"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_rbtpx"]
+shader = SubResource("Shader_u5a54")
+shader_parameter/open_amount = 0.0
+shader_parameter/edge_blur_amount = 0.47999998927104
+shader_parameter/color = Color(0, 0, 0, 1)
+
 [node name="game" type="Node2D" unique_id=429334472]
 y_sort_enabled = true
 
@@ -467,7 +496,7 @@ position = Vector2(1770, 1547)
 script = ExtResource("6_qj867")
 player = NodePath("../mainCharacter")
 dropped_cap_scene = ExtResource("7_w1jwl")
-newspaper_nodes = [NodePath("")]
+newspaper_nodes = [null]
 
 [node name="CanvasLayer2" type="CanvasLayer" parent="." unique_id=1786252916]
 
@@ -501,3 +530,11 @@ script = ExtResource("10_ddjna")
 material = SubResource("ShaderMaterial_oi645")
 offset_right = 1152.0
 offset_bottom = 648.0
+
+[node name="CanvasLayer3" type="CanvasLayer" parent="." unique_id=1461962183]
+
+[node name="open_your_eyes" type="ColorRect" parent="CanvasLayer3" unique_id=466843958]
+material = SubResource("ShaderMaterial_rbtpx")
+offset_right = 1152.0
+offset_bottom = 648.0
+script = ExtResource("12_cyuyt")

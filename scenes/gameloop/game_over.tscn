@@ -94,24 +94,59 @@ shader_parameter/Position_Max = 0.5
 shader_parameter/Alpha = 0.10000000475
 
 [sub_resource type="Shader" id="Shader_vgy2e"]
-code = "shader_type canvas_item;
+code = "// Rain and Snow shader by Brian Smith (steampunkdemon.itch.io)
+// MIT licence
 
-void vertex() {
-	// Called for every vertex the material is visible on.
-}
+shader_type canvas_item;
+
+uniform float rain_amount = 200.0;
+uniform float near_rain_length : hint_range(0.01, 1.0) = 0.2;
+uniform float far_rain_length : hint_range(0.01, 1.0) = 0.1;
+uniform float near_rain_width : hint_range(0.1, 1.0) = 1.0;
+uniform float far_rain_width : hint_range(0.1, 1.0) = 0.5;
+uniform float near_rain_transparency : hint_range(0.1, 1.0) = 1.0;
+uniform float far_rain_transparency : hint_range(0.1, 1.0) = 0.5;
+// Replace the below reference to source_color with hint_color if you are using a version of Godot before 4.
+uniform vec4 rain_color : source_color = vec4(0.8, 0.8, 0.8, 1.0);
+uniform float base_rain_speed : hint_range(0.1, 1.0) = 0.5;
+uniform float additional_rain_speed : hint_range(0.1, 1.0) = 0.5;
+uniform float slant : hint_range(-1.0, 1.0) = 0.2;
 
 void fragment() {
-	// Called for every pixel the material is visible on.
-}
+// To control the rainfall from your program comment out the below line and add a new uniform above as:
+// uniform float time = 10000.0;
+// Then update the time uniform from your _physics_process function by adding delta. You can then pause the rainfall by not changing the time uniform.
+	float time = 10000.0 + TIME;
 
-//void light() {
-//	// Called for every pixel for every light affecting the CanvasItem.
-//	// Uncomment to replace the default light processing function with this one.
-//}
-"
+// Uncomment the following line if you are applying the shader to a TextureRect and using a version of Godot before 4.
+//	COLOR = texture(TEXTURE,UV);
+
+	vec2 uv = vec2(0.0);
+	float remainder = mod(UV.x - UV.y * slant, 1.0 / rain_amount);
+	uv.x = (UV.x - UV.y * slant) - remainder;
+	float rn = fract(sin(uv.x * rain_amount));
+	uv.y = fract((UV.y + rn));
+
+// Blurred trail. Works well for rain:
+//	COLOR = mix(COLOR, rain_color, smoothstep(1.0 - (far_rain_length + (near_rain_length - far_rain_length) * rn), 1.0, fract(uv.y - time * (base_rain_speed + additional_rain_speed * rn))) * (far_rain_transparency + (near_rain_transparency - far_rain_transparency) * rn) * step(remainder * rain_amount, far_rain_width + (near_rain_width - far_rain_width) * rn));
+
+// No trail. Works well for snow:
+	COLOR = mix(COLOR, rain_color, step(1.0 - (far_rain_length + (near_rain_length - far_rain_length) * rn), fract(uv.y - time * (base_rain_speed + additional_rain_speed * rn))) * (far_rain_transparency + (near_rain_transparency - far_rain_transparency) * rn) * step(remainder * rain_amount, far_rain_width + (near_rain_width - far_rain_width) * rn));
+}"
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_64a7n"]
 shader = SubResource("Shader_vgy2e")
+shader_parameter/rain_amount = 50.0
+shader_parameter/near_rain_length = 0.00999999977648
+shader_parameter/far_rain_length = 0.16800000728148
+shader_parameter/near_rain_width = 0.10000000149012
+shader_parameter/far_rain_width = 0.10000000149012
+shader_parameter/near_rain_transparency = 1.0
+shader_parameter/far_rain_transparency = 0.5
+shader_parameter/rain_color = Color(0.8, 0.8, 0.8, 0.23137255)
+shader_parameter/base_rain_speed = 0.5
+shader_parameter/additional_rain_speed = 0.5
+shader_parameter/slant = 0.2
 
 [node name="gameOver" type="Node2D" unique_id=324113374]
 script = ExtResource("1_0c6he")
@@ -151,10 +186,8 @@ offset_bottom = 546.0
 
 [node name="rain" type="ColorRect" parent="CanvasLayer2" unique_id=751043655]
 material = SubResource("ShaderMaterial_64a7n")
-offset_left = 255.0
-offset_top = 187.0
-offset_right = 1405.0
-offset_bottom = 823.0
+offset_right = 1152.0
+offset_bottom = 648.0
 color = Color(1, 1, 1, 0)
 
 [node name="CanvasLayer3" type="CanvasLayer" parent="." unique_id=271376858]

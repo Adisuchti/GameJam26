@@ -1,11 +1,21 @@
 [gd_scene format=3 uid="uid://dehronembxvb3"]
 
 [ext_resource type="Script" uid="uid://bggeb6m8oswdl" path="res://scenes/SpeechBubble.gd" id="1_a8ruc"]
+[ext_resource type="FontFile" uid="uid://bkec2pue1apws" path="res://sprites/ui/pixelated-elegance-font/PixelatedEleganceRegular-ovyAA.ttf" id="2_x4eeu"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_e1pub"]
+font = ExtResource("2_x4eeu")
+font_size = 17
+outline_size = 4
+outline_color = Color(0, 0, 0, 1)
+shadow_color = Color(0, 0, 0, 1)
+shadow_offset = Vector2(0, 3)
 
 [node name="SpeechBubble" type="Node2D" unique_id=962259099]
 script = ExtResource("1_a8ruc")
 
 [node name="PanelContainer" type="PanelContainer" parent="." unique_id=1912989709]
+self_modulate = Color(1, 1, 1, 0)
 offset_left = -41.0
 offset_top = -35.0
 offset_right = 42.0
@@ -13,6 +23,7 @@ offset_bottom = -4.0
 
 [node name="label" type="Label" parent="PanelContainer" unique_id=1351218864]
 layout_mode = 2
+label_settings = SubResource("LabelSettings_e1pub")
 horizontal_alignment = 1
 vertical_alignment = 1
 

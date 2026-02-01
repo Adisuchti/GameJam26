@@ -12,9 +12,8 @@ func _process(delta: float) -> void:
 
 
 func _on_play_pressed() -> void:
-
 	global.lastCameraSpotted = -1000000;
-
+	
 	global.mask_down = true
 	global.cap_lost = false
 	global.mask_hidden = true
@@ -22,6 +21,8 @@ func _on_play_pressed() -> void:
 	global.cap_picked_up.emit()
 	global.mask_restored.emit()
 	global.mask_hide.emit()
+	global.reset_wanted.emit()
+	global.reset_everything.emit()
 
 	get_tree().change_scene_to_file("res://scenes/gameloop/game.tscn")
 
