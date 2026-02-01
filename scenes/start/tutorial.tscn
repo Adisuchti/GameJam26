@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://dccj6dsdjjmdq" path="res://sprites/tutorial/fire.png" id="3_mmone"]
 [ext_resource type="Texture2D" uid="uid://e70fqfcpvebr" path="res://sprites/tutorial/camera.png" id="5_5tehq"]
 [ext_resource type="Texture2D" uid="uid://djvjitcwlvno8" path="res://sprites/tutorial/face.png" id="6_uiw8j"]
+[ext_resource type="Texture2D" uid="uid://cdfftpt2cc75m" path="res://sprites/tutorial/missions.png" id="7_mmone"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bo7en"]
 bg_color = Color(0.01607666, 0.01607666, 0.01607666, 1)
@@ -18,7 +19,7 @@ border_width_bottom = 20
 layout_mode = 3
 anchors_preset = 0
 script = ExtResource("1_bo7en")
-tutorial_images = Array[Texture2D]([ExtResource("2_sbtct"), ExtResource("3_mmone"), ExtResource("1_pdgim"), ExtResource("5_5tehq"), ExtResource("6_uiw8j")])
+tutorial_images = Array[Texture2D]([ExtResource("2_sbtct"), ExtResource("3_mmone"), ExtResource("1_pdgim"), ExtResource("5_5tehq"), ExtResource("6_uiw8j"), ExtResource("7_mmone")])
 next_scene_path = "uid://bnf3rnjlkmnii"
 
 [node name="TextureRect" type="TextureRect" parent="." unique_id=434190502]
