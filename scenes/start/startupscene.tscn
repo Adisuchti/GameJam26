@@ -1,7 +1,6 @@
 [gd_scene format=3 uid="uid://c4roo1maew2b4"]
 
 [ext_resource type="Script" uid="uid://b6rcu1osnoom0" path="res://scripts/startupscene.gd" id="1_60wh5"]
-[ext_resource type="VideoStream" uid="uid://b4xkp3pmlsp8q" path="res://assets/intro1.ogv" id="2_38rpl"]
 
 [node name="Startup Scene" type="Node2D" unique_id=1316823878]
 script = ExtResource("1_60wh5")
@@ -15,10 +14,9 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
-stream = ExtResource("2_38rpl")
 
 [node name="Timer" type="Timer" parent="." unique_id=425665835]
-wait_time = 3.0
+wait_time = 10.0
 one_shot = true
 autostart = true
 
