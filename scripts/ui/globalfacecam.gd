@@ -54,7 +54,8 @@ func _ready() -> void:
 func _on_cap_picked_up():
 	clean_cap.position = cap_original_pos
 	cap_is_forever_gone = false
-	set_cap_visible(true)
+	cap_hidden = true
+	#set_cap_visible(true)
 
 func _on_mask_hide():
 	mask_hidden = true

@@ -13,7 +13,14 @@ func _process(delta: float) -> void:
 
 func _on_play_pressed() -> void:
 	global.lastCameraSpotted = -100000000;
-	get_tree().change_scene_to_file("res://scenes/gameloop/tilemap.tscn")
+	global.mask_down = true
+	global.cap_lost = false
+	global.mask_hidden = true
+	global.cap_hide.emit()
+	global.cap_picked_up.emit()
+	global.mask_restored.emit()
+	global.mask_hide.emit()
+	get_tree().change_scene_to_file("res://scenes/gameloop/game.tscn")
 
 
 func _on_quit_pressed() -> void:

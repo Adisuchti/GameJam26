@@ -1,46 +1,52 @@
 extends CharacterBody2D
 
 @onready var anim_sprite: AnimatedSprite2D = $AnimatedSprite2D
-# 1. Add a NavigationAgent2D node to your NPC scene and link it here
 @onready var nav_agent: NavigationAgent2D = $NavigationAgent2D
 
-@export var speed = 100
+@export var speed = 70.0
+@export var jitter_strength = 3.5
 @export var waypoints: Array[Marker2D] = [] 
 @export var active: bool = false 
 
 var current_waypoint_index = 0
 var animation_timer = 0.0
 var use_alt_frame = false 
+var frame_counter = 0
 
 func _ready():
-	# Optional: Tune agent parameters
+	# Randomized speed so every NPC has a unique walking pace
+	speed = randf_range(60.0, 85.0)
+	
 	nav_agent.path_desired_distance = 10.0
 	nav_agent.target_desired_distance = 10.0
 
 func _physics_process(delta):
 	if not active or waypoints.is_empty():
-		animation_timer = 0.0
-		use_alt_frame = false
-		anim_sprite.frame = 0 
-		velocity = Vector2.ZERO # Ensure they stop moving
+		_reset_to_idle()
 		return
 
-	# 2. Pathfinding Logic [cite: 1, 2]
 	var target_position = waypoints[current_waypoint_index].global_position
 	nav_agent.target_position = target_position
 
-	# Check if we reached the current waypoint to cycle to the next one 
 	if nav_agent.is_navigation_finished():
 		current_waypoint_index = (current_waypoint_index + 1) % waypoints.size()
 		return
 
-	# Calculate the next position in the path (this avoids the walls) 
 	var next_path_pos = nav_agent.get_next_path_position()
 	var direction = global_position.direction_to(next_path_pos)
 	
 	velocity = direction * speed
 	
-	# Animation timing [cite: 1]
+	# Jitter Logic
+	frame_counter += 1
+	if frame_counter >= 10:
+		anim_sprite.position = Vector2(
+			randf_range(-jitter_strength, jitter_strength),
+			randf_range(-jitter_strength, jitter_strength)
+		)
+		frame_counter = 0
+	
+	# Animation Timing
 	animation_timer += delta
 	if animation_timer >= 0.2: 
 		animation_timer = 0.0
@@ -49,25 +55,25 @@ func _physics_process(delta):
 	update_animation(direction)
 	move_and_slide()
 
+func _reset_to_idle():
+	animation_timer = 0.0
+	use_alt_frame = false
+	anim_sprite.frame = 0 
+	anim_sprite.position = Vector2.ZERO 
+	frame_counter = 0
+	velocity = Vector2.ZERO
+
 func update_animation(direction: Vector2):
 	var angle = direction.angle()
 	var direction_index = int(round((angle + PI) / (PI / 4))) % 8
 	
-	# --- NEW: Rotate DetectionArea Logic ---
-	# This ensures it updates during Patrol AND Chase
 	if has_node("DetectionArea"):
-		# direction.angle() assumes 0 is Right.
-		# If your semicircle sprite faces UP in the editor, use "+ PI / 2" (which is +90 degrees).
-		# If it faces RIGHT in the editor, just use "direction.angle()".
-		# If it faces DOWN, use "- PI / 2".
-		
-		# Based on your previous code trying to offset by 90:
 		$DetectionArea.rotation = direction.angle() + deg_to_rad(-90) 
-	# ---------------------------------------
 
 	var anim_name = "front"
 	var should_flip = false
 
+	# Fixed match block (No curly braces)
 	match direction_index:
 		0: # Left
 			anim_name = "walk_left"
@@ -81,7 +87,7 @@ func update_animation(direction: Vector2):
 		3: # Up-Right
 			anim_name = "walk_up"
 			should_flip = true
-		4: # Right [cite: 3]
+		4: # Right
 			anim_name = "walk_right"
 			should_flip = false
 		5: # Down-Right
