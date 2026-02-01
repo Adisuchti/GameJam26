@@ -3,6 +3,8 @@
 [ext_resource type="Script" uid="uid://b04yqha13xys4" path="res://main_character_movement.gd" id="1_s28po"]
 [ext_resource type="Shader" uid="uid://bslj24yq1avlf" path="res://scenes/gameloop/ingameUI/facecam.gdshader" id="1_wgyqw"]
 [ext_resource type="Texture2D" uid="uid://ultljvsx6lhf" path="res://sprites/character/protag/protag.png" id="2_h0ik5"]
+[ext_resource type="AudioStream" uid="uid://be8h764ui80sy" path="res://sounds/city_ambient.mp3" id="4_vhs7y"]
+[ext_resource type="AudioStream" uid="uid://c6486sscj8d4u" path="res://sounds/running.mp3" id="5_frh7d"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_vhs7y"]
 shader = ExtResource("1_wgyqw")
@@ -415,3 +417,11 @@ animation = &"both_walk_right"
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=955898391]
 offset = Vector2(100, 0)
+
+[node name="cityambient" type="AudioStreamPlayer2D" parent="." unique_id=1739569612]
+stream = ExtResource("4_vhs7y")
+volume_db = -15.6
+autoplay = true
+
+[node name="footsteps" type="AudioStreamPlayer2D" parent="." unique_id=1532786227]
+stream = ExtResource("5_frh7d")
