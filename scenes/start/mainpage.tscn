@@ -3,20 +3,34 @@
 [ext_resource type="Script" uid="uid://c87xndjahdkjm" path="res://scripts/mainpage.gd" id="1_m1fh4"]
 [ext_resource type="Texture2D" uid="uid://bd7n0f67wguw4" path="res://assets/Pandemonium.png" id="2_h13qq"]
 [ext_resource type="Shader" uid="uid://505ltlw2vmjk" path="res://shaders/button_shine.gdshader" id="3_rhrqi"]
+[ext_resource type="Shader" uid="uid://70g58ghv8q1h" path="res://scenes/gameloop/ingameUI/ingame_iu.gdshader" id="4_uv3m0"]
+[ext_resource type="Texture2D" uid="uid://dfe5g6jrf8wcd" path="res://sprites/ui/vignette.png" id="5_qcex1"]
+[ext_resource type="FontFile" uid="uid://bkec2pue1apws" path="res://sprites/ui/pixelated-elegance-font/PixelatedEleganceRegular-ovyAA.ttf" id="6_rq6k1"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_q8x1i"]
 shader = ExtResource("3_rhrqi")
 shader_parameter/Line_Smoothness = 0.045
 shader_parameter/Line_Width = 0.09
-shader_parameter/Brightness = 3.0
+shader_parameter/Brightness = 0.1
 shader_parameter/Rotation_deg = 30.0
 shader_parameter/Distortion = 1.8
 shader_parameter/Speed = 0.3
 shader_parameter/Position = 0.0
 shader_parameter/Position_Min = 0.25
 shader_parameter/Position_Max = 0.5
-shader_parameter/Alpha = 0.10000000475
-[ext_resource type="Texture2D" uid="uid://dfe5g6jrf8wcd" path="res://sprites/ui/vignette.png" id="3_rhrqi"]
+shader_parameter/Alpha = 1.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_cyhow"]
+shader = ExtResource("4_uv3m0")
+shader_parameter/alpha_percent = 0.42000001995
+
+[sub_resource type="LabelSettings" id="LabelSettings_qv3vk"]
+font = ExtResource("6_rq6k1")
+font_size = 20
+outline_size = 2
+shadow_size = 6
+shadow_color = Color(0.21568628, 0.047058824, 0.15294118, 1)
+shadow_offset = Vector2(0, 2)
 
 [node name="mainpage" type="Node2D" unique_id=850755395]
 script = ExtResource("1_m1fh4")
@@ -46,40 +60,54 @@ offset_top = 547.0
 offset_right = 668.0
 offset_bottom = 602.0
 
-[node name="CanvasLayer2" type="CanvasLayer" parent="." unique_id=415799478]
-
-[node name="Play" type="Button" parent="CanvasLayer2" unique_id=543999438]
-visible = false
-offset_left = 405.0
-offset_top = 446.0
-offset_right = 745.0
-offset_bottom = 521.0
-flat = true
-
-[node name="Quit" type="Button" parent="CanvasLayer2" unique_id=1901476647]
-visible = false
-offset_left = 485.0
-offset_top = 550.0
-offset_right = 665.0
-offset_bottom = 597.0
-flat = true
-
-[node name="TextureRect2" type="TextureRect" parent="." unique_id=638930589]
+[node name="ColorRect3" type="ColorRect" parent="CanvasLayer" unique_id=2098055478]
+material = SubResource("ShaderMaterial_q8x1i")
 offset_left = 986.0
 offset_top = 599.0
 offset_right = 1147.0
 offset_bottom = 641.0
-texture = ExtResource("3_rhrqi")
+
+[node name="TextureRect2" type="TextureRect" parent="." unique_id=638930589]
+material = SubResource("ShaderMaterial_cyhow")
+offset_left = 986.0
+offset_top = 599.0
+offset_right = 1147.0
+offset_bottom = 641.0
+texture = ExtResource("5_qcex1")
 expand_mode = 2
 
-[node name="tutorial" type="Button" parent="." unique_id=1799290165]
-offset_left = 947.0
-offset_top = 594.0
-offset_right = 1182.7334
-offset_bottom = 646.0
-text = "Tutorial"
+[node name="CanvasLayer2" type="CanvasLayer" parent="." unique_id=415799478]
+
+[node name="tutorial" type="Button" parent="CanvasLayer2" unique_id=1799290165]
+offset_left = 985.0
+offset_top = 598.0
+offset_right = 1147.0
+offset_bottom = 641.0
 flat = true
 
-[connection signal="pressed" from="Play" to="." method="_on_play_pressed"]
-[connection signal="pressed" from="Quit" to="." method="_on_quit_pressed"]
-[connection signal="pressed" from="tutorial" to="." method="_on_tutorial_pressed"]
+[node name="Label" type="Label" parent="CanvasLayer2/tutorial" unique_id=474518565]
+layout_mode = 0
+offset_left = 19.0
+offset_top = 13.0
+offset_right = 148.0
+offset_bottom = 37.0
+text = "TUTORIAL"
+label_settings = SubResource("LabelSettings_qv3vk")
+
+[node name="Play" type="Button" parent="CanvasLayer2" unique_id=543999438]
+offset_left = 407.0
+offset_top = 435.0
+offset_right = 747.0
+offset_bottom = 510.0
+flat = true
+
+[node name="Quit" type="Button" parent="CanvasLayer2" unique_id=1901476647]
+offset_left = 488.0
+offset_top = 551.0
+offset_right = 665.0
+offset_bottom = 600.0
+flat = true
+
+[connection signal="pressed" from="CanvasLayer2/tutorial" to="." method="_on_tutorial_pressed"]
+[connection signal="pressed" from="CanvasLayer2/Play" to="." method="_on_play_pressed"]
+[connection signal="pressed" from="CanvasLayer2/Quit" to="." method="_on_quit_pressed"]
