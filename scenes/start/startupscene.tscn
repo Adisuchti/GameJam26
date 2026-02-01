@@ -20,4 +20,10 @@ wait_time = 10.0
 one_shot = true
 autostart = true
 
+[node name="Button" type="Button" parent="Timer" unique_id=1415844044]
+offset_right = 1176.0
+offset_bottom = 679.0
+flat = true
+
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+[connection signal="pressed" from="Timer/Button" to="." method="_on_button_pressed"]
