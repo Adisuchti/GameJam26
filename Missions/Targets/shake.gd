@@ -43,9 +43,7 @@ func _on_area_2d_body_entered(body: Node2D) -> void:
 func success():
 	target_hit.emit(true)
 	anim_player.play("Despawn")
-	print("SUCCESS")
 
 func fail():
 	target_hit.emit(false)
 	anim_player.play("Despawn")
-	print("FAILURE")

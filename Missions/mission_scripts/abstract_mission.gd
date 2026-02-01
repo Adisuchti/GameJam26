@@ -21,7 +21,7 @@ func _process(_delta: float) -> void:
 		print("ERROR: NO CAMERA FOUND")
 		return
 	
-	var viewport_dimensions: Vector2 = get_viewport().get_visible_rect().size
+	var viewport_dimensions: Vector2 = get_viewport().get_visible_rect().size - Vector2(256, 0)
 	var screen_coordinates = (global_position - camera.global_position) * camera.zoom + viewport_dimensions * 0.5
 	var screen_inset_rectangle = Rect2(Vector2.ZERO, viewport_dimensions).grow(-screen_margin)
 	
