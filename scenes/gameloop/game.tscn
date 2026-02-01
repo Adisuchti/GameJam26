@@ -9,6 +9,7 @@
 [ext_resource type="Script" uid="uid://dbtimws0qf162" path="res://scripts/itemdopsandpickups.gd" id="6_qj867"]
 [ext_resource type="PackedScene" uid="uid://cyyi6wgw6woo4" path="res://scenes/gameloop/items/cap.tscn" id="7_w1jwl"]
 [ext_resource type="PackedScene" uid="uid://25r54ucq3b18" path="res://scenes/gameloop/items/newsletter.tscn" id="8_vw46h"]
+[ext_resource type="Script" uid="uid://b57v4w4n4sdqe" path="res://scenes/gameloop/rain.gd" id="10_ddjna"]
 
 [sub_resource type="Shader" id="Shader_63d22"]
 code = "shader_type canvas_item;
@@ -205,6 +206,71 @@ shader_parameter/clip_warp = false
 shader_parameter/vignette_intensity = 0.09
 shader_parameter/vignette_opacity = 1.0
 
+[sub_resource type="Shader" id="Shader_vw46h"]
+code = "// simple rain/snow shader
+// useful learning resources:
+// https://www.ronja-tutorials.com/post/034-2d-sdf-basics/#circle
+// https://iquilezles.org/articles/distfunctions2d/
+
+shader_type canvas_item;
+
+// can make snow by adjusting values
+uniform int count: hint_range(0, 2000) = 150;
+uniform float slant: hint_range(-0.1, 0.1) = -0.01;
+uniform float speed: hint_range(25.0, 100.0) = 50.0;
+uniform float blur: hint_range(0.0005, 0.1) = 0.002;
+uniform vec4 colour: source_color = vec4(1.0, 1.0, 1.0, 1.0);
+uniform vec2 size = vec2(0.005, 0.2);
+
+float line_sdf(vec2 p, vec2 s) {
+    vec2 d = abs(p) - s;
+    return min(max(d.x, d.y), 0.0) + length(max(d, 0.0));
+}
+
+float Hash(float x) {
+    return fract(sin(x * 18.34) * 51.78);
+}
+
+float Hash2(float x) {
+    return fract(sin(x * 25.42) * 21.24);
+}
+void fragment() {
+    vec2 s = size * 0.1;
+    float time = TIME + 1000.0;
+    vec2 uv = UV;
+    
+    // Slant the UVs based on the parameter we set in GDScript
+    uv.x += uv.y * slant;
+    float output = 0.0;
+    
+    for (int i = 1; i <= count; i++) {
+        float h1 = Hash(float(i));
+        float h2 = Hash2(float(i));
+        
+        float sl = h1 * uv.y * -slant;
+        float pos_mod_x = h1 * 1.2;
+        
+        // Use the 'speed' uniform directly so the GDScript change takes effect
+        float pos_mod_y = max(h2 * speed, pos_mod_x * speed);
+        
+        // Wrap y values
+        vec2 position = vec2(pos_mod_x + sl, -mod(-pos_mod_y * time * 0.01, -1.0));
+        float sdf = line_sdf(uv - position, s);
+        output += clamp(- sdf / blur, 0.0, 1.0);
+    }
+
+    COLOR = vec4(colour.rgb, output);
+}"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ddjna"]
+shader = SubResource("Shader_vw46h")
+shader_parameter/count = 150
+shader_parameter/slant = -0.01
+shader_parameter/speed = 50.0
+shader_parameter/blur = 0.002
+shader_parameter/colour = Color(1, 1, 1, 1)
+shader_parameter/size = Vector2(0.005, 0.2)
+
 [node name="game" type="Node2D" unique_id=429334472]
 y_sort_enabled = true
 
@@ -285,3 +351,9 @@ z_index = 4096
 material = SubResource("ShaderMaterial_oi645")
 offset_right = 1152.0
 offset_bottom = 648.0
+
+[node name="rain" type="ColorRect" parent="PostProcess" unique_id=1554521510]
+material = SubResource("ShaderMaterial_ddjna")
+offset_right = 893.0
+offset_bottom = 648.0
+script = ExtResource("10_ddjna")
