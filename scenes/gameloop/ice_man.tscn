@@ -277,7 +277,7 @@ animations = [{
 "speed": 5.0
 }]
 
-[node name="iceMan" type="CharacterBody2D" unique_id=1965744311]
+[node name="iceMan" type="CharacterBody2D" unique_id=1965744311 groups=["Enemies"]]
 script = ExtResource("1_qisom")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=924964050]

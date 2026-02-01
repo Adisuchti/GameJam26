@@ -401,7 +401,7 @@ animations = [{
 "speed": 5.0
 }]
 
-[node name="Character" type="CharacterBody2D" unique_id=930760806]
+[node name="Character" type="CharacterBody2D" unique_id=930760806 groups=["Player"]]
 material = SubResource("ShaderMaterial_vhs7y")
 script = ExtResource("1_s28po")
 

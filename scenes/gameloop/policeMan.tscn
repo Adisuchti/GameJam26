@@ -271,7 +271,7 @@ animations = [{
 "speed": 5.0
 }]
 
-[node name="PoliceMan" type="CharacterBody2D" unique_id=1605622894]
+[node name="PoliceMan" type="CharacterBody2D" unique_id=1605622894 groups=["Enemies"]]
 position = Vector2(525, 330)
 script = ExtResource("1_4dp8m")
 

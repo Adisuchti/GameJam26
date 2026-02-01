@@ -357,6 +357,7 @@ y_sort_enabled = true
 z_index = 1
 position = Vector2(1991, 771)
 scale = Vector2(0.75, 0.75)
+speed = 250
 
 [node name="Police" type="Node" parent="." unique_id=1551040706]
 process_mode = 3
@@ -383,22 +384,77 @@ position = Vector2(2483, 3440)
 
 [node name="PoliceMan" parent="Police" unique_id=1605622894 node_paths=PackedStringArray("waypoints") instance=ExtResource("3_13dkx")]
 position = Vector2(2450, 542)
+chase_speed = 200.0
 waypoints = [NodePath("../Marker2D5"), NodePath("../Marker2D6")]
 active = true
 
 [node name="PoliceMan2" parent="Police" unique_id=949773939 node_paths=PackedStringArray("waypoints") instance=ExtResource("3_13dkx")]
 position = Vector2(4028, 3469)
+chase_speed = 200.0
 waypoints = [NodePath("../Marker2D2"), NodePath("../Marker2D3"), NodePath("../Marker2D4"), NodePath("../Marker2D")]
 active = true
 
+[node name="PoliceMan3" parent="Police" unique_id=1087702749 node_paths=PackedStringArray("waypoints") instance=ExtResource("3_13dkx")]
+position = Vector2(6545, 1756)
+chase_speed = 200.0
+waypoints = [NodePath("../Marker2D7"), NodePath("../Marker2D8"), NodePath("../Marker2D9"), NodePath("../Marker2D10")]
+active = true
+
+[node name="Marker2D7" type="Marker2D" parent="Police" unique_id=2040311937]
+position = Vector2(6188, 1478)
+
+[node name="Marker2D8" type="Marker2D" parent="Police" unique_id=810217640]
+position = Vector2(6544, 1501)
+
+[node name="Marker2D9" type="Marker2D" parent="Police" unique_id=1900659105]
+position = Vector2(6573, 1942)
+
+[node name="Marker2D10" type="Marker2D" parent="Police" unique_id=2123874323]
+position = Vector2(6119, 1928)
+
+[node name="PoliceMan4" parent="Police" unique_id=279978191 node_paths=PackedStringArray("waypoints") instance=ExtResource("3_13dkx")]
+position = Vector2(6315, 2107)
+chase_speed = 200.0
+waypoints = [NodePath("../Marker2D11"), NodePath("../Marker2D12")]
+active = true
+
+[node name="Marker2D11" type="Marker2D" parent="Police" unique_id=397322042]
+position = Vector2(6125, 2110)
+
+[node name="Marker2D12" type="Marker2D" parent="Police" unique_id=1741764124]
+position = Vector2(416, 2114)
+
 [node name="Ice" type="Node" parent="." unique_id=390293031]
 
-[node name="iceMan" parent="Ice" unique_id=1965744311 instance=ExtResource("4_oi645")]
+[node name="iceMan" parent="Ice" unique_id=1965744311 node_paths=PackedStringArray("waypoints") instance=ExtResource("4_oi645")]
 position = Vector2(3908, 1053)
+chase_speed = 200.0
+waypoints = [NodePath("../Marker2D"), NodePath("../Marker2D2")]
 active = true
 
 [node name="Marker2D" type="Marker2D" parent="Ice" unique_id=24865077]
 position = Vector2(3641, 951)
+
+[node name="Marker2D2" type="Marker2D" parent="Ice" unique_id=909156140]
+position = Vector2(3891, 1740)
+
+[node name="iceMan2" parent="Ice" unique_id=1295691252 node_paths=PackedStringArray("waypoints") instance=ExtResource("4_oi645")]
+position = Vector2(3842, 2136)
+chase_speed = 200.0
+waypoints = [NodePath("../Marker2D3"), NodePath("../Marker2D4"), NodePath("../Marker2D5"), NodePath("../Marker2D6")]
+active = true
+
+[node name="Marker2D3" type="Marker2D" parent="Ice" unique_id=1421221443]
+position = Vector2(3923, 2162)
+
+[node name="Marker2D4" type="Marker2D" parent="Ice" unique_id=1125061555]
+position = Vector2(3922, 3551)
+
+[node name="Marker2D5" type="Marker2D" parent="Ice" unique_id=662358847]
+position = Vector2(1966, 3515)
+
+[node name="Marker2D6" type="Marker2D" parent="Ice" unique_id=1227300415]
+position = Vector2(1942, 2076)
 
 [node name="Node" type="Node" parent="." unique_id=1125253834]
 
