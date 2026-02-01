@@ -2,6 +2,116 @@
 
 [ext_resource type="Script" uid="uid://lvdfkh757x6l" path="res://scenes/gameloop/game_over.gd" id="1_0c6he"]
 [ext_resource type="Texture2D" uid="uid://bx1hngiml8jp1" path="res://assets/you_are_salvadone2.png" id="2_0c6he"]
+[ext_resource type="Shader" uid="uid://505ltlw2vmjk" path="res://shaders/button_shine.gdshader" id="3_vgy2e"]
+
+[sub_resource type="Shader" id="Shader_0c6he"]
+code = "shader_type canvas_item;
+
+#define iResolution 1.0/SCREEN_PIXEL_SIZE
+#define iTime TIME
+#define fragColor COLOR
+
+uniform sampler2D iChannel0;
+uniform float frequency : hint_range(-10.0, 4.0, 0.1) = 0.0;
+uniform float size : hint_range(0.001, 0.05, 0.001) = 0.015;
+
+// Author: Élie Michel
+// License: CC BY 3.0
+// July 2017
+
+vec2 rand(vec2 c){
+    mat2 m = mat2(vec2(12.9898,.16180),vec2(78.233,.31415));
+	return fract(sin(m * c) * vec2(43758.5453, 14142.1));
+}
+
+vec2 noise(vec2 p){
+	vec2 co = floor(p);
+	vec2 mu = fract(p);
+	mu = 3.*mu*mu-2.*mu*mu*mu;
+	vec2 a = rand((co+vec2(0.,0.)));
+	vec2 b = rand((co+vec2(1.,0.)));
+	vec2 c = rand((co+vec2(0.,1.)));
+	vec2 d = rand((co+vec2(1.,1.)));
+	return mix(mix(a, b, mu.x), mix(c, d, mu.x), mu.y);
+}
+
+void fragment()
+{
+	vec2 u = UV,
+         v = UV * 0.1,
+         n = noise(v*200.); // Displacement
+    
+    fragColor = textureLod(iChannel0, u, 2.5);
+    
+    // Loop through the different inverse sizes of drops
+    for (float r = 4. ; r > frequency ; r--) {
+        vec2 x = iResolution.xy * r * size,  // Number of potential drops (in a grid)
+             p = 6.28 * u * x + (n - .5) * 2.,
+             s = sin(p);
+        
+        // Current drop properties. Coordinates are rounded to ensure a
+        // consistent value among the fragment of a given drop.
+        //vec4 d = texture(iChannel1, round(u * x - 0.25) / x);
+        vec2 v = round(u * x - 0.25) / x;
+        vec4 d = vec4(noise(v*200.), noise(v));
+        
+        // Drop shape and fading
+        float t = (s.x+s.y) * max(0., 1. - fract(iTime * (d.b + .1) + d.g) * 2.);;
+        
+        // d.r -> only x% of drops are kept on, with x depending on the size of drops
+        if (d.r < (5.-r)*.08 && t > .5) {
+            // Drop normal
+            vec3 v = normalize(-vec3(cos(p), mix(.2, 2., t-.5)));
+             //fragColor = vec4(v * 0.5 + 0.5, 1.0);  // show normals
+            
+            // Poor man's refraction (no visual need to do more)
+            fragColor = texture(iChannel0, u - v.xy * .3);
+        }
+    }
+    
+    // Debug noise function
+    //f = vec4(n, 0.0, 1.0);
+}"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_vgy2e"]
+shader = SubResource("Shader_0c6he")
+shader_parameter/iChannel0 = ExtResource("2_0c6he")
+shader_parameter/frequency = 2.200000181794641
+shader_parameter/size = 0.0030000001425
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_r1o6i"]
+resource_local_to_scene = true
+shader = ExtResource("3_vgy2e")
+shader_parameter/Line_Smoothness = 0.045
+shader_parameter/Line_Width = 0.09
+shader_parameter/Brightness = 3.0
+shader_parameter/Rotation_deg = 30.0
+shader_parameter/Distortion = 1.8
+shader_parameter/Speed = 0.3
+shader_parameter/Position = 0.0
+shader_parameter/Position_Min = 0.25
+shader_parameter/Position_Max = 0.5
+shader_parameter/Alpha = 0.10000000475
+
+[sub_resource type="Shader" id="Shader_vgy2e"]
+code = "shader_type canvas_item;
+
+void vertex() {
+	// Called for every vertex the material is visible on.
+}
+
+void fragment() {
+	// Called for every pixel the material is visible on.
+}
+
+//void light() {
+//	// Called for every pixel for every light affecting the CanvasItem.
+//	// Uncomment to replace the default light processing function with this one.
+//}
+"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_64a7n"]
+shader = SubResource("Shader_vgy2e")
 
 [node name="gameOver" type="Node2D" unique_id=324113374]
 script = ExtResource("1_0c6he")
@@ -16,19 +126,52 @@ texture = ExtResource("2_0c6he")
 expand_mode = 3
 stretch_mode = 3
 
-[node name="Play" type="Button" parent="." unique_id=1685987291]
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1741611587]
+
+[node name="raindrops" type="ColorRect" parent="CanvasLayer" unique_id=547639358]
+material = SubResource("ShaderMaterial_vgy2e")
+offset_right = 1152.0
+offset_bottom = 648.0
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer" unique_id=1845609704]
+material = SubResource("ShaderMaterial_r1o6i")
+offset_left = 134.0
+offset_top = 448.0
+offset_right = 527.0
+offset_bottom = 546.0
+
+[node name="ColorRect2" type="ColorRect" parent="CanvasLayer" unique_id=1313954371]
+material = SubResource("ShaderMaterial_r1o6i")
+offset_left = 626.0
+offset_top = 448.0
+offset_right = 1019.0
+offset_bottom = 546.0
+
+[node name="CanvasLayer2" type="CanvasLayer" parent="." unique_id=1315019998]
+
+[node name="rain" type="ColorRect" parent="CanvasLayer2" unique_id=751043655]
+material = SubResource("ShaderMaterial_64a7n")
+offset_left = 255.0
+offset_top = 187.0
+offset_right = 1405.0
+offset_bottom = 823.0
+color = Color(1, 1, 1, 0)
+
+[node name="CanvasLayer3" type="CanvasLayer" parent="." unique_id=271376858]
+
+[node name="Play" type="Button" parent="CanvasLayer3" unique_id=1685987291]
 offset_left = 136.0
 offset_top = 442.0
 offset_right = 523.0
 offset_bottom = 541.0
 flat = true
 
-[node name="Quit" type="Button" parent="." unique_id=1463617198]
+[node name="Quit" type="Button" parent="CanvasLayer3" unique_id=1463617198]
 offset_left = 628.0
 offset_top = 445.0
 offset_right = 1017.0
 offset_bottom = 546.0
 flat = true
 
-[connection signal="pressed" from="Play" to="." method="_on_play_pressed"]
-[connection signal="pressed" from="Quit" to="." method="_on_quit_pressed"]
+[connection signal="pressed" from="CanvasLayer3/Play" to="." method="_on_play_pressed"]
+[connection signal="pressed" from="CanvasLayer3/Quit" to="." method="_on_quit_pressed"]

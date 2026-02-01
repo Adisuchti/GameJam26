@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://bmoo5ympo8g7m" path="res://scenes/gameloop/ingameUI/newspaper.tscn" id="5_taqhf"]
 [ext_resource type="Shader" uid="uid://70g58ghv8q1h" path="res://scenes/gameloop/ingameUI/ingame_iu.gdshader" id="6_skb31"]
 [ext_resource type="Texture2D" uid="uid://b45k21xicfo28" path="res://sprites/ui/cam/frame_only_wood.png" id="6_tth5c"]
+[ext_resource type="Texture2D" uid="uid://dqlehp3k0tyyt" path="res://sprites/ui/sign.png" id="9_ap58y"]
 [ext_resource type="Script" uid="uid://fmagvujm5kvl" path="res://scenes/gameloop/ingameUI/progress_bar.gd" id="9_tth5c"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ap58y"]
@@ -118,22 +119,32 @@ position = Vector2(446, 324.50003)
 scale = Vector2(0.87109375, 1.2018518)
 texture = ExtResource("4_s1pl0")
 
+[node name="Sign" type="Sprite2D" parent="." unique_id=1355392758]
+position = Vector2(1019.2242, 389.12164)
+rotation = -0.06632251
+scale = Vector2(0.33801347, 0.285)
+texture = ExtResource("9_ap58y")
+
 [node name="wanted_level" type="Node2D" parent="." unique_id=1263139313]
+position = Vector2(52.999992, 95.00001)
+rotation = -0.06632251
+scale = Vector2(0.785, 0.785)
 
 [node name="ProgressBar" type="ProgressBar" parent="wanted_level" unique_id=820908015]
 modulate = Color(1, 0, 0, 1)
-offset_left = 911.0
-offset_top = 365.0
-offset_right = 1131.0
-offset_bottom = 392.0
+offset_left = 1143.5543
+offset_top = 428.32184
+offset_right = 1256.0038
+offset_bottom = 455.32184
 script = ExtResource("9_tth5c")
 
 [node name="alert_label" type="Label" parent="wanted_level" unique_id=227953564]
-offset_left = 911.0
-offset_top = 391.0
-offset_right = 1132.0
-offset_bottom = 414.0
+offset_left = 1091.9558
+offset_top = 455.53528
+offset_right = 1312.9558
+offset_bottom = 478.53528
 theme_override_colors/font_color = Color(1, 0, 0, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 text = "WANTED"
 horizontal_alignment = 1

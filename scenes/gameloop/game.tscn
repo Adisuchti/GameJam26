@@ -10,6 +10,148 @@
 [ext_resource type="PackedScene" uid="uid://cyyi6wgw6woo4" path="res://scenes/gameloop/items/cap.tscn" id="7_w1jwl"]
 [ext_resource type="PackedScene" uid="uid://25r54ucq3b18" path="res://scenes/gameloop/items/newsletter.tscn" id="8_vw46h"]
 [ext_resource type="Script" uid="uid://b57v4w4n4sdqe" path="res://scenes/gameloop/rain.gd" id="10_ddjna"]
+[ext_resource type="Shader" uid="uid://dw0eh8k0ecv0v" path="res://scenes/gameloop/game.gdshader" id="10_u5a54"]
+[ext_resource type="Script" uid="uid://bvkb2g77bo4r2" path="res://scenes/gameloop/damage.gd" id="11_cyuyt"]
+
+[sub_resource type="Shader" id="Shader_ddjna"]
+code = "shader_type canvas_item;
+
+group_uniforms cloud_layer_1;
+uniform sampler2D cloud_texture_1;
+uniform vec2 cloud_moving_speed_1 = vec2(0.01, -0.2);
+
+group_uniforms cloud_layer_2;
+uniform sampler2D cloud_texture_2;
+uniform vec2 cloud_moving_speed_2 = vec2(-0.02, -0.15);
+
+uniform vec4 sky_color : source_color = vec4(0.53, 0.81, 0.98, 1.0);
+uniform float mix_ratio : hint_range(0.0, 1.0) = 0.2;
+
+// --- NEW SLIDER ---
+uniform float transparency : hint_range(0.0, 1.0, 0.01) = 1.0;
+
+void fragment() {
+    vec2 offset1 = TIME * cloud_moving_speed_1;
+    vec2 offset2 = TIME * cloud_moving_speed_2;
+    vec2 uv1 = fract(UV + offset1);
+    vec2 uv2 = fract(UV + offset2);
+
+    vec4 color1 = texture(cloud_texture_1, uv1);
+    vec4 color2 = texture(cloud_texture_2, uv2);
+    
+    // Combine layers based on mix_ratio
+    vec4 combined_clouds = mix(color2, color1, mix_ratio);
+
+    // Use the red channel (common for cloud masks) as the base alpha
+    float cloud_alpha = combined_clouds.r;
+    
+    // Mix the sky color with the clouds based on cloud density
+    vec4 final_color = mix(sky_color, combined_clouds, cloud_alpha);
+
+    // Apply the transparency slider to the final alpha output
+    final_color.a *= transparency;
+
+    COLOR = final_color;
+}"
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_ddjna"]
+frequency = 0.0029
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_u5a54"]
+width = 256
+height = 256
+noise = SubResource("FastNoiseLite_ddjna")
+seamless = true
+seamless_blend_skirt = 0.471
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_u5a54"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_cyuyt"]
+noise = SubResource("FastNoiseLite_u5a54")
+seamless = true
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_u5a54"]
+shader = SubResource("Shader_ddjna")
+shader_parameter/cloud_texture_1 = SubResource("NoiseTexture2D_u5a54")
+shader_parameter/cloud_moving_speed_1 = Vector2(0.01, -0.2)
+shader_parameter/cloud_texture_2 = SubResource("NoiseTexture2D_cyuyt")
+shader_parameter/cloud_moving_speed_2 = Vector2(-0.02, -0.01)
+shader_parameter/sky_color = Color(0.5294118, 0.8117647, 0.98039216, 0)
+shader_parameter/mix_ratio = 0.2
+shader_parameter/transparency = 0.3499999921768
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_cyuyt"]
+shader = ExtResource("10_u5a54")
+shader_parameter/flash_color = Color(1, 0, 0, 1)
+shader_parameter/intensity = 0.0
+shader_parameter/edge_power = 2.5
+shader_parameter/inner_ratio = 0.75
+shader_parameter/feather = 0.4
+
+[sub_resource type="Shader" id="Shader_vw46h"]
+code = "// simple rain/snow shader
+// useful learning resources:
+// https://www.ronja-tutorials.com/post/034-2d-sdf-basics/#circle
+// https://iquilezles.org/articles/distfunctions2d/
+
+shader_type canvas_item;
+
+// can make snow by adjusting values
+uniform int count: hint_range(0, 2000) = 150;
+uniform float slant: hint_range(-0.1, 0.1) = -0.01;
+uniform float speed: hint_range(25.0, 100.0) = 50.0;
+uniform float blur: hint_range(0.0005, 0.1) = 0.002;
+uniform vec4 colour: source_color = vec4(1.0, 1.0, 1.0, 1.0);
+uniform vec2 size = vec2(0.005, 0.2);
+
+float line_sdf(vec2 p, vec2 s) {
+    vec2 d = abs(p) - s;
+    return min(max(d.x, d.y), 0.0) + length(max(d, 0.0));
+}
+
+float Hash(float x) {
+    return fract(sin(x * 18.34) * 51.78);
+}
+
+float Hash2(float x) {
+    return fract(sin(x * 25.42) * 21.24);
+}
+void fragment() {
+    vec2 s = size * 0.1;
+    float time = TIME + 1000.0;
+    vec2 uv = UV;
+    
+    // Slant the UVs based on the parameter we set in GDScript
+    uv.x += uv.y * slant;
+    float output = 0.0;
+    
+    for (int i = 1; i <= count; i++) {
+        float h1 = Hash(float(i));
+        float h2 = Hash2(float(i));
+        
+        float sl = h1 * uv.y * -slant;
+        float pos_mod_x = h1 * 1.2;
+        
+        // Use the 'speed' uniform directly so the GDScript change takes effect
+        float pos_mod_y = max(h2 * speed, pos_mod_x * speed);
+        
+        // Wrap y values
+        vec2 position = vec2(pos_mod_x + sl, -mod(-pos_mod_y * time * 0.01, -1.0));
+        float sdf = line_sdf(uv - position, s);
+        output += clamp(- sdf / blur, 0.0, 1.0);
+    }
+
+    COLOR = vec4(colour.rgb, output);
+}"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ddjna"]
+shader = SubResource("Shader_vw46h")
+shader_parameter/count = 150
+shader_parameter/slant = -0.01
+shader_parameter/speed = 50.0
+shader_parameter/blur = 0.002
+shader_parameter/colour = Color(1, 1, 1, 1)
+shader_parameter/size = Vector2(0.005, 0.2)
 
 [sub_resource type="Shader" id="Shader_63d22"]
 code = "shader_type canvas_item;
@@ -206,71 +348,6 @@ shader_parameter/clip_warp = false
 shader_parameter/vignette_intensity = 0.09
 shader_parameter/vignette_opacity = 1.0
 
-[sub_resource type="Shader" id="Shader_vw46h"]
-code = "// simple rain/snow shader
-// useful learning resources:
-// https://www.ronja-tutorials.com/post/034-2d-sdf-basics/#circle
-// https://iquilezles.org/articles/distfunctions2d/
-
-shader_type canvas_item;
-
-// can make snow by adjusting values
-uniform int count: hint_range(0, 2000) = 150;
-uniform float slant: hint_range(-0.1, 0.1) = -0.01;
-uniform float speed: hint_range(25.0, 100.0) = 50.0;
-uniform float blur: hint_range(0.0005, 0.1) = 0.002;
-uniform vec4 colour: source_color = vec4(1.0, 1.0, 1.0, 1.0);
-uniform vec2 size = vec2(0.005, 0.2);
-
-float line_sdf(vec2 p, vec2 s) {
-    vec2 d = abs(p) - s;
-    return min(max(d.x, d.y), 0.0) + length(max(d, 0.0));
-}
-
-float Hash(float x) {
-    return fract(sin(x * 18.34) * 51.78);
-}
-
-float Hash2(float x) {
-    return fract(sin(x * 25.42) * 21.24);
-}
-void fragment() {
-    vec2 s = size * 0.1;
-    float time = TIME + 1000.0;
-    vec2 uv = UV;
-    
-    // Slant the UVs based on the parameter we set in GDScript
-    uv.x += uv.y * slant;
-    float output = 0.0;
-    
-    for (int i = 1; i <= count; i++) {
-        float h1 = Hash(float(i));
-        float h2 = Hash2(float(i));
-        
-        float sl = h1 * uv.y * -slant;
-        float pos_mod_x = h1 * 1.2;
-        
-        // Use the 'speed' uniform directly so the GDScript change takes effect
-        float pos_mod_y = max(h2 * speed, pos_mod_x * speed);
-        
-        // Wrap y values
-        vec2 position = vec2(pos_mod_x + sl, -mod(-pos_mod_y * time * 0.01, -1.0));
-        float sdf = line_sdf(uv - position, s);
-        output += clamp(- sdf / blur, 0.0, 1.0);
-    }
-
-    COLOR = vec4(colour.rgb, output);
-}"
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_ddjna"]
-shader = SubResource("Shader_vw46h")
-shader_parameter/count = 150
-shader_parameter/slant = -0.01
-shader_parameter/speed = 50.0
-shader_parameter/blur = 0.002
-shader_parameter/colour = Color(1, 1, 1, 1)
-shader_parameter/size = Vector2(0.005, 0.2)
-
 [node name="game" type="Node2D" unique_id=429334472]
 y_sort_enabled = true
 
@@ -340,6 +417,15 @@ newspaper_nodes = [NodePath("../Newsletter")]
 [node name="Newsletter" parent="." unique_id=2142553142 instance=ExtResource("8_vw46h")]
 position = Vector2(2000, 1007)
 
+[node name="CanvasLayer2" type="CanvasLayer" parent="." unique_id=1786252916]
+
+[node name="cloud" type="ColorRect" parent="CanvasLayer2" unique_id=1042168145]
+material = SubResource("ShaderMaterial_u5a54")
+offset_left = -94.0
+offset_top = -95.0
+offset_right = 7084.0
+offset_bottom = 4132.0
+
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=550270837]
 
 [node name="ingameIU" parent="CanvasLayer" unique_id=1906887442 instance=ExtResource("3_63d22")]
@@ -347,13 +433,19 @@ z_index = 4096
 
 [node name="PostProcess" type="CanvasLayer" parent="." unique_id=1049298825]
 
-[node name="ColorRect" type="ColorRect" parent="PostProcess" unique_id=1627708519]
-material = SubResource("ShaderMaterial_oi645")
-offset_right = 1152.0
+[node name="damage" type="ColorRect" parent="PostProcess" unique_id=654475908]
+material = SubResource("ShaderMaterial_cyuyt")
+offset_right = 892.0
 offset_bottom = 648.0
+script = ExtResource("11_cyuyt")
 
 [node name="rain" type="ColorRect" parent="PostProcess" unique_id=1554521510]
 material = SubResource("ShaderMaterial_ddjna")
 offset_right = 893.0
 offset_bottom = 648.0
 script = ExtResource("10_ddjna")
+
+[node name="CRTV" type="ColorRect" parent="PostProcess" unique_id=1627708519]
+material = SubResource("ShaderMaterial_oi645")
+offset_right = 1152.0
+offset_bottom = 648.0

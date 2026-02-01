@@ -14,6 +14,9 @@ func _process(delta: float) -> void:
 func _on_play_pressed() -> void:
 	get_tree().change_scene_to_file("res://scenes/gameloop/game.tscn")
 
+func _on_tutorial_pressed() -> void:
+	get_tree().change_scene_to_file("res://scenes/start/tutorial.tscn")
+
 
 func _on_quit_pressed() -> void:
 	get_tree().quit()

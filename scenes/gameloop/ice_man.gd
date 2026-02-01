@@ -35,11 +35,13 @@ func _physics_process(delta):
 
 	if is_aggroed and target_player != null:
 		perform_chase_and_attack_logic(delta)
+		
 	else:
 		# Reset jitter when returning to patrol or idle
 		super._physics_process(delta)
 
 func perform_chase_and_attack_logic(delta):
+	Global.lastCameraSpotted = Time.get_ticks_msec()
 	var distance_to_player = global_position.distance_to(target_player.global_position)
 
 	# --- JITTER LOGIC (Every 10 frames) ---

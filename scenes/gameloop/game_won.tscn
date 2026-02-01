@@ -1,0 +1,170 @@
+[gd_scene format=3 uid="uid://ccfdh6f6crvpl"]
+
+[ext_resource type="Texture2D" uid="uid://dqvmftqll2jwa" path="res://assets/you won.png" id="1_3lor0"]
+[ext_resource type="Script" uid="uid://qu33y1wi1t6l" path="res://scripts/game_won.gd" id="1_mepu7"]
+[ext_resource type="Shader" uid="uid://505ltlw2vmjk" path="res://shaders/button_shine.gdshader" id="3_eai8g"]
+
+[sub_resource type="Shader" id="Shader_mepu7"]
+code = "shader_type canvas_item;
+
+// Required for SCREEN_TEXTURE in Godot 4
+uniform sampler2D SCREEN_TEXTURE : hint_screen_texture, filter_linear_mipmap;
+
+uniform float angle = -0.3;
+uniform float position = -0.2;
+uniform float spread : hint_range(0.0, 1.0) = 0.5;
+uniform float cutoff : hint_range(-1.0, 1.0) = 0.1;
+uniform float falloff : hint_range(0.0, 1.0) = 0.2;
+uniform float edge_fade : hint_range(0.0, 1.0) = 0.15;
+
+uniform float speed = 1.0;
+uniform float ray1_density = 8.0;
+uniform float ray2_density = 30.0;
+uniform float ray2_intensity : hint_range(0.0, 1.0) = 0.3;
+
+// FIXED: Changed hint_color to source_color
+uniform vec4 color : source_color = vec4(1.0, 0.9, 0.65, 0.8);
+
+uniform bool hdr = false;
+uniform float seed = 5.0;
+
+float random(vec2 _uv) {
+    return fract(sin(dot(_uv.xy, vec2(12.9898, 78.233))) * 43758.5453123);
+}
+
+float noise (in vec2 uv) {
+    vec2 i = floor(uv);
+    vec2 f = fract(uv);
+    float a = random(i);
+    float b = random(i + vec2(1.0, 0.0));
+    float c = random(i + vec2(0.0, 1.0));
+    float d = random(i + vec2(1.0, 1.0));
+    vec2 u = f * f * (3.0-2.0 * f);
+    return mix(a, b, u.x) + (c - a)* u.y * (1.0 - u.x) + (d - b) * u.x * u.y;
+}
+
+mat2 rotate(float _angle){
+    return mat2(vec2(cos(_angle), -sin(_angle)), vec2(sin(_angle), cos(_angle)));
+}
+
+vec4 screen(vec4 base, vec4 blend){
+    return 1.0 - (1.0 - base) * (1.0 - blend);
+}
+
+void fragment()
+{
+    // NEW: Create a dynamic seed that increases over time
+    // This creates a constant lateral drift for the rays
+    float dynamic_seed = seed + (TIME * speed * 0.5);
+    
+    // Rotate, skew and move the UVs
+    vec2 transformed_uv = ( rotate(angle) * (UV - position) )  / ( (UV.y + spread) - (UV.y * spread) );
+    
+    // Animate the rays using the dynamic_seed
+    vec2 ray1 = vec2(transformed_uv.x * ray1_density + sin(TIME * 0.1 * speed) * (ray1_density * 0.2) + dynamic_seed, 1.0);
+    vec2 ray2 = vec2(transformed_uv.x * ray2_density + sin(TIME * 0.2 * speed) * (ray1_density * 0.2) + dynamic_seed, 1.0);
+    
+    float cut = step(cutoff, transformed_uv.x) * step(cutoff, 1.0 - transformed_uv.x);
+    ray1 *= cut;
+    ray2 *= cut;
+    
+    float rays;
+    if (hdr){
+        rays = noise(ray1) + (noise(ray2) * ray2_intensity);
+    }
+    else{
+         rays = clamp(noise(ray1) + (noise(ray2) * ray2_intensity), 0., 1.);
+    }
+    
+    rays *= smoothstep(0.0, falloff, (1.0 - UV.y)); 
+    rays *= smoothstep(0.0 + cutoff, edge_fade + cutoff, transformed_uv.x); 
+    rays *= smoothstep(0.0 + cutoff, edge_fade + cutoff, 1.0 - transformed_uv.x); 
+    
+    vec3 shine = vec3(rays) * color.rgb;
+    
+    // Fixed SCREEN_TEXTURE access for Godot 4
+    vec4 screen_col = texture(SCREEN_TEXTURE, SCREEN_UV);
+    shine = screen(screen_col, vec4(shine, 1.0)).rgb;
+    
+    COLOR = vec4(shine, rays * color.a);
+}"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_eai8g"]
+shader = SubResource("Shader_mepu7")
+shader_parameter/angle = -0.3
+shader_parameter/position = -0.2
+shader_parameter/spread = 0.5
+shader_parameter/cutoff = 0.1
+shader_parameter/falloff = 0.2
+shader_parameter/edge_fade = 0.15
+shader_parameter/speed = 1.0
+shader_parameter/ray1_density = 8.0
+shader_parameter/ray2_density = 30.0
+shader_parameter/ray2_intensity = 0.3
+shader_parameter/color = Color(1, 0.9, 0.65, 0.8)
+shader_parameter/hdr = false
+shader_parameter/seed = 5.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_dm70m"]
+resource_local_to_scene = true
+shader = ExtResource("3_eai8g")
+shader_parameter/Line_Smoothness = 0.045
+shader_parameter/Line_Width = 0.09
+shader_parameter/Brightness = 3.0
+shader_parameter/Rotation_deg = 30.0
+shader_parameter/Distortion = 1.8
+shader_parameter/Speed = 0.3
+shader_parameter/Position = 0.0
+shader_parameter/Position_Min = 0.25
+shader_parameter/Position_Max = 0.5
+shader_parameter/Alpha = 1.0
+
+[node name="GameWon" type="Node2D" unique_id=1050383061]
+script = ExtResource("1_mepu7")
+
+[node name="YouWon" type="Sprite2D" parent="." unique_id=2076223565]
+position = Vector2(576, 308.49997)
+scale = Vector2(0.45569625, 0.40271232)
+texture = ExtResource("1_3lor0")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1518182071]
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer" unique_id=658510092]
+material = SubResource("ShaderMaterial_eai8g")
+offset_right = 1152.0
+offset_bottom = 648.0
+
+[node name="CanvasLayer2" type="CanvasLayer" parent="." unique_id=1838153230]
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer2" unique_id=545083102]
+material = SubResource("ShaderMaterial_dm70m")
+offset_left = 115.0
+offset_top = 452.0
+offset_right = 463.0
+offset_bottom = 538.0
+
+[node name="ColorRect2" type="ColorRect" parent="CanvasLayer2" unique_id=1187390404]
+material = SubResource("ShaderMaterial_dm70m")
+offset_left = 707.0
+offset_top = 451.0
+offset_right = 1040.0
+offset_bottom = 541.0
+
+[node name="CanvasLayer3" type="CanvasLayer" parent="." unique_id=2007235645]
+
+[node name="continue" type="Button" parent="CanvasLayer3" unique_id=256271422]
+offset_left = 112.0
+offset_top = 449.0
+offset_right = 464.0
+offset_bottom = 539.0
+flat = true
+
+[node name="exit" type="Button" parent="CanvasLayer3" unique_id=424820929]
+offset_left = 706.0
+offset_top = 450.0
+offset_right = 1041.0
+offset_bottom = 541.0
+flat = true
+
+[connection signal="pressed" from="CanvasLayer3/continue" to="." method="_on_continue_pressed"]
+[connection signal="pressed" from="CanvasLayer3/exit" to="." method="_on_exit_pressed"]

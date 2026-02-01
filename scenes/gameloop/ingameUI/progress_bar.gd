@@ -11,6 +11,7 @@ func _process(_delta: float) -> void:
 		# Show the UI elements
 		self.show()
 		alert_label.show()
+		global.wanted_level.emit(true)
 		
 		# Calculate and set the progress
 		var ratio = 1.0 - (elapsed / COOLDOWN_MS)
@@ -20,3 +21,4 @@ func _process(_delta: float) -> void:
 		self.hide()
 		alert_label.hide()
 		self.value = 0
+		global.wanted_level.emit(false)
