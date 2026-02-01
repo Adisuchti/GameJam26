@@ -19,7 +19,7 @@ func _process(delta):
 		# "get" is safe to use even if the property doesn't exist (returns null)
 		var has_mask = player_in_zone.get("has_mask")
 		
-		if has_mask == false:
+		if (has_mask == false) or ((has_mask == true) and global.maskState < 50):
 			trigger_alert()
 		else:
 			# If they put the mask ON while inside, the camera relaxes
