@@ -538,3 +538,7 @@ material = SubResource("ShaderMaterial_rbtpx")
 offset_right = 1152.0
 offset_bottom = 648.0
 script = ExtResource("12_cyuyt")
+
+[node name="sound_effects" type="Node2D" parent="." unique_id=1808967434]
+
+[node name="alarm" type="AudioStreamPlayer2D" parent="sound_effects" unique_id=1618538070]

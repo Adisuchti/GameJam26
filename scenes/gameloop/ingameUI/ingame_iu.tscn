@@ -10,6 +10,9 @@
 [ext_resource type="Texture2D" uid="uid://b45k21xicfo28" path="res://sprites/ui/cam/frame_only_wood.png" id="6_tth5c"]
 [ext_resource type="Texture2D" uid="uid://dqlehp3k0tyyt" path="res://sprites/ui/sign.png" id="9_ap58y"]
 [ext_resource type="Script" uid="uid://fmagvujm5kvl" path="res://scenes/gameloop/ingameUI/progress_bar.gd" id="9_tth5c"]
+[ext_resource type="Script" uid="uid://5djirpu52uak" path="res://scenes/gameloop/ingameUI/sound_effects.gd" id="11_adgkx"]
+[ext_resource type="AudioStream" uid="uid://dfm7n7mn8ptpo" path="res://sounds/rain.mp3" id="12_ulgbr"]
+[ext_resource type="AudioStream" uid="uid://bq05h0vly5jqc" path="res://sounds/wind.mp3" id="13_5dkra"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ap58y"]
 resource_local_to_scene = true
@@ -150,3 +153,14 @@ text = "WANTED"
 horizontal_alignment = 1
 vertical_alignment = 1
 script = SubResource("GDScript_tth5c")
+
+[node name="sound_effects" type="Node2D" parent="." unique_id=842290999]
+script = ExtResource("11_adgkx")
+
+[node name="rain" type="AudioStreamPlayer2D" parent="sound_effects" unique_id=467741708]
+stream = ExtResource("12_ulgbr")
+volume_db = -23.4
+
+[node name="wind" type="AudioStreamPlayer2D" parent="sound_effects" unique_id=1871502852]
+stream = ExtResource("13_5dkra")
+volume_db = -23.4

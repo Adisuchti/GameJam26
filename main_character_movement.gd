@@ -1,4 +1,5 @@
 extends CharacterBody2D
+@onready var footsteps: AudioStreamPlayer2D = $footsteps
 
 @onready var anim_sprite: AnimatedSprite2D = $AnimatedSprite2D
 @export var speed = 150
@@ -39,7 +40,6 @@ func _process(delta: float) -> void:
 #func _on_mask_lost_forever() -> void:
 	#mask_gone = false
 	#update_animation(last_direction)
-
 func _physics_process(delta):
 	if is_dead:
 		return
@@ -48,10 +48,14 @@ func _physics_process(delta):
 	velocity = input_direction * speed
 	
 	if input_direction != Vector2.ZERO:
+		# --- AUDIO LOGIC: START ---
+		if not footsteps.playing:   # <--- ADDED
+			footsteps.play()        # <--- ADDED
+
 		# --- RHYTHMIC JITTER LOGIC ---
 		frame_counter += 1
 		
-		# Only change the offset every 10 frames
+		# Only change the offset every 10 framesx
 		if frame_counter >= 10:
 			var displacement = Vector2(
 				randf_range(-jitter_strength, jitter_strength),
@@ -69,6 +73,10 @@ func _physics_process(delta):
 		update_animation(input_direction)
 		last_direction = input_direction
 	else:
+		# --- AUDIO LOGIC: STOP ---
+		if footsteps.playing:       # <--- ADDED
+			footsteps.stop()        # <--- ADDED
+
 		# Reset when standing still
 		anim_sprite.position = Vector2.ZERO 
 		frame_counter = 0
@@ -77,12 +85,6 @@ func _physics_process(delta):
 		anim_sprite.frame = 0 
 		
 	move_and_slide()
-
-	# Navigation Snapping
-	var map = get_world_2d().get_navigation_map()
-	var valid_pos = NavigationServer2D.map_get_closest_point(map, global_position)
-	if valid_pos != Vector2.ZERO:
-		global_position = valid_pos
 	
 # New helper function for your test toggles
 func _input(event):
