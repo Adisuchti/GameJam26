@@ -8,7 +8,6 @@
 [ext_resource type="PackedScene" uid="uid://cg2mat3hlxosh" path="res://scenes/gameloop/camera.tscn" id="5_37rvb"]
 [ext_resource type="Script" uid="uid://dbtimws0qf162" path="res://scripts/itemdopsandpickups.gd" id="6_qj867"]
 [ext_resource type="PackedScene" uid="uid://cyyi6wgw6woo4" path="res://scenes/gameloop/items/cap.tscn" id="7_w1jwl"]
-[ext_resource type="PackedScene" uid="uid://25r54ucq3b18" path="res://scenes/gameloop/items/newsletter.tscn" id="8_vw46h"]
 [ext_resource type="Script" uid="uid://b57v4w4n4sdqe" path="res://scenes/gameloop/rain.gd" id="10_ddjna"]
 [ext_resource type="Shader" uid="uid://dw0eh8k0ecv0v" path="res://scenes/gameloop/game.gdshader" id="10_u5a54"]
 [ext_resource type="Script" uid="uid://bvkb2g77bo4r2" path="res://scenes/gameloop/damage.gd" id="11_cyuyt"]
@@ -468,10 +467,7 @@ position = Vector2(1770, 1547)
 script = ExtResource("6_qj867")
 player = NodePath("../mainCharacter")
 dropped_cap_scene = ExtResource("7_w1jwl")
-newspaper_nodes = [NodePath("../Newsletter")]
-
-[node name="Newsletter" parent="." unique_id=2142553142 instance=ExtResource("8_vw46h")]
-position = Vector2(2000, 1007)
+newspaper_nodes = [NodePath("")]
 
 [node name="CanvasLayer2" type="CanvasLayer" parent="." unique_id=1786252916]
 

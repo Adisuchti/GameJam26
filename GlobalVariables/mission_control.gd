@@ -19,6 +19,7 @@ func mission_finished(success: bool):
 	else: score -= 1
 	if score >= target_score: get_tree().change_scene_to_file("res://scenes/gameloop/game_won.tscn")
 	missions_available.emit(true)
+	Global.lastCameraSpotted = Time.get_ticks_msec()
 	update_paper()
 
 func get_random_mission() -> PackedScene:

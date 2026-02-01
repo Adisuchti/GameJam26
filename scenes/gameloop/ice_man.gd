@@ -8,6 +8,8 @@ extends "res://scenes/gameloop/NPC_movement.gd"
 
 var bubble_scene = load("res://scenes/speech_bubble.tscn")
 
+const COOLDOWN_MS = 30000.0
+
 var target_player = null 
 var attack_timer = 0.0
 var is_aggroed = false 
@@ -25,9 +27,12 @@ func _ready():
 
 func _physics_process(delta):
 	attack_timer += delta
+	
+	var current_time = Time.get_ticks_msec()
+	var elapsed = current_time - Global.lastCameraSpotted
 
 	if target_player != null and not is_aggroed:
-		if target_player.get("has_hat") != true:
+		if (target_player.get("has_hat") != true) or (elapsed < COOLDOWN_MS):
 			is_aggroed = true
 			var bubble = bubble_scene.instantiate()
 			add_child(bubble)
