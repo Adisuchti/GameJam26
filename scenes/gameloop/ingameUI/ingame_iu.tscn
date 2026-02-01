@@ -13,7 +13,7 @@
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ap58y"]
 resource_local_to_scene = true
 shader = ExtResource("6_skb31")
-shader_parameter/alpha_percent = 0.54000002565
+shader_parameter/alpha_percent = 0.722000034295
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_rlcvn"]
 shader = ExtResource("6_skb31")
