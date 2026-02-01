@@ -22,12 +22,21 @@ func _ready():
 	current_health = max_health # Initialize health
 	
 func _process(delta: float) -> void:
+	#global.mask_lost_forever.connect(_on_mask_lost_forever)
+	#global.mask_restored.connect(_on_mask_restored)
 	if global.cap_lost:
 		has_hat = false
 	if global.mask_down:
 		has_mask = false
 	update_animation(last_direction)
-	
+
+#func _on_mask_restored() -> void:
+	#mask_gone = true
+	#update_animation(last_direction)
+	#
+#func _on_mask_lost_forever() -> void:
+	#mask_gone = false
+	#update_animation(last_direction)
 
 func _physics_process(delta):
 	if is_dead:

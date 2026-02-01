@@ -57,10 +57,6 @@ func perform_chase_and_attack_logic(delta):
 			var direction = global_position.direction_to(next_pos)
 			velocity = direction * chase_speed
 			update_animation(direction)
-			
-			$DetectionArea.rotation = direction.angle() - 90
-			velocity = direction * chase_speed
-			update_animation(direction)
 	
 	move_and_slide()
 
