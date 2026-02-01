@@ -11,8 +11,8 @@ shader_parameter/pickup_range = 1.0
 shader_parameter/fade_amount = 0.810000038475
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_h0ik5"]
-radius = 17.0
-height = 84.0
+radius = 25.0
+height = 50.0
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_gtpqm"]
 atlas = ExtResource("2_h0ik5")
@@ -403,10 +403,11 @@ animations = [{
 
 [node name="Character" type="CharacterBody2D" unique_id=930760806 groups=["Player"]]
 material = SubResource("ShaderMaterial_vhs7y")
+floor_block_on_wall = false
 script = ExtResource("1_s28po")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=479010126]
-position = Vector2(0, 27)
+position = Vector2(-1, 37)
 shape = SubResource("CapsuleShape2D_h0ik5")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1800875661]
