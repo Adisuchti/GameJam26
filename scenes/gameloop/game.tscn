@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://coedkdyf8sqbd"]
 
 [ext_resource type="PackedScene" uid="uid://b5i6f2ebusnkj" path="res://scenes/gameloop/ingameUI/ingame_iu.tscn" id="1_mgpub"]
-[ext_resource type="PackedScene" uid="uid://c5aggcikkjnf4" path="res://scenes/gameloop/tilemap.tscn" id="2_h3l1r"]
+[ext_resource type="PackedScene" uid="uid://c5aggcikkjnf4" path="res://sprites/map/tilemap.tscn" id="2_h3l1r"]
 [ext_resource type="Shader" uid="uid://70g58ghv8q1h" path="res://scenes/gameloop/ingameUI/ingame_iu.gdshader" id="3_7fyfm"]
 [ext_resource type="Texture2D" uid="uid://dfe5g6jrf8wcd" path="res://sprites/ui/vignette.png" id="4_4a24n"]
 
