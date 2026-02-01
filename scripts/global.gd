@@ -21,7 +21,6 @@ var newspaper_headlines = [
 	"'I am the greatest sex offender in the world, simply the best', claims the President.",
 	"Senator caught laundering money through a neighborhood lemonade stand.",
 	"White House Press Secretary admits: 'We have no idea what is going on either.'",
-	"Secret Plans leaked, to fake a coup to get rid of debt.",
 	"FIRE accidentally deports the state of New Mexico after confusion over name.",
 	"Third migrating bird shot by porder patrol. Government finds itself innocent.",
 

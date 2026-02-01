@@ -27,8 +27,7 @@ MissionControl="*uid://c7xd5jm4r4efu"
 
 window/size/mode=2
 window/size/resizable=false
-window/stretch/mode="viewport"
-window/stretch/scale_mode="integer"
+window/stretch/mode="canvas_items"
 
 [editor]
 
@@ -39,6 +38,8 @@ version_control/autoload_on_startup=true
 
 MissionSpawner=""
 TargetSpawner=""
+Enemies=""
+Player=""
 
 [input]
 
