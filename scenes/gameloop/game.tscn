@@ -1,22 +1,282 @@
 [gd_scene format=3 uid="uid://coedkdyf8sqbd"]
 
-[ext_resource type="PackedScene" uid="uid://b5i6f2ebusnkj" path="res://scenes/gameloop/ingameUI/ingame_iu.tscn" id="1_mgpub"]
-[ext_resource type="PackedScene" uid="uid://c5aggcikkjnf4" path="res://sprites/map/tilemap.tscn" id="2_h3l1r"]
-[ext_resource type="Shader" uid="uid://70g58ghv8q1h" path="res://scenes/gameloop/ingameUI/ingame_iu.gdshader" id="3_7fyfm"]
-[ext_resource type="Texture2D" uid="uid://dfe5g6jrf8wcd" path="res://sprites/ui/vignette.png" id="4_4a24n"]
+[ext_resource type="PackedScene" uid="uid://11os60r36ysk" path="res://scenes/gameloop/mainCharacter.tscn" id="2_63d22"]
+[ext_resource type="PackedScene" uid="uid://c5aggcikkjnf4" path="res://scenes/gameloop/tilemap.tscn" id="2_h3l1r"]
+[ext_resource type="PackedScene" uid="uid://dcmy5lgb2xxx2" path="res://scenes/gameloop/policeMan.tscn" id="3_13dkx"]
+[ext_resource type="PackedScene" uid="uid://b5i6f2ebusnkj" path="res://scenes/gameloop/ingameUI/ingame_iu.tscn" id="3_63d22"]
+[ext_resource type="PackedScene" uid="uid://56e6u2f1pafl" path="res://scenes/gameloop/ice_man.tscn" id="4_oi645"]
+[ext_resource type="PackedScene" uid="uid://cg2mat3hlxosh" path="res://scenes/gameloop/camera.tscn" id="5_37rvb"]
+[ext_resource type="Script" uid="uid://dbtimws0qf162" path="res://scripts/itemdopsandpickups.gd" id="6_qj867"]
+[ext_resource type="PackedScene" uid="uid://cyyi6wgw6woo4" path="res://scenes/gameloop/items/cap.tscn" id="7_w1jwl"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_5u7iv"]
-shader = ExtResource("3_7fyfm")
-shader_parameter/alpha_percent = 0.32400001539
+[sub_resource type="Shader" id="Shader_63d22"]
+code = "shader_type canvas_item;
 
-[node name="Game" type="Node2D" unique_id=1828080213]
 
-[node name="ingameIU" parent="." unique_id=1906887442 instance=ExtResource("1_mgpub")]
+uniform sampler2D SCREEN_TEXTURE : hint_screen_texture, filter_linear_mipmap;
 
-[node name="Tilemap" parent="." unique_id=1369200881 instance=ExtResource("2_h3l1r")]
 
-[node name="Vignette" type="Sprite2D" parent="." unique_id=1394481620]
-material = SubResource("ShaderMaterial_5u7iv")
-position = Vector2(446.00003, 323.50006)
-scale = Vector2(0.8730468, 1.2018518)
-texture = ExtResource("4_4a24n")
+uniform bool overlay = false;
+
+uniform float scanlines_opacity : hint_range(0.0, 1.0) = 0.4;
+uniform float scanlines_width : hint_range(0.0, 0.5) = 0.25;
+uniform float grille_opacity : hint_range(0.0, 1.0) = 0.3;
+uniform vec2 resolution = vec2(640.0, 480.0);
+
+uniform bool pixelate = true;
+
+uniform bool roll = true;
+uniform float roll_speed = 8.0;
+uniform float roll_size : hint_range(0.0, 100.0) = 15.0;
+uniform float roll_variation : hint_range(0.1, 5.0) = 1.8;
+uniform float distort_intensity : hint_range(0.0, 0.2) = 0.05;
+
+uniform float noise_opacity : hint_range(0.0, 1.0) = 0.4;
+uniform float noise_speed = 5.0;
+
+uniform float static_noise_intensity : hint_range(0.0, 1.0) = 0.06;
+
+uniform float aberration : hint_range(-1.0, 1.0) = 0.03;
+uniform float brightness = 1.4;
+uniform bool discolor = true;
+
+uniform float warp_amount : hint_range(0.0, 5.0) = 1.0;
+uniform bool clip_warp = false;
+
+uniform float vignette_intensity = 0.4;
+uniform float vignette_opacity : hint_range(0.0, 1.0) = 0.5;
+
+
+
+vec2 random(vec2 uv){
+    uv = vec2(dot(uv, vec2(127.1,311.7)), dot(uv, vec2(269.5,183.3)));
+    return -1.0 + 2.0 * fract(sin(uv) * 43758.5453123);
+}
+
+float noise(vec2 uv) {
+    vec2 uv_index = floor(uv);
+    vec2 uv_fract = fract(uv);
+    vec2 blur = smoothstep(0.0, 1.0, uv_fract);
+
+    return mix(
+        mix(dot(random(uv_index + vec2(0.0,0.0)), uv_fract - vec2(0.0,0.0)),
+            dot(random(uv_index + vec2(1.0,0.0)), uv_fract - vec2(1.0,0.0)), blur.x),
+        mix(dot(random(uv_index + vec2(0.0,1.0)), uv_fract - vec2(0.0,1.0)),
+            dot(random(uv_index + vec2(1.0,1.0)), uv_fract - vec2(1.0,1.0)), blur.x), 
+        blur.y
+    ) * 0.5 + 0.5;
+}
+
+vec2 warp(vec2 uv){
+    vec2 delta = uv - 0.5;
+    float delta2 = dot(delta.xy, delta.xy);
+    float delta4 = delta2 * delta2;
+    float delta_offset = delta4 * warp_amount;
+    return uv + delta * delta_offset;
+}
+
+float border (vec2 uv){
+    float radius = min(warp_amount, 0.08);
+    radius = max(min(min(abs(radius * 2.0), abs(1.0)), abs(1.0)), 1e-5);
+    vec2 abs_uv = abs(uv * 2.0 - 1.0) - vec2(1.0, 1.0) + radius;
+    float dist = length(max(vec2(0.0), abs_uv)) / radius;
+    float square = smoothstep(0.96, 1.0, dist);
+    return clamp(1.0 - square, 0.0, 1.0);
+}
+
+float vignette(vec2 uv){
+    uv *= 1.0 - uv.xy;
+    float vignette = uv.x * uv.y * 15.0;
+    return pow(vignette, vignette_intensity * vignette_opacity);
+}
+
+
+void fragment()
+{
+    vec2 uv = overlay ? warp(SCREEN_UV) : warp(UV);
+    vec2 text_uv = uv;
+    vec2 roll_uv = vec2(0.0);
+    float time = roll ? TIME : 0.0;
+
+    if (pixelate){
+        text_uv = ceil(uv * resolution) / resolution;
+    }
+
+    float roll_line = 0.0;
+    if (roll || noise_opacity > 0.0){
+        roll_line = smoothstep(0.3, 0.9, sin(uv.y * roll_size - (time * roll_speed)));
+        roll_line *= roll_line * smoothstep(0.3, 0.9, sin(uv.y * roll_size * roll_variation - (time * roll_speed * roll_variation)));
+        roll_uv = vec2((roll_line * distort_intensity * (1.-UV.x)), 0.0);
+    }
+
+    vec4 text;
+    if (roll){
+        text.r = texture(SCREEN_TEXTURE, text_uv + roll_uv * 0.8 + vec2(aberration, 0.0) * .1).r;
+        text.g = texture(SCREEN_TEXTURE, text_uv + roll_uv * 1.2 - vec2(aberration, 0.0) * .1).g;
+        text.b = texture(SCREEN_TEXTURE, text_uv + roll_uv).b;
+        text.a = 1.0;
+    } else {
+        text.r = texture(SCREEN_TEXTURE, text_uv + vec2(aberration, 0.0) * .1).r;
+        text.g = texture(SCREEN_TEXTURE, text_uv - vec2(aberration, 0.0) * .1).g;
+        text.b = texture(SCREEN_TEXTURE, text_uv).b;
+        text.a = 1.0;
+    }
+
+    float r = text.r;
+    float g = text.g;
+    float b = text.b;
+
+    uv = warp(UV);
+
+    if (grille_opacity > 0.0){
+        float g_r = smoothstep(0.85, 0.95, abs(sin(uv.x * (resolution.x * 3.14159265))));
+        r = mix(r, r * g_r, grille_opacity);
+
+        float g_g = smoothstep(0.85, 0.95, abs(sin(1.05 + uv.x * (resolution.x * 3.14159265))));
+        g = mix(g, g * g_g, grille_opacity);
+
+        float b_b = smoothstep(0.85, 0.95, abs(sin(2.1 + uv.x * (resolution.x * 3.14159265))));
+        b = mix(b, b * b_b, grille_opacity);
+    }
+
+    text.r = clamp(r * brightness, 0.0, 1.0);
+    text.g = clamp(g * brightness, 0.0, 1.0);
+    text.b = clamp(b * brightness, 0.0, 1.0);
+
+    float scanlines = 0.5;
+    if (scanlines_opacity > 0.0){
+        scanlines = smoothstep(scanlines_width, scanlines_width + 0.5, abs(sin(uv.y * (resolution.y * 3.14159265))));
+        text.rgb = mix(text.rgb, text.rgb * vec3(scanlines), scanlines_opacity);
+    }
+
+    if (noise_opacity > 0.0){
+        float n = smoothstep(0.4, 0.5, noise(uv * vec2(2.0, 200.0) + vec2(10.0, (TIME * (noise_speed)))));
+        roll_line *= n * scanlines * clamp(random((ceil(uv * resolution) / resolution) + vec2(TIME * 0.8, 0.0)).x + 0.8, 0.0, 1.0);
+        text.rgb = clamp(mix(text.rgb, text.rgb + roll_line, noise_opacity), vec3(0.0), vec3(1.0));
+    }
+
+    if (static_noise_intensity > 0.0){
+        text.rgb += clamp(random((ceil(uv * resolution) / resolution) + fract(TIME)).x, 0.0, 1.0) * static_noise_intensity;
+    }
+
+    text.rgb *= border(uv);
+    text.rgb *= vignette(uv);
+
+    if (clip_warp){
+        text.a = border(uv);
+    }
+
+    if (discolor){
+        float saturation = 0.5;
+        float contrast = 1.2;
+        vec3 greyscale = vec3(text.r + text.g + text.b) / 3.;
+        text.rgb = mix(text.rgb, greyscale, saturation);
+
+        float midpoint = pow(0.5, 2.2);
+        text.rgb = (text.rgb - vec3(midpoint)) * contrast + midpoint;
+    }
+
+    COLOR = text;
+}
+"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_oi645"]
+shader = SubResource("Shader_63d22")
+shader_parameter/overlay = true
+shader_parameter/scanlines_opacity = 0.0
+shader_parameter/scanlines_width = 0.02800000133
+shader_parameter/grille_opacity = 0.0450000021375
+shader_parameter/resolution = Vector2(2560, 1920)
+shader_parameter/pixelate = true
+shader_parameter/roll = false
+shader_parameter/roll_speed = 0.1
+shader_parameter/roll_size = 4.00000019
+shader_parameter/roll_variation = 0.10000000149012
+shader_parameter/distort_intensity = 0.0
+shader_parameter/noise_opacity = 0.0
+shader_parameter/noise_speed = 0.0
+shader_parameter/static_noise_intensity = 0.0
+shader_parameter/aberration = 0.01000004797499998
+shader_parameter/brightness = 1.4
+shader_parameter/discolor = true
+shader_parameter/warp_amount = 0.030000001425
+shader_parameter/clip_warp = false
+shader_parameter/vignette_intensity = 0.09
+shader_parameter/vignette_opacity = 1.0
+
+[node name="game" type="Node2D" unique_id=429334472]
+y_sort_enabled = true
+
+[node name="Tilemap" parent="." unique_id=727338766 instance=ExtResource("2_h3l1r")]
+
+[node name="mainCharacter" parent="." unique_id=930760806 instance=ExtResource("2_63d22")]
+z_index = 1
+position = Vector2(1991, 771)
+scale = Vector2(0.75, 0.75)
+
+[node name="Police" type="Node" parent="." unique_id=1551040706]
+process_mode = 3
+physics_interpolation_mode = 1
+auto_translate_mode = 1
+
+[node name="Marker2D" type="Marker2D" parent="Police" unique_id=1285327064]
+position = Vector2(3875, 3484)
+
+[node name="Marker2D2" type="Marker2D" parent="Police" unique_id=912864306]
+position = Vector2(5989, 3516)
+
+[node name="Marker2D3" type="Marker2D" parent="Police" unique_id=1797217226]
+position = Vector2(6014, 2059)
+
+[node name="Marker2D4" type="Marker2D" parent="Police" unique_id=1696929095]
+position = Vector2(3901, 2069)
+
+[node name="Marker2D5" type="Marker2D" parent="Police" unique_id=2055784674]
+position = Vector2(2506, 626)
+
+[node name="Marker2D6" type="Marker2D" parent="Police" unique_id=1392358107]
+position = Vector2(2483, 3440)
+
+[node name="PoliceMan" parent="Police" unique_id=1605622894 node_paths=PackedStringArray("waypoints") instance=ExtResource("3_13dkx")]
+position = Vector2(2450, 542)
+waypoints = [NodePath("../Marker2D5"), NodePath("../Marker2D6")]
+active = true
+
+[node name="PoliceMan2" parent="Police" unique_id=949773939 node_paths=PackedStringArray("waypoints") instance=ExtResource("3_13dkx")]
+position = Vector2(4028, 3469)
+waypoints = [NodePath("../Marker2D2"), NodePath("../Marker2D3"), NodePath("../Marker2D4"), NodePath("../Marker2D")]
+active = true
+
+[node name="Ice" type="Node" parent="." unique_id=390293031]
+
+[node name="iceMan" parent="Ice" unique_id=1965744311 instance=ExtResource("4_oi645")]
+position = Vector2(3908, 1053)
+active = true
+
+[node name="Marker2D" type="Marker2D" parent="Ice" unique_id=24865077]
+position = Vector2(3641, 951)
+
+[node name="Node" type="Node" parent="." unique_id=1125253834]
+
+[node name="camera" parent="Node" unique_id=1674744262 instance=ExtResource("5_37rvb")]
+position = Vector2(5797, 3003)
+
+[node name="camera2" parent="Node" unique_id=2113523910 instance=ExtResource("5_37rvb")]
+position = Vector2(1770, 1547)
+
+[node name="itemmanagement" type="Node2D" parent="." unique_id=773895452 node_paths=PackedStringArray("player")]
+script = ExtResource("6_qj867")
+player = NodePath("../mainCharacter")
+dropped_cap_scene = ExtResource("7_w1jwl")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=550270837]
+
+[node name="ingameIU" parent="CanvasLayer" unique_id=1906887442 instance=ExtResource("3_63d22")]
+z_index = 4096
+
+[node name="PostProcess" type="CanvasLayer" parent="." unique_id=1049298825]
+
+[node name="ColorRect" type="ColorRect" parent="PostProcess" unique_id=1627708519]
+material = SubResource("ShaderMaterial_oi645")
+offset_right = 1152.0
+offset_bottom = 648.0
