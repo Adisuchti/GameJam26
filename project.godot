@@ -26,7 +26,6 @@ MissionControl="*uid://c7xd5jm4r4efu"
 [display]
 
 window/size/mode=2
-
 window/size/resizable=false
 window/stretch/mode="canvas_items"
 

@@ -5,6 +5,7 @@ var lastCameraSpotted: int = -100000000;
 var cap_lost = false
 var mask_down = false
 var mask_hidden = true
+var maskState = 100;
 # DEFINE SIGNALS HERE
 
 var newspaper_headlines = [
