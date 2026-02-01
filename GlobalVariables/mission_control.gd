@@ -1,13 +1,12 @@
 extends Node
 
 signal missions_available
-signal victory
 
 var paper : newspaper
-var item_manager : item_manager
+var item_man : item_manager
 var possible_missions
 var score = 0
-var target_score = 20
+var target_score = 10
 
 func _ready() -> void:
 	possible_missions = ResourceLoader.load("res://Missions/available_missions/mission_list.tres")
@@ -18,7 +17,7 @@ func mission_activated():
 func mission_finished(success: bool):
 	if success: score += 1
 	else: score -= 1
-	if score >= target_score: victory.emit()
+	if score >= target_score: get_tree().change_scene_to_file("res://scenes/gameloop/game_won.tscn")
 	missions_available.emit(true)
 	update_paper()
 

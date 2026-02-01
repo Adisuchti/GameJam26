@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://dsfm4taml6tmt" path="res://Missions/mission_scripts/newspaper_missions.gd" id="1_ilfgb"]
 [ext_resource type="PackedScene" uid="uid://25r54ucq3b18" path="res://scenes/gameloop/items/newsletter.tscn" id="2_5g513"]
-[ext_resource type="Texture2D" uid="uid://b3ikeul77gvbr" path="res://sprites/map/CP_V1.0.4.png" id="2_wenke"]
+[ext_resource type="Texture2D" uid="uid://b3ikeul77gvbr" path="res://sprites/map/CP_V1.0.3.png" id="2_wenke"]
 [ext_resource type="Texture2D" uid="uid://n3b5tkdvnp1o" path="res://assets/icon.svg" id="3_ftmru"]
 
 [node name="Newspaper" type="Node2D" unique_id=1529074359]
