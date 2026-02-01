@@ -117,9 +117,9 @@ func _apply_wind_effects(delta: float) -> void:
 	if ws > 5.0 && ws < 7.0:
 		set_emotion(3)
 	elif ws >= 7.0 && ws < 8.5:
-		set_emotion(6)
-	elif ws >= 8.5:
 		set_emotion(1)
+	elif ws >= 8.5:
+		set_emotion(2)
 	
 		
 	# --- VIDEO VISIBILITY ---
@@ -211,10 +211,10 @@ func hide_mask() -> void:
 	set_mask_visible(false)
 
 func set_mask_visible(value: bool) -> void:
-	print("Mask hidden: ")
-	print(mask_hidden)
-	print("Mask lost: ")
-	print(mask_lost_forever)
+	#print("Mask hidden: ")
+	#print(mask_hidden)
+	#print("Mask lost: ")
+	#print(mask_lost_forever)
 	if mask_lost_forever || mask_hidden:
 		clean_mask.visible = false
 	else:
@@ -236,7 +236,8 @@ func _process_mask_fall(delta: float) -> void:
 
 	# Slow fall: 1px per frame
 	if mask_falling && !is_mask_held:
-		clean_mask.position.y += 0.03
+		if not clean_mask.position.y >= mask_original_pos.y + 30.0:
+			clean_mask.position.y += 0.1
 		var ws = globalwind.wind_strength
 		if ws < 5:
 			if clean_mask.position.y > 25.0:
@@ -249,24 +250,26 @@ func _process_mask_fall(delta: float) -> void:
 				set_emotion(3)
 
 		# Out of screen
-		if clean_mask.position.y >= mask_original_pos.y + 50.0:
-			set_mask_visible(false)
-			mask_lost_forever = true
+		if clean_mask.position.y >= mask_original_pos.y + 45.0:
+			#set_mask_visible(false)
+			#mask_lost_forever = true
 			mask_falling = false
 			global.mask_lost_forever.emit()
 			
 	if is_mask_held && clean_mask.position.y >= mask_original_pos.y:
-		clean_mask.position.y -= 0.03
+		clean_mask.position.y -= 0.15
 		if clean_mask.position.y < 21:
 			mask_falling = false
 			_schedule_mask_fall()
 			global.mask_restored.emit()
+	#print(clean_mask.position.y)
 		
 		
 
 func _schedule_mask_fall() -> void:
 	mask_timer = 0.0
 	mask_trigger_time = randf_range(mask_fall_min_time, mask_fall_max_time)
+	mask_trigger_time = 1
 
 
 # ========================
