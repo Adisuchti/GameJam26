@@ -273,6 +273,7 @@ animations = [{
 
 [node name="PoliceMan" type="CharacterBody2D" unique_id=1605622894 groups=["Enemies"]]
 position = Vector2(525, 330)
+collision_mask = 0
 script = ExtResource("1_4dp8m")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=886751667]
@@ -291,5 +292,5 @@ polygon = PackedVector2Array(462, 219, 324, 393, 75, 503, -203, 467, -413, 290, 
 
 [node name="Polygon2D" type="Polygon2D" parent="DetectionArea/CollisionShape2D" unique_id=670921897]
 scale = Vector2(10.288747, 10.288747)
-color = Color(18.892157, 0, 0, 0.21568628)
+color = Color(0, 8.719938, 9.913678, 0.216)
 polygon = PackedVector2Array(50, 0, 49.039265, 9.754516, 46.193977, 19.134172, 41.573483, 27.778511, 35.35534, 35.35534, 27.778511, 41.573483, 19.134172, 46.193977, 9.754516, 49.039265, 3.0615159e-15, 50, -9.754516, 49.039265, -19.134172, 46.193977, -27.778511, 41.573483, -35.35534, 35.35534, -41.21007, 27.311394, -46.193977, 19.134172, -49.039265, 9.754516, -50, 6.1230318e-15)
